@@ -108,6 +108,7 @@ Outputs are written to `outputs/results/`:
 | `notebooks/eda/`, `outputs/eda/` | Earlier exploratory analysis (reference; verified in Phase 1) |
 | `writeup/` | Write-up source and PDF |
 | `PLAN.md`, `FINDINGS.md` | Plan and assumptions; earlier EDA findings |
+| `logs/SESSION_LOG.md` | Condensed session log: my prompts, what the AI did, what was corrected |
 | `prompts/`, `.claude/agents/`, `logs/`, `AI_WORKFLOW.md` | AI-workflow audit trail |
 
 ## Extending

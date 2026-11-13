@@ -1,0 +1,210 @@
+# Session log: Lorehaven pricing take-home
+
+**Who:** Immanuel Tacky (candidate) working with Claude (Opus 5.5) as an agentic assistant: shell, files, a browser for checks, and subagents for the critic role.
+**When:** evening of 12 Nov 2026 to the afternoon of 13 Nov 2026, Toronto time, with an overnight break.
+**What this is:** a condensed, ordered record of the working session. My prompts are quoted **word-for-word** where marked "verbatim" and **paraphrased** where marked "paraphrased". Each step points to the commit and decision-log rows that back it, so every claim here can be checked in the repo.
+
+| Record | Where | What it holds |
+|---|---|---|
+| Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
+| Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
+| Decision log | `logs/decision_log.csv` | 64 rows: every AI suggestion and what I did with it (43 accepted, 10 edited, 11 rejected) |
+| Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
+| Commits | `git log` | One commit per phase, then small follow-ups |
+| Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
+
+---
+
+## At a glance
+
+- **Approach agreed before any modelling.** Claude profiled the data with aggregations only and proposed an approach. I made the key calls before Phase 0: randomized discount depth as the main identification, lifetime value as the metric, a lightweight tool, and costs limited to discounts.
+- **Five gated phases** (scaffold → analysis → critic → tool → write-up → AI note). I waived the per-phase approval gates in Phase 1 ("keep going through the phases until im needed") but kept one commit per phase.
+- **A single source of truth.** Every number in the write-up, tool and notebook is read from `outputs/results/metrics.json`. None are typed in by hand.
+- **Independent checks.** A fresh-context, read-only critic reviewed the analysis (20 issues) and the write-up (15 issues). 42 of 46 claims from the early exploration were re-derived independently: 4 did not match and were flagged rather than hidden. There are 59 automated tests plus an out-of-sample backcast.
+- **Human steering that changed the result:** the would-join-anyway vs persuadable split, keeping randomization in the recommendation, and the tool's run instructions (tested on my own Windows machine).
+
+---
+
+## Timeline
+
+### 1. Kick-off and exploration (12 Nov, evening)
+
+**Prompt (verbatim, abridged only by removing the local folder path):**
+> Hey Hey! Got a new interesting task for us to work on! I have a take home assignment that I have to complete for Audible (attached: PDF description + 3 CSVs, ignore the zip files). The description mentions that effort caps at a few hours and evaluates my AI workflow, so the process must be deliberate, small, and auditable. Right-sizing is part of the test. […] The audience is Bennett Chiles - Head of Economics, Yosub Jung - Senior Economist, and Alex Magnuson — Economist I (who is just shadowing only). […]
+> Rules: -feel free to use tables, frequency distributions, or step by step calculations. if you use any equations please explain/define every variable so that it is clear what you mean and I don't have to make assumptions - Never fabricate data/results; label assumptions vs. estimates
+
+**Follow-up (verbatim):**
+> due to size you also don't have to read the entire data files. you have the schemas. You can learn what is in the files by doing transformations.
+
+**What Claude did.** It read the brief and profiled the three files using group-bys only:
+- The panel covers the whole population: `member_count` in the aggregate file equals the panel sum in all 72 region-seasons.
+- Panem never gets a discount and stays at $15. The other regions cut to $12 from 2019 spring.
+- Discount depth is $1–$5, in almost equal counts at each depth.
+- Offered and non-offered prospects look the same on every observable.
+- Before 2019, Panem's gap to the other regions moves around, so it is a weak control.
+
+It proposed the randomized depth as the main analysis and the difference-in-differences on the base cut as supporting evidence. It then asked me four decisions.
+
+**My decisions (paraphrased):**
+- Explain the randomized-depth approach.
+- Lifetime value is the success metric.
+- The tool can be HTML or Flask but should be lightweight, with UI inspiration from a folder of screenshots.
+- "Costs" means discount costs only; content costs are out of scope.
+
+**Exploration questions I asked (paraphrased):**
+- the data structure, how offers were assigned, and the missing TV/display values;
+- randomization checks against the propensity scores;
+- which customer types respond to price, and at what threshold;
+- labelling segments as incremental vs would-join-anyway;
+- sign-up and retention sensitivity with the elasticity maths step by step;
+- a strategy for both prospects and members, written up in `FINDINGS.md`.
+
+**Where the AI was wrong here.** The exploration argued from a steady-state formula (member value V = p·r/(1−r)) that deep member discounts pay for themselves. This was later reversed: the formula ignores tenure and re-joining. See Phase 1.
+
+### 2. Master prompt and Phase 0: scaffold (commit `9759efc`)
+
+**Prompt:** I gave Claude a master prompt (saved verbatim in `prompts/00_master_prompt.md`). It sets out:
+- the repo structure and three agents (analyst, critic, tool-builder);
+- one source of truth for numbers;
+- a decision log with fixed columns;
+- versioned prompts, and one commit per phase with approval gates;
+- the rule to "Never fabricate data/results; label assumptions vs. estimates".
+
+**Follow-ups (verbatim):**
+> for the open questions, I agree with all the recommendations and you have my permission to make commits
+
+> i already have the source data on cloud I don't need to create an extra in data/raw
+
+then
+
+> create an extra copy for your own sanity please
+
+**What Claude did.**
+- Scaffolded the repo and wrote the three agent definitions.
+- Pinned the environment and moved the earlier exploration scripts into `notebooks/eda/` as an audit trail.
+- Copied the CSVs into a git-ignored `data/raw/`.
+- Logged 13 decisions, including two edits after my corrections on where the data lives.
+
+### 3. Phase 1: analysis (commit `e869ee3`)
+
+**Prompt (verbatim):**
+> keep going through the phases until im needed
+
+**Mid-phase request (paraphrased):** separate customers who would subscribe anyway from those who are persuadable, so we avoid unnecessarily deep discounts.
+
+**What Claude did.**
+- Rebuilt the analysis as tested code in `src/`.
+- Fit logit models of sign-up and retention on price, with region × quarter fixed effects and customer-clustered standard errors.
+- Added segment models, an uplift analysis (would-join-anyway vs persuadable), off-policy evaluation, a pull-forward check, a difference-in-differences on the base cut, and the `simulate()` engine.
+- Re-derived 46 claims from the early exploration: 42 matched and 4 were flagged as mismatches.
+
+**AI suggestions I rejected (from the log):**
+- A pooled segment model with shared fixed effects. It gave the wrong retention slope for less-engaged customers.
+- Modelling lapsed customers as an intercept shift. It over-predicted their sign-ups.
+- Calibrating the simulator from averaged fixed effects. The worst cell was off by 18.8 percentage points, against 2.1 with the replacement.
+- The steady-state "deep member discounts pay" claim from the exploration. It was reversed, which led to tenure-based pricing.
+- An ad-hoc sensitivity check that charged lapsed customers the wrong price.
+
+### 4. Phase 2: critic review (commit `65b0b56`)
+
+A **fresh-context, read-only critic** reviewed the Phase 1 commit and raised 20 issues. Highlights:
+- the extrapolation warnings used the wrong tested range;
+- the difference-in-differences standard errors were too small and its pre-trend test failed;
+- segment results pooled the $15 and $12 eras;
+- retention ignored tenure.
+
+Outcome: 17 accepted, 2 accepted in modified form, 1 rejected with evidence (`logs/critic_phase2.md`).
+
+The main session also caught its own error: the first tenure and score checks were built wrong, and it rebuilt them. Fixing the tenure issue led to the recommendation's member lever, discounts by tenure.
+
+### 5. Phase 3: tool, tests, backcast (commit `91c7ae3`)
+
+**What Claude did.**
+- Built a Flask simulator that calls `simulate()`, with validation, extrapolation warnings and starting presets.
+- Wrote a test suite.
+- Ran a backcast: fit on 2017–18 and predict 2019. Against an average-2018 baseline, the error is 10% for the discounting regions and 43% for Panem. The pre-planned same-season baseline missed the discounting regions by 32%. All three numbers are reported in the write-up.
+
+**My input (verbatim):**
+> Here is the audible logo
+
+The accent colour switched to Audible orange.
+
+**When the tool failed on my machine** (two error reports, then "please verify it works before handing it off to me for my next attempt"):
+- `ModuleNotFoundError`: fixed with path handling.
+- Windows reserving port 5000: fixed by picking a free port automatically.
+- Claude added a double-click launcher (`run_tool.bat`) and then verified it on my machine by opening the tool in Chrome.
+
+### 6. Phase 4: write-up, figures, notebook, second critic (commit `6edb5cd`)
+
+**Prompts (verbatim):**
+> Ok looks and works great. For the writeup though, I don't like how the fonts for the visuals are very squashed and distorted. please fix that. Lastly, lets push this to git if there are no other outstanding items. […] Ensure that If someone downloads it from git, it should be very quick for them to get the tool up and running.
+
+> Also, can you create a notebook that highlights the EDA, calculations, evals, and steps, etc. we went through to inform our process? I may want to go through some of it with the audience. remember everything in this notbook should be clearly defined and explained also
+
+**A steering question (paraphrased):** wasn't the random 25% offer what let us estimate incremental effects in the first place? If so, dropping it in the recommendation throws that away. As a result, the recommendation became a $5 default offer with a **persistent randomized holdout**: 85% at $5, 10% at list price, 5% at other depths. Claude quantified it: the standard error is ×0.72 of today's, at about $0.10 per prospect-quarter.
+
+**Prompt (verbatim):**
+> yes rerun it so we can finish this project.
+
+The second critic reviewed the write-up and raised 15 issues (4 high). All were addressed (`logs/critic_phase4.md`). For example:
+- "rising in every segment" was false;
+- a full-coverage assumption was added, and the tool now warns about it;
+- both backcast baselines are now reported;
+- the base cut is now described as "consistent with" higher sign-ups, not "caused".
+
+Claude also logged a correction to an earlier decision-log row rather than rewriting it.
+
+### 7. Phase 5 and sharing (commit `1c4654c`)
+
+- Claude wrote `AI_WORKFLOW.md`.
+- I chose a **private** GitHub repo. I created the empty repo, Claude pushed all phases, then downloaded a fresh copy from GitHub and confirmed the tool runs with only Flask installed.
+- **Prompt (verbatim):** "can you make a zip of the project as well?"
+
+### 8. Tool redesign (commit `0a804de`)
+
+**Prompt (verbatim):**
+> ok can we explore som alternative UX UI designs? this is not bad, but it could be better. I added a couple of more screenshots to the inspo folder
+
+Claude mocked up three directions on a design canvas, all using the model's real numbers:
+- (A) a dashboard console;
+- (B) the policy written as an editable sentence;
+- (C) today vs. yours, side by side.
+
+**I chose (verbatim):** "console A looks best"
+
+Claude rebuilt the tool in that layout with the same inputs and calculations. It added a "Compare policies" panel, and clicked through it in a browser: presets, horizon buttons, an out-of-range price, an invalid input and the hover tooltip.
+
+### 9. Branding (commits `62fb3ae`, `1e6235d`, `dd46d28`)
+
+**Prompts (verbatim):**
+> also, can we add the Team acronym in the pricing tool? Just so that some of the team branding is there as well
+
+> They Are called Audible Economics, Research & Optimization (AERO)
+
+> Also for the writeup say it was written by Immanuel Tacky instead of Iman
+
+> Can we improve the look of the writup as well? I would like to see the audible brand present there also
+
+Claude had first guessed the acronym "EDS" from the brief's title and held it back for my confirmation. It replaced it with AERO, updated the byline, and restyled the write-up: an Audible masthead, a "Bottom line" callout, orange section markers and page footers. The write-up is still 2 pages with 3 figures.
+
+---
+
+## Where the AI got it wrong, and what caught it
+
+| Error | Caught by | Fix |
+|---|---|---|
+| "Deep member discounts pay for themselves" (steady-state formula) | Claude, during Phase 1 re-derivation | Reversed; led to tenure-based member pricing |
+| Pooled segment model gave a wrong retention slope | Phase 1 cross-check against the exploration | Separate fits per segment |
+| Simulator calibration off by up to 18.8pp | In-sample fit check | Calibrated directly on the $12 regime (2.1pp worst cell) |
+| Extrapolation warnings used the wrong range; DiD standard errors too small; pooled eras | Critic, Phase 2 | Fixed and logged (17/2/1) |
+| The tool failed on Windows (package path, reserved port) | Me, running it | Path handling, automatic port, double-click launcher, verified on my machine |
+| Recommendation dropped the randomization behind the analysis | Me | Default offer with a persistent randomized holdout |
+| Overstated claims in the write-up ("every segment", base cut "raised" sign-ups) | Critic, Phase 4 | Reworded; assumptions stated |
+| Commit message miscounted critic outcomes | Claude, later | Correction logged, history kept |
+| Team acronym guessed (EDS) | Claude flagged it, I corrected it | AERO |
+
+## What is not in this log
+
+- **Raw tool output.** The full conversation is about 80 turns, mostly tool calls and data output. The commits, `logs/` and the notebook carry the results instead.
+- **The raw data.** Kept out of the repo by design (`data/raw/` is git-ignored).
+- **The full verbatim transcript.** Available as a share link from the chat on request.
