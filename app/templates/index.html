@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorehaven pricing simulator</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="page-header">
+  <div class="brand">
+    <img src="{{ url_for('static', filename='audible_logo.png') }}" alt="Audible">
+    <span class="divider" aria-hidden="true"></span>
+    <h1>Lorehaven pricing simulator</h1>
+  </div>
+  <p>Try a membership price and discount policy and see what it does to members and revenue over the next three years, compared with today's policy.</p>
+</header>
+
+<main class="layout">
+  <form id="controls" class="card controls" novalidate>
+    <label class="field">Start from
+      <select name="preset" id="preset"></select>
+    </label>
+    <p id="form-error" class="form-error" role="alert" hidden></p>
+
+    <fieldset>
+      <legend>Membership price</legend>
+      <label class="field">Base price per quarter ($)
+        <input type="number" name="base_price" step="0.5" min="1" max="50">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Offers to new customers</legend>
+      <p class="hint">Engaged listeners are prospects with a podcast-engagement score of 0.5 or more.</p>
+      <div class="pair">
+        <label class="field">Engaged listeners offered (%)
+          <input type="number" name="offer_share_high" step="5" min="0" max="100">
+        </label>
+        <label class="field">Their discount ($ off)
+          <input type="number" name="discount_high" step="0.5" min="0">
+        </label>
+      </div>
+      <div class="pair">
+        <label class="field">Other prospects offered (%)
+          <input type="number" name="offer_share_low" step="5" min="0" max="100">
+        </label>
+        <label class="field">Their discount ($ off)
+          <input type="number" name="discount_low" step="0.5" min="0">
+        </label>
+      </div>
+      <label class="check"><input type="checkbox" name="lapsed_get_offers"> Former members also get the offer</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Current members</legend>
+      <p class="hint">New members are far more likely to cancel than established ones, so a discount buys more loyalty early on.</p>
+      <label class="field">Discount at the first two renewals ($ off)
+        <input type="number" name="new_member_discount" step="0.5" min="0">
+      </label>
+      <label class="field">Discount from the third renewal on ($ off)
+        <input type="number" name="established_member_discount" step="0.5" min="0">
+      </label>
+    </fieldset>
+
+    <details>
+      <summary>More settings</summary>
+      <label class="field">Horizon (quarters)
+        <input type="number" name="horizon_quarters" step="1" min="1" max="40">
+      </label>
+      <label class="field">Discount rate on future revenue (% per quarter)
+        <input type="number" name="discount_rate_pct" step="0.5" min="0" max="99">
+      </label>
+      <label class="check"><input type="checkbox" name="random_depths"> Draw each discount at random from $1–$5, as today (ignores the discount amounts above)</label>
+    </details>
+
+  </form>
+
+  <section class="results">
+    <div class="kpis" id="kpis"></div>
+
+    <article class="card chart-card">
+      <h2>Members per 1,000 prospects</h2>
+      <p class="hint">Your policy versus today's policy: base ${{ facts.base }}, a quarter of prospects get a random $1–$5 offer, every member gets a random $1–$5 discount.</p>
+      <div id="chart" class="chart" aria-label="Members per quarter, your policy versus today"></div>
+      <div class="legend"><span class="key scenario"></span>Your policy <span class="key baseline"></span>Today's policy</div>
+    </article>
+
+    <div class="lower">
+      <article class="card">
+        <h2>Guardrails</h2>
+        <dl id="guardrails" class="guardrails"></dl>
+        <ul id="warnings" class="warnings"></ul>
+      </article>
+      <article class="card">
+        <h2>What this assumes</h2>
+        <ul class="assumptions">
+          <li>Price responses are measured from Lorehaven's randomized discounts and calibrated to 2019 conditions with the ${{ facts.base }} base price. Other base prices are flagged as an extrapolation.</li>
+          <li>Tested prices: ${{ facts.prospect_low }}–${{ facts.prospect_high }} for new customers and ${{ facts.member_low }}–${{ facts.member_high }} for members. Anything outside is flagged.</li>
+          <li>Revenue is what members actually pay, so it is already net of discounts. Content costs are not included.</li>
+          <li>Customers do not change behaviour because they expect future offers (for example, cancelling to get a win-back deal). Measured pull-forward from one quarter's offer to the next is small (about {{ facts.pull_forward_low_pct }}–{{ facts.pull_forward_high_pct }}%).</li>
+          <li>Tested against history: fit on 2017–2018 only, the model predicted 2019 member counts in the discounting regions within about {{ facts.backcast_treated_pct }}% on average, but missed the region without discounts by about {{ facts.backcast_control_pct }}%. Treat the numbers as a comparison between policies, not a forecast.</li>
+          <li>Every quarter looks like an average 2019 quarter: no seasonality and no marketing changes.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

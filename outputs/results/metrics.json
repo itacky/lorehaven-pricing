@@ -48,6 +48,132 @@
   "unit": "",
   "value": "winter->spring->summer->fall"
  },
+ "backcast.in_sample.mape": {
+  "label": "estimate",
+  "note": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.046033389186175395
+ },
+ "backcast.in_sample.mape_panem": {
+  "label": "estimate",
+  "note": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.1036946759082093
+ },
+ "backcast.in_sample.mape_treated": {
+  "label": "estimate",
+  "note": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.03450113184176862
+ },
+ "backcast.in_sample.total_error_q11_pct": {
+  "label": "estimate",
+  "note": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": -0.005236668953069734
+ },
+ "backcast.in_sample.total_members_q11_actual": {
+  "label": "estimate",
+  "note": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+  "source": "lorehaven.backcast",
+  "unit": "members",
+  "value": 155771
+ },
+ "backcast.in_sample.total_members_q11_predicted": {
+  "label": "estimate",
+  "note": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+  "source": "lorehaven.backcast",
+  "unit": "members",
+  "value": 154955.27884051137
+ },
+ "backcast.out_of_sample_avg_2018.mape": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 quarter. Chosen AFTER the same-season rule failed; both reported",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.15173287913421374
+ },
+ "backcast.out_of_sample_avg_2018.mape_panem": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 quarter. Chosen AFTER the same-season rule failed; both reported",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.43057608613429477
+ },
+ "backcast.out_of_sample_avg_2018.mape_treated": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 quarter. Chosen AFTER the same-season rule failed; both reported",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.09596423773419753
+ },
+ "backcast.out_of_sample_avg_2018.total_error_q11_pct": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 quarter. Chosen AFTER the same-season rule failed; both reported",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": -0.11619497725802685
+ },
+ "backcast.out_of_sample_avg_2018.total_members_q11_actual": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 quarter. Chosen AFTER the same-season rule failed; both reported",
+  "source": "lorehaven.backcast",
+  "unit": "members",
+  "value": 155771
+ },
+ "backcast.out_of_sample_avg_2018.total_members_q11_predicted": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 quarter. Chosen AFTER the same-season rule failed; both reported",
+  "source": "lorehaven.backcast",
+  "unit": "members",
+  "value": 137671.1921975399
+ },
+ "backcast.out_of_sample_same_season.mape": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.33287610263216033
+ },
+ "backcast.out_of_sample_same_season.mape_panem": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.42050764153616427
+ },
+ "backcast.out_of_sample_same_season.mape_treated": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.3153497948513595
+ },
+ "backcast.out_of_sample_same_season.total_error_q11_pct": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+  "source": "lorehaven.backcast",
+  "unit": "share",
+  "value": 0.17278005768067284
+ },
+ "backcast.out_of_sample_same_season.total_members_q11_actual": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+  "source": "lorehaven.backcast",
+  "unit": "members",
+  "value": 155771
+ },
+ "backcast.out_of_sample_same_season.total_members_q11_predicted": {
+  "label": "estimate",
+  "note": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+  "source": "lorehaven.backcast",
+  "unit": "members",
+  "value": 182685.1223649761
+ },
  "base_cut_observed.panem.2018_spring_fall.members_per_customer_quarter": {
   "label": "observed",
   "note": "DESCRIPTIVE ONLY: 2019 spring-fall vs 2018 spring-fall; not causal",

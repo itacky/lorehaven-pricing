@@ -1,0 +1,61 @@
+"""The Flask tool: page loads, presets run, invalid inputs return a clear 400 pointing at the field."""
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
+from app import create_app          # noqa: E402
+from presets import PRESETS         # noqa: E402
+
+
+@pytest.fixture(scope="module")
+def client():
+    return create_app().test_client()
+
+
+def test_page_loads_with_numbers_from_metrics(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert b"{{" not in response.data          # every template value was filled
+
+
+@pytest.mark.parametrize("preset_id", list(PRESETS))
+def test_every_preset_runs(client, preset_id):
+    response = client.post("/api/simulate", json=PRESETS[preset_id]["values"])
+    assert response.status_code == 200
+    body = response.get_json()
+    assert set(body) == {"scenario", "baseline"}
+    assert body["scenario"]["kpis"]["ltv_per_1000_prospects"] > 0
+
+
+def test_presets_keep_their_order_with_recommended_first(client):
+    assert list(client.get("/api/presets").get_json()) == list(PRESETS)
+    assert list(PRESETS)[0] == "recommended"
+
+
+def test_status_quo_matches_its_own_baseline(client):
+    body = client.post("/api/simulate", json=PRESETS["status_quo"]["values"]).get_json()
+    assert body["scenario"]["kpis"] == body["baseline"]["kpis"]
+
+
+@pytest.mark.parametrize("change, field", [
+    ({"base_price": "abc"}, "base_price"),
+    ({"base_price": ""}, "base_price"),
+    ({"offer_share_high": 150}, "offer_share_high"),
+    ({"discount_low": 20}, "discount_low"),
+    ({"new_member_discount": -1}, "new_member_discount"),
+    ({"horizon_quarters": 2.5}, "horizon_quarters"),
+    ({"discount_rate_pct": 100}, "discount_rate_pct"),
+])
+def test_invalid_input_returns_400_with_field(client, change, field):
+    response = client.post("/api/simulate", json={**PRESETS["recommended"]["values"], **change})
+    assert response.status_code == 400
+    body = response.get_json()
+    assert body["field"] == field
+    assert body["error"]
+
+
+def test_non_json_request_is_rejected(client):
+    response = client.post("/api/simulate", data="not json", content_type="text/plain")
+    assert response.status_code == 400

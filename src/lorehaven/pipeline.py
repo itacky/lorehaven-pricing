@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from lorehaven import data_prep, models
+from lorehaven import backcast, data_prep, models
 from lorehaven.simulate import SEGMENTS, PricingPolicy, load_model, logistic, member_value, simulate
 
 RESULTS_DIR = data_prep.REPO_ROOT / "outputs" / "results"
@@ -197,6 +197,19 @@ def record_model_fit_check(rec, table, model):
     rec.add("fit_check_in_sample.max_relative_error", checks.relative_error.max(), "share of observed", "estimate", src, note)
 
 
+def record_backcast(rec, table):
+    results = backcast.run_backcast(table)
+    pd.concat([frame.assign(run=name) for name, frame in results.items()]).to_csv(RESULTS_DIR / "backcast.csv", index=False)
+    notes = {"in_sample": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
+             "out_of_sample_same_season": "Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = same season 2018",
+             "out_of_sample_avg_2018": ("Fit on 2017-2018, forecast 2019 from actual end-2018 state; baseline = average 2018 "
+                                        "quarter. Chosen AFTER the same-season rule failed; both reported")}
+    for key, value in backcast.summarize(results).items():
+        run = key.split(".")[0]
+        unit = "members" if "total_members" in key else "share"
+        rec.add(f"backcast.{key}", value, unit, "estimate", "lorehaven.backcast", notes[run])
+
+
 def record_member_value(rec, model):
     """Value of one established member by price and horizon (steady state ignores re-joining)."""
     for segment, segment_model in model.segments.items():
@@ -280,6 +293,7 @@ def main():
     record_member_value(rec, model)
     record_model_fit_check(rec, table, model)
     record_scenarios(rec, model)
+    record_backcast(rec, table)
     rec.save(RESULTS_DIR / "metrics.json")
     print(f"wrote {len(rec.metrics)} metrics to {RESULTS_DIR / 'metrics.json'}")
     from lorehaven import verify_findings   # local import: verify_findings imports this module
