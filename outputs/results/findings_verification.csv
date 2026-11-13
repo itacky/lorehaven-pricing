@@ -41,5 +41,7 @@ cold list-price sign-up (Already Sold),0.003,0.0026558817954236576,0.001,,0.0003
 DiD delta (log-odds),0.829,0.8291054280586627,0.02,,0.00010542805866275984,match
 win-back first-quarter revenue peaks at $4 off ($12 era),4.0,4.0,0.0,,0.0,match
 warm-listener first-quarter revenue highest at $5 off ($12 era),5.0,5.0,0.0,,0.0,match
-strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; with_winback_offers),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r); the 12-quarter cohort simulation reverses it,2.0,MISMATCH
-strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; no_winback_offers),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r); the 12-quarter cohort simulation reverses it,2.0,MISMATCH
+strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; winback; 12 quarters),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r) for one member; cohort simulation includes re-joining and tenure,2.0,MISMATCH
+strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; winback; 40 quarters),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r) for one member; cohort simulation includes re-joining and tenure,2.0,MISMATCH
+strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; no_winback; 12 quarters),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r) for one member; cohort simulation includes re-joining and tenure,2.0,MISMATCH
+strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; no_winback; 40 quarters),1.0,1.0,0.0,EDA used steady-state V = p r/(1-r) for one member; cohort simulation includes re-joining and tenure,0.0,match

@@ -27,9 +27,10 @@ def _fixed_effect_dummies(frame: pd.DataFrame, fixed_effect_columns: list) -> pd
     return pd.concat(parts, axis=1)
 
 
-def fit_logit_clustered(data: pd.DataFrame, outcome: str, regressors: list, fixed_effect_columns: list) -> dict:
+def fit_logit_clustered(data: pd.DataFrame, outcome: str, regressors: list, fixed_effect_columns: list,
+                        cluster_column: str = CLUSTER_COLUMN) -> dict:
     """Logit with fixed effects, fitted on collapsed cells (identical MLE to row-level), with
-    customer-clustered sandwich standard errors computed from row-level scores.
+    cluster-robust sandwich standard errors (default: by customer) computed from row-level scores.
 
       P(outcome = 1) = 1 / (1 + exp(-(fixed effects + sum_j coef_j * regressor_j)))
     """
@@ -46,9 +47,9 @@ def fit_logit_clustered(data: pd.DataFrame, outcome: str, regressors: list, fixe
     information_inverse = np.linalg.inv(X.T @ (X * weights[:, None]))
 
     # meat: per-customer sums of row scores (y - p) * x
-    rows = data[[CLUSTER_COLUMN, outcome] + keys].merge(cells[keys + ["predicted"]], on=keys, how="left")
+    rows = data[list(dict.fromkeys([cluster_column, outcome] + keys))].merge(cells[keys + ["predicted"]], on=keys, how="left")
     residual = rows[outcome].to_numpy(float) - rows.predicted.to_numpy()
-    customer_codes, n_clusters = pd.factorize(rows[CLUSTER_COLUMN])[0], rows[CLUSTER_COLUMN].nunique()
+    customer_codes, n_clusters = pd.factorize(rows[cluster_column])[0], rows[cluster_column].nunique()
     names = list(design.columns)
     column_position = {name: i for i, name in enumerate(names)}
     score_rows, score_cols, score_values = [], [], []
@@ -151,6 +152,13 @@ def segment_models(table) -> dict:
 
 
 CURRENT_REGIME_QUARTERS = (9, 10, 11)   # 2019 spring-fall: $12 base outside Panem
+TENURE_GROUPS = {"first_renewal": (1, 1), "second_renewal": (2, 2), "established": (3, 99)}  # quarters as member
+
+
+def current_regime_rows(table) -> pd.DataFrame:
+    rows = table[(table.is_treated_region == 1) & table.quarter_index.isin(CURRENT_REGIME_QUARTERS)].copy()
+    rows["current_regime"] = "q9_q11"
+    return rows
 
 
 def simulator_fits(table) -> dict:
@@ -158,29 +166,75 @@ def simulator_fits(table) -> dict:
     quarters 9-11) WITHOUT quarter fixed effects. Offers and depths are randomized with the same
     probabilities in every quarter, so price is independent of quarter and this logit estimates the
     curve averaged over the three quarters (what a 'typical quarter' simulator needs).
+    Retention is fit separately by member tenure (first renewal, second renewal, established).
     Fixed-effect models above remain the main elasticity estimates."""
-    rows = table[(table.is_treated_region == 1) & table.quarter_index.isin(CURRENT_REGIME_QUARTERS)].copy()
-    rows["current_regime"] = "q9_q11"
+    rows = current_regime_rows(table)
+    fixed = ("current_regime",)
     fits = {}
     for segment, flag in (("high_podcast", 1), ("low_podcast", 0)):
         segment_rows = rows[rows.is_high_podcast == flag]
-        fits[segment] = {
-            "join_never": acquisition_model(segment_rows[segment_rows.is_lapsed == 0], fixed_effects=("current_regime",)),
-            "join_lapsed": acquisition_model(segment_rows[segment_rows.is_lapsed == 1], fixed_effects=("current_regime",)),
-            "retention": retention_model(segment_rows, fixed_effects=("current_regime",))}
+        never = segment_rows[(segment_rows.is_prospect == 1) & (segment_rows.is_lapsed == 0)]
+        fits[segment] = {"join_never": acquisition_model(never, fixed_effects=fixed),
+                         "join_lapsed": acquisition_model(segment_rows[segment_rows.is_lapsed == 1], fixed_effects=fixed)}
+        for group, (low, high) in TENURE_GROUPS.items():
+            tenure_rows = segment_rows[segment_rows.member_tenure.between(low, high)]
+            fits[segment][f"stay_{group}"] = retention_model(tenure_rows, fixed_effects=fixed)
+    prospects_now = rows[(rows.is_prospect == 1) & (rows.is_lapsed == 0)]
+    fits["share_high_podcast_among_never_prospects"] = prospects_now.is_high_podcast.mean()
+    fits["tested_prospect_price_range"] = (int(rows[rows.is_prospect == 1].membership_price.min()),
+                                           int(rows[rows.is_prospect == 1].membership_price.max()))
+    fits["tested_member_price_range"] = (int(rows[rows.status == "member"].membership_price.min()),
+                                         int(rows[rows.status == "member"].membership_price.max()))
     return fits
+
+
+def pull_forward_check(table) -> dict:
+    """Does a deeper offer this quarter lower NEXT quarter's sign-up among prospects who did not join?
+    Linear probability, FE = next quarter's region x quarter, controlling for next quarter's depth
+    (both depths are randomized and independent). Negative coefficient = pull-forward / depletion."""
+    rows = table[table.is_treated_region == 1].copy()
+    by_customer = rows.groupby("customer_id", sort=False)
+    rows["next_signup"] = by_customer.sign_up_flag.shift(-1)
+    rows["next_depth"] = by_customer.discount_depth.shift(-1).astype(float)
+    rows["next_region_quarter"] = by_customer.region_quarter.shift(-1)
+    rows["depth_now"] = rows.discount_depth.astype(float)
+    rows = rows[(rows.is_prospect == 1) & (rows.sign_up_flag == 0) & rows.next_signup.notna()]
+    out = {}
+    for segment, flag in (("high_podcast", 1), ("low_podcast", 0)):
+        fit = fit_linear_fe_clustered(rows[rows.is_high_podcast == flag], "next_signup", ["depth_now", "next_depth"], "next_region_quarter")
+        out[segment] = {"next_quarter_effect_per_dollar_now": fit["coef"]["depth_now"],
+                        "next_quarter_effect_se": fit["se_clustered"]["depth_now"],
+                        "same_quarter_effect_per_dollar": fit["coef"]["next_depth"]}
+    return out
+
+
+def base_cut_observed_comparison(table) -> pd.DataFrame:
+    """DESCRIPTIVE: revenue and members per customer, treated vs Panem, 2019 spring-fall (post-cut)
+    vs the same seasons of 2018. Not causal (one control region, failed pre-trend test)."""
+    rows = table[table.quarter_index.isin([5, 6, 7, 9, 10, 11])].copy()
+    rows["period"] = np.where(rows.quarter_index >= 9, "2019_spring_fall", "2018_spring_fall")
+    rows["revenue"] = rows.sign_up_flag * rows.membership_price
+    rows["group"] = np.where(rows.is_treated_region == 1, "treated", "panem")
+    out = rows.groupby(["group", "period"]).agg(customer_quarters=("customer_id", "size"), members=("sign_up_flag", "sum"),
+                                                revenue=("revenue", "sum")).reset_index()
+    out["members_per_customer_quarter"] = out.members / out.customer_quarters
+    out["revenue_per_customer_quarter"] = out.revenue / out.customer_quarters
+    out["revenue_per_member_quarter"] = out.revenue / out.members
+    return out
 
 
 # ---------------------------------------------------------------- 2019 base cut: DiD and event study
 def base_cut_did(table) -> dict:
-    """Prospects at LIST price only (no offer), all regions. Treated no-offer prospects are a random
+    """DIRECTION CHECK ONLY. Standard errors clustered by sub-region (20 clusters; few-cluster caveat).
+    Prospects at LIST price only (no offer), all regions. Treated no-offer prospects are a random
     75% of treated prospects, so they are comparable to Panem prospects (never offered).
       logit P(sign-up) = region FE + quarter FE + delta * treated x post
     """
     rows = prospects(table)
     rows = rows[rows.discount_flag == 0].copy()
     rows["treated_x_post"] = rows.is_treated_region * (rows.quarter_index >= 9)
-    did = fit_logit_clustered(rows, "sign_up_flag", ["treated_x_post"], ["region_name", "quarter_index"])
+    # cluster by sub-region (20 clusters, 6 in Panem): customer clustering ignores shared regional shocks
+    did = fit_logit_clustered(rows, "sign_up_flag", ["treated_x_post"], ["region_name", "quarter_index"], "region_id")
 
     reference_quarter = 8   # last quarter before the cut
     event_terms = []
@@ -189,7 +243,7 @@ def base_cut_did(table) -> dict:
             name = f"treated_x_q{q}"
             rows[name] = rows.is_treated_region * (rows.quarter_index == q)
             event_terms.append(name)
-    event = fit_logit_clustered(rows, "sign_up_flag", event_terms, ["region_name", "quarter_index"])
+    event = fit_logit_clustered(rows, "sign_up_flag", event_terms, ["region_name", "quarter_index"], "region_id")
     pre_terms = [t for t in event_terms if int(t.split("_q")[1]) < reference_quarter]
     return {"did": did, "event": event, "pretrend_test": wald_test(event, pre_terms),
             "reference_quarter": reference_quarter}
@@ -206,12 +260,14 @@ def label_segments(rows: pd.DataFrame) -> pd.Series:
     return pd.Series([PROSPECT_SEGMENTS[k] for k in keys], index=rows.index)
 
 
-def uplift_by_segment(table) -> pd.DataFrame:
+def uplift_by_segment(table, base_price=None) -> pd.DataFrame:
     """Treated prospects. Per segment: list-price sign-up rate p0 (observed) and uplift of each
     $k discount vs list (LPM with region x quarter FE, clustered SEs).
     Decomposition at $5 (ASSUMPTION: nobody is less likely to join because of a discount):
       already_sold = p0, persuadable = uplift_5, out_of_reach = 1 - p0 - uplift_5."""
     rows = prospects(table, treated_only=True).copy()
+    if base_price is not None:
+        rows = rows[rows.base_price == base_price]
     rows["segment"] = label_segments(rows)
     depth_columns = []
     for k in range(1, 6):
@@ -307,6 +363,19 @@ def evaluate_policy(rows: pd.DataFrame, policy: dict, propensities: pd.Series) -
     return result
 
 
+def _on_policy_value(rows) -> dict:
+    """Mean outcome under the logged policy, with customer-clustered SE."""
+    result = {}
+    for name, outcome in {"signup_rate": rows.sign_up_flag, "first_quarter_revenue": rows.sign_up_flag * rows.membership_price}.items():
+        values = outcome.to_numpy(float)
+        per_customer = pd.Series(values - values.mean()).groupby(rows.customer_id.to_numpy()).sum()
+        n = len(per_customer)
+        result[name] = values.mean()
+        result[name + "_se"] = np.sqrt((per_customer ** 2).sum() * n / (n - 1)) / len(rows)
+    result["matched_rows"] = len(rows)
+    return result
+
+
 TARGETING_POLICIES = {
     "no_offers": {s: 0 for s in PROSPECT_SEGMENTS.values()},
     "offer_all_3_off": {s: 3 for s in PROSPECT_SEGMENTS.values()},
@@ -317,11 +386,12 @@ TARGETING_POLICIES = {
 
 
 def off_policy_evaluation(table) -> pd.DataFrame:
-    rows = prospects(table, treated_only=True).copy()
+    """First-quarter (myopic) policy values for prospects in the current $12 regime (q9-q11).
+    Multi-quarter value comes from simulate(), not from here."""
+    rows = prospects(current_regime_rows(table)).copy()
     rows["segment"] = label_segments(rows)
     propensities = logging_propensities(rows)
-    output = [{"policy": "status_quo_random_25pct", "signup_rate": rows.sign_up_flag.mean(),
-               "first_quarter_revenue": (rows.sign_up_flag * rows.membership_price).mean(), "matched_rows": len(rows)}]
+    output = [{"policy": "status_quo_random_25pct", **_on_policy_value(rows)}]
     for name, policy in TARGETING_POLICIES.items():
         output.append({"policy": name, **evaluate_policy(rows, policy, propensities)})
     return pd.DataFrame(output), propensities

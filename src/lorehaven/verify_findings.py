@@ -102,12 +102,13 @@ def claims(table: pd.DataFrame, aggregate: pd.DataFrame) -> list:
     add("win-back first-quarter revenue peaks at $4 off ($12 era)", 4, best_winback, COUNT)
     best_warm = value("efficiency.prospect.warm_listener.base12.revenue_best_depth")
     add("warm-listener first-quarter revenue highest at $5 off ($12 era)", 5, best_warm, COUNT)
-    for winback in ("", "no_winback_"):
-        deep = value(f"scenario.prospects_5_off_{winback}members_5_off.ltv_per_1000_prospects")
-        shallow = value(f"scenario.prospects_5_off_{winback}members_1_off.ltv_per_1000_prospects")
-        add(f"strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; {winback or 'with_winback_'}offers)",
-            1, np.sign(deep - shallow), COUNT,
-            "EDA used steady-state V = p r/(1-r); the 12-quarter cohort simulation reverses it")
+    for winback in ("winback", "no_winback"):
+        for horizon in ("", ".h40"):
+            deep = value(f"scenario.prospects_5_off_{winback}_members_5_off{horizon}.ltv_per_1000_prospects")
+            shallow = value(f"scenario.prospects_5_off_{winback}_members_1_off{horizon}.ltv_per_1000_prospects")
+            add(f"strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; {winback}; "
+                f"{'40' if horizon else '12'} quarters)", 1, np.sign(deep - shallow), COUNT,
+                "EDA used steady-state V = p r/(1-r) for one member; cohort simulation includes re-joining and tenure")
     return out
 
 
@@ -123,6 +124,10 @@ def main():
     print(f"\n{(result.status == 'match').sum()} match, {(result.status == 'MISMATCH').sum()} mismatch")
     metrics_path = RESULTS_DIR / "metrics.json"
     metrics = json.loads(metrics_path.read_text())
+    for i, row in result.iterrows():
+        metrics[f"verification.claim{i + 1:02d}"] = {"value": row.rederived, "unit": "", "label": "observed",
+                                                   "source": "lorehaven.verify_findings",
+                                                   "note": f"{row.claim} | claimed {row.claimed} | {row.status} | EDA sample (q>=1)"}
     for name, count in (("n_claims", len(result)), ("n_match", int((result.status == "match").sum())),
                         ("n_mismatch", int((result.status == "MISMATCH").sum()))):
         metrics[f"verification.{name}"] = {"value": count, "unit": "claims", "label": "observed",

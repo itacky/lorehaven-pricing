@@ -92,6 +92,11 @@ def add_derived_columns(panel: pd.DataFrame) -> pd.DataFrame:
     panel["churned"] = ((panel.was_member_last_quarter == 1) & (panel.sign_up_flag == 0)).astype("int8")
     panel["stayed"] = 1 - panel.churned
     panel["last_quarter_discount_depth"] = by_customer.discount_depth.shift()
+    # member_tenure: consecutive quarters as a member before this quarter (0 for prospects)
+    run_id = (panel.sign_up_flag != by_customer.sign_up_flag.shift()).cumsum()
+    quarters_in_run = panel.groupby(run_id).cumcount() + 1
+    panel["member_tenure"] = np.where(panel.status == "member",
+                                      quarters_in_run.groupby(panel.customer_id).shift(), 0).astype("int8")
     panel["region_quarter"] = panel.region_name.astype(str) + "_q" + panel.quarter_index.astype(str)
     return panel
 
