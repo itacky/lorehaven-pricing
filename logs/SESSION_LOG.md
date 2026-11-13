@@ -1,7 +1,7 @@
 # Session log: Lorehaven pricing take-home
 
 **Who:** Immanuel Tacky (candidate) working with Claude (Opus 5.5) as an agentic assistant: shell, files, a browser for checks, and subagents for the critic role.
-**When:** evening of 12 Nov 2026 to the afternoon of 13 Nov 2026, Toronto time, with an overnight break.
+**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only minor follow-ups: the write-up's visual styling and this log. Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
 **What this is:** a condensed, ordered record of the working session. My prompts are quoted **word-for-word** where marked "verbatim" and **paraphrased** where marked "paraphrased". Each step points to the commit and decision-log rows that back it, so every claim here can be checked in the repo.
 
 | Record | Where | What it holds |
@@ -61,7 +61,7 @@ It proposed the randomized depth as the main analysis and the difference-in-diff
 
 **Where the AI was wrong here.** The exploration argued from a steady-state formula (member value V = p·r/(1−r)) that deep member discounts pay for themselves. This was later reversed: the formula ignores tenure and re-joining. See Phase 1.
 
-### 2. Master prompt and Phase 0: scaffold (commit `9759efc`)
+### 2. Master prompt and Phase 0: scaffold (12 Nov, evening; commit `9759efc`)
 
 **Prompt:** I gave Claude a master prompt (saved verbatim in `prompts/00_master_prompt.md`). It sets out:
 - the repo structure and three agents (analyst, critic, tool-builder);
@@ -85,7 +85,7 @@ then
 - Copied the CSVs into a git-ignored `data/raw/`.
 - Logged 13 decisions, including two edits after my corrections on where the data lives.
 
-### 3. Phase 1: analysis (commit `e869ee3`)
+### 3. Phase 1: analysis (12 Nov, evening; commit `e869ee3`)
 
 **Prompt (verbatim):**
 > keep going through the phases until im needed
@@ -105,7 +105,7 @@ then
 - The steady-state "deep member discounts pay" claim from the exploration. It was reversed, which led to tenure-based pricing.
 - An ad-hoc sensitivity check that charged lapsed customers the wrong price.
 
-### 4. Phase 2: critic review (commit `65b0b56`)
+### 4. Phase 2: critic review (12 Nov, evening; commit `65b0b56`)
 
 A **fresh-context, read-only critic** reviewed the Phase 1 commit and raised 20 issues. Highlights:
 - the extrapolation warnings used the wrong tested range;
@@ -117,7 +117,7 @@ Outcome: 17 accepted, 2 accepted in modified form, 1 rejected with evidence (`lo
 
 The main session also caught its own error: the first tenure and score checks were built wrong, and it rebuilt them. Fixing the tenure issue led to the recommendation's member lever, discounts by tenure.
 
-### 5. Phase 3: tool, tests, backcast (commit `91c7ae3`)
+### 5. Phase 3: tool, tests, backcast (12 Nov, evening; commit `91c7ae3`)
 
 **What Claude did.**
 - Built a Flask simulator that calls `simulate()`, with validation, extrapolation warnings and starting presets.
@@ -134,7 +134,7 @@ The accent colour switched to Audible orange.
 - Windows reserving port 5000: fixed by picking a free port automatically.
 - Claude added a double-click launcher (`run_tool.bat`) and then verified it on my machine by opening the tool in Chrome.
 
-### 6. Phase 4: write-up, figures, notebook, second critic (commit `6edb5cd`)
+### 6. Phase 4: write-up, figures, notebook, second critic (12 Nov, evening; commit `6edb5cd`)
 
 **Prompts (verbatim):**
 > Ok looks and works great. For the writeup though, I don't like how the fonts for the visuals are very squashed and distorted. please fix that. Lastly, lets push this to git if there are no other outstanding items. […] Ensure that If someone downloads it from git, it should be very quick for them to get the tool up and running.
@@ -154,13 +154,13 @@ The second critic reviewed the write-up and raised 15 issues (4 high). All were 
 
 Claude also logged a correction to an earlier decision-log row rather than rewriting it.
 
-### 7. Phase 5 and sharing (commit `1c4654c`)
+### 7. Phase 5 and sharing (12 Nov, evening; commit `1c4654c`)
 
 - Claude wrote `AI_WORKFLOW.md`.
 - I chose a **private** GitHub repo. I created the empty repo, Claude pushed all phases, then downloaded a fresh copy from GitHub and confirmed the tool runs with only Flask installed.
 - **Prompt (verbatim):** "can you make a zip of the project as well?"
 
-### 8. Tool redesign (commit `0a804de`)
+### 8. Tool redesign (late night of 12 Nov; commit `0a804de`)
 
 **Prompt (verbatim):**
 > ok can we explore som alternative UX UI designs? this is not bad, but it could be better. I added a couple of more screenshots to the inspo folder
@@ -174,7 +174,7 @@ Claude mocked up three directions on a design canvas, all using the model's real
 
 Claude rebuilt the tool in that layout with the same inputs and calculations. It added a "Compare policies" panel, and clicked through it in a browser: presets, horizon buttons, an out-of-range price, an invalid input and the hover tooltip.
 
-### 9. Branding (commits `62fb3ae`, `1e6235d`, `dd46d28`)
+### 9. Branding (late night of 12 Nov; commits `62fb3ae`, `1e6235d`)
 
 **Prompts (verbatim):**
 > also, can we add the Team acronym in the pricing tool? Just so that some of the team branding is there as well
@@ -183,9 +183,18 @@ Claude rebuilt the tool in that layout with the same inputs and calculations. It
 
 > Also for the writeup say it was written by Immanuel Tacky instead of Iman
 
+Claude had first guessed the acronym "EDS" from the brief's title and held it back for my confirmation. It replaced it with AERO and updated the byline.
+
+### 10. Minor follow-ups (13 Nov; commit `dd46d28` and this log)
+
+The assignment was complete by this point. Two small additions came afterwards.
+
+**Prompt (verbatim):**
 > Can we improve the look of the writup as well? I would like to see the audible brand present there also
 
-Claude had first guessed the acronym "EDS" from the brief's title and held it back for my confirmation. It replaced it with AERO, updated the byline, and restyled the write-up: an Audible masthead, a "Bottom line" callout, orange section markers and page footers. The write-up is still 2 pages with 3 figures.
+This was visual styling only: an Audible masthead, a "Bottom line" callout, orange section markers and page footers. The content and numbers did not change, and the write-up is still 2 pages with 3 figures.
+
+**Prompt (verbatim):** "can you create a session log/transcript for this so I can share with my interviewers?" This produced this file.
 
 ---
 
