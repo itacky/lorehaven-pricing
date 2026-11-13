@@ -1,5 +1,5 @@
 # Lorehaven: were the price changes effective, and what next?
-<p class="byline">Iman · Audible Economics &amp; Data Science take-home · numbers generated from <code>outputs/results/metrics.json</code></p>
+<p class="byline">Immanuel Tacky · Audible Economics &amp; Data Science take-home · numbers generated from <code>outputs/results/metrics.json</code></p>
 
 ## Bottom line
 - **Discounts work, and the evidence is causal.** Discount depth ($1–$5) was randomized by design. Who got an offer is assumed random: the brief says business rules decide it, but no observable predicts it (assumption A2). Each $1 off raises the odds of signing up by {{headline.signup_odds_change_per_dollar_off|pct0}} and the odds of a member staying by {{headline.retention_odds_change_per_dollar_off|pct0}}.
