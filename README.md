@@ -4,16 +4,26 @@ Take-home for Audible Economics & Data Science: were Lorehaven's price changes e
 membership pricing and discounts be? This repo holds the analysis (`src/lorehaven/`), every reported number
 (`outputs/results/metrics.json`), and a small pricing simulator a non-technical pricing lead can run (`app/`).
 
-## Quick start (about 2 minutes)
-Requires Python 3.10 or newer (tested on 3.10 and 3.13).
+## Quick start
+Needs Python 3.10-3.13. The tool itself needs only Flask (`requirements-tool.txt`).
+
+- **Windows:** double-click `run_tool.bat`. It finds Python (Anaconda, Miniconda or python.org), installs
+  Flask if it is missing, starts the tool and opens it in your browser. Close the window to stop it.
+- **macOS/Linux:** run `bash run_tool.sh`. The first run creates a local `.venv` with Flask (about 20 s);
+  later runs start immediately. Ctrl+C stops it.
+
+**Full environment (analysis, tests, notebook):**
+Requires Python 3.10-3.13 (tested on 3.10 and 3.13).
 ```
-python -m venv .venv
+python -m venv .venv                # macOS/Linux: python3 -m venv .venv
 .venv\Scripts\activate              # Windows   (macOS/Linux: source .venv/bin/activate)
 pip install -r requirements.txt
-pip install -e .
-python app/app.py                   # then open http://127.0.0.1:5000
+python app/app.py                   # prints the address (e.g. http://127.0.0.1:8050) and opens your browser
 ```
-The tool needs no raw data: it reads the fitted parameters in `outputs/results/metrics.json`.
+The tool needs no raw data: it reads the fitted parameters in `outputs/results/metrics.json`. To run *only*
+the tool, Flask is the one package it needs (`pip install flask==3.1.0`). The tool picks a free local port
+(8050 first; Windows often reserves 5000). To force one: `set LOREHAVEN_PORT=8765` (Windows) or
+`LOREHAVEN_PORT=8765 python app/app.py` (macOS/Linux).
 
 ## Using the simulator
 1. **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $3 discount for all members*, or *No discounts*.
@@ -61,11 +71,12 @@ data/raw/aggregate.csv
 data/raw/customer_panel.csv
 data/raw/customer_propensities.csv
 ```
-`data/raw/` is gitignored. Re-running the analysis needs about 6 GB of free memory. The tool and the
+`data/raw/` is gitignored. For the analysis commands, first run `pip install -e .` (it makes
+`python -m lorehaven...` work from any folder). Re-running the analysis needs about 6 GB of free memory. The tool and the
 default tests need very little.
 ```
 python -m lorehaven.pipeline        # about 1 minute: models, scenarios, backcast, metrics.json, FINDINGS.md verification
-pytest                              # 57 fast tests: validation, edge cases, monotonicity, warnings, tool API, backcast errors
+pytest                              # 59 fast tests: validation, edge cases, monotonicity, warnings, tool API, backcast errors
 LOREHAVEN_RUN_SLOW=1 pytest         # adds a full backcast re-run from the raw CSVs (~4-5 GB RAM)
 ```
 Outputs are written to `outputs/results/`:
@@ -93,6 +104,7 @@ Outputs are written to `outputs/results/`:
 | `src/lorehaven/pipeline.py`, `verify_findings.py` | Writes metrics.json; re-derives FINDINGS.md claims |
 | `app/` | Flask tool. `app.py` (routes), `presets.py`, `templates/`, `static/` (layout and styling only) |
 | `tests/` | pytest suite |
+| `notebooks/lorehaven_walkthrough.ipynb` | Presentation walkthrough of the EDA, calculations, models and checks (executed; readable on GitHub) |
 | `notebooks/eda/`, `outputs/eda/` | Earlier exploratory analysis (reference; verified in Phase 1) |
 | `writeup/` | Write-up source and PDF |
 | `PLAN.md`, `FINDINGS.md` | Plan and assumptions; earlier EDA findings |

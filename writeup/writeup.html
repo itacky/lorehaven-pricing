@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@page { size: Letter; margin: 0.5in 0.6in; }
+body { font-family: "Segoe UI", "DejaVu Sans", Arial, sans-serif; font-size: 8.9pt; line-height: 1.36; color: #1c2433; }
+h1 { font-size: 14pt; margin: 0 0 2px; }
+.byline { color: #5d6779; margin: 0 0 8px; font-size: 8.5pt; }
+h2 { font-size: 10pt; margin: 9px 0 3px; color: #1c2433; border-bottom: 1px solid #e1e0d9; padding-bottom: 2px; }
+p { margin: 0 0 5px; }
+ul { margin: 0 0 5px; padding-left: 16px; }
+li { margin-bottom: 2px; }
+.figs { display: flex; gap: 14px; margin: 6px 0 4px; align-items: flex-start; }
+.figs img { width: 49%; height: auto; }   /* never stretch: keeps the figure's aspect ratio */
+.fig-right { float: right; width: 47%; margin: 2px 0 4px 12px; }
+.fig-right img { width: 100%; height: auto; }
+.caption { font-size: 7.6pt; color: #5d6779; }
+table { border-collapse: collapse; font-size: 8pt; margin: 3px 0 6px; }
+th, td { border-bottom: 1px solid #e1e0d9; padding: 2px 6px; text-align: left; }
+th { color: #5d6779; font-weight: 600; }
+.note { font-size: 8pt; color: #3d4656; }
+.pagebreak { break-before: page; }
+</style></head><body><h1>Lorehaven: were the price changes effective, and what next?</h1>
+<p class="byline">Iman · Audible Economics &amp; Data Science take-home · numbers generated from <code>outputs/results/metrics.json</code></p>
+
+<h2>Bottom line</h2>
+<ul>
+<li><strong>Discounts work, and the evidence is causal.</strong> Discount depth ($1–$5) was randomized by design. Who got an offer is assumed random: the brief says business rules decide it, but no observable predicts it (assumption A2). Each $1 off raises the odds of signing up by 46% and the odds of a member staying by 32%.</li>
+<li><strong>The 2019 cut from $15 to $12 is consistent with higher sign-ups, but it is not cleanly identified.</strong> Panem is the only comparison region and its trends were not parallel before the cut. The best-identified size is what the randomized price curve implies for $3 (1.14 log-odds).</li>
+<li><strong>Recommendation: keep the $12 base. Replace the random 25% offer with a $5 introductory offer for every new prospect. Discount members by tenure: $5 off at the first two renewals, $1 off after that.</strong> In simulation this earns 133% more revenue per new prospect than today's policy over 3 years (69% over 10), and 12% more than the best single member discount. It assumes people respond the same when every prospect gets an offer as when about a quarter did, so the rollout should test this.</li>
+</ul>
+<h2>How I evaluated it</h2>
+<p>Customers were re-priced every quarter by a random draw, so comparing customers in the same region and quarter at different prices identifies the effect of price, with no parallel-trends assumption needed. Inside the discounting regions, offer eligibility (25% of prospects) and depth (20% at each of $1–$5) are balanced on every observable: propensity scores, ad exposure, history, sub-region, quarter and customer-ID patterns. I fit logit models of sign-up (prospects) and retention (members) on price, with region × quarter fixed effects and customer-clustered errors. Elasticities range from -1.92 to -5.51 for sign-up and -0.09 to -1.10 for retention, (under a logit, elasticity grows with price by construction). For the $12 cut, I compared list-price prospects in the cut regions against Panem, which never had discounts. To compare policies, a simulator follows a cohort of 1,000 new prospects for 12 quarters using response curves fit on the 2019 $12 regime.</p>
+<h2>Findings</h2>
+<div class="figs"><img src="../outputs/figures/fig1_who_the_offer_wins.png"><img src="../outputs/figures/fig2_retention_by_tenure.png"></div>
+
+<p><strong>1. A $5 offer mostly wins people who would not otherwise join (Fig. 1).</strong> At the $12 base, 69% of warm listeners who join with $5 off would not have joined at list price. The figure is 62% for win-backs (former members) and 96% for the "cold" majority with low podcast engagement. Because the discount is only paid by those who join, every segment earns more in its first quarter with an offer than without one. Targeting by segment adds nothing measurable. Using the logged random assignment, first-quarter revenue per prospect is $0.89 under today's policy, $1.77 for a uniform $5 offer, and $1.77 for a segment-tuned offer (standard error about $0.02).</p>
+<p><strong>2. Established members mostly stay anyway; new members are the price-sensitive ones (Fig. 2).</strong> At $11, 92% of established engaged members stay, against 83% at their first renewal. For less-engaged members, first-renewal retention rises from 43% at $11 to 67% at $7. Today every member gets a random $1–$5 discount every quarter, which spends most of the member discount budget on people who would stay at a higher price.</p>
+<p><strong>3. The $12 base cut is consistent with higher sign-ups, but not cleanly identified.</strong> List-price sign-up in the cut regions jumped relative to Panem in the first quarter after the cut (3.12 log-odds), then faded to 0.43 two quarters later. The first-quarter jump is far larger than the randomized curve implies for a $3 cut (1.14), which points to a shock in the same quarter. Pre-cut differences were not stable either (pre-trend p &lt; 0.001). Descriptively, comparing 2019 with the same seasons of 2018: revenue per customer rose +45% in the cut regions against +37% in Panem. Members per customer rose +92%, which more than offset a -25% change in revenue per member. Panem's trend is the only comparison, so this is supporting evidence, not proof.</p>
+<h2>Recommendation</h2>
+<div class="fig-right"><img src="../outputs/figures/fig3_policy_value.png"></div>
+
+<ol>
+<li><strong>Keep the base at $12.</strong> The model is calibrated there. Test any further list-price change in a controlled experiment rather than taking it from the model: in the data, the same price drew different responses as a discount and as a list price.</li>
+<li><strong>Make a $5 introductory offer the default, and keep a persistent randomized holdout.</strong> $5 is the largest discount tested. First-quarter revenue was still rising at $5 for never-members (most prospects); for former members it peaks at $4. The random 25% offer is what made this analysis possible, so keep randomizing: offer about 85% of new prospects $5 off, keep about 10% at list price, and test other depths (e.g. $3, $7) on about 5%. Assign each prospect once and log the assignment. Compared with today's logged shares, this makes the $5-vs-list estimate more precise (standard error ×0.72), at a cost of about $0.10 per prospect-quarter. A persistent holdout also measures long-run incremental revenue directly, pull-forward included. Keep a holdout within any segment you target.</li>
+<li><strong>Price members by tenure: $5 off at the first two renewals, $1 off after that</strong> (Fig. 3). Over 12 quarters this yields $47.0k per 1,000 new prospects against $20.2k today. The result holds over 40 quarters (+69% vs today) and with or without win-back offers.</li>
+<li><strong>Hold win-back offers to a test arm.</strong> The model credits them (+164% vs today), but it cannot see customers who cancel in order to collect one.</li>
+<li><strong>Keep randomized arms for members and for list-price changes.</strong> Give a small share of members random depths, including some established members at full price, which was never tested. Stagger future base-price changes across regions rather than changing all regions but one.</li>
+</ol>
+<p><strong>Guardrails to watch.</strong> Revenue per member-quarter barely moves ($9.25 vs $9.17). Average churn rises (13.7% vs 11.3%) because the member base holds more new, higher-churn members. Discounts given away more than double ($14.0k vs $6.2k per 1,000 prospects), and they buy 469 members at the end against 259.</p>
+<p><strong>Limits.</strong> Fit only on 2017–18, the simulator's engine predicted 2019 member counts in the discounting regions within 10% on average and missed Panem by 43%. That baseline was chosen after the pre-planned same-season baseline missed the discounting regions by 32%. Quarterly demand shocks are not predictable, so the tool compares policies rather than forecasting. Pull-forward is small: a deep offer this quarter costs 1.3%–2.6% of its gain in next quarter's sign-ups. Revenue is net of discounts, and content costs are excluded.</p>
+<h2>How I used AI</h2>
+<p class="note">I used Claude (agentic, with three role-scoped agents: analyst, a read-only critic with fresh context, and a tool-builder), with every prompt versioned and every accepted, edited or rejected suggestion logged (<code>logs/decision_log.csv</code>). <b>Where it fell short:</b> the first models pooled segments with shared fixed effects (a wrong retention slope for less-engaged members), valued members with a steady-state formula that ignored tenure and re-joining, and one sensitivity check charged lapsed customers the wrong price. The critic raised 20 issues, including overly precise DiD errors, extrapolation warnings set on the wrong range, and missing tenure effects; 17 were accepted, 2 accepted in modified form, and 1 rejected with evidence. <b>How I verified:</b> 42 of 46 earlier EDA claims were re-derived independently (4 flagged, not hidden); there are 59 fast tests (plus one opt-in full re-run) and an out-of-sample backcast; every analysis number in this note is filled in from <code>metrics.json</code> by the build script, and process counts come from <code>logs/</code>. A second critic review of this write-up raised 15 issues, all addressed (<code>logs/critic_phase4.md</code>).</p></body></html>

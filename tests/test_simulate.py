@@ -144,8 +144,14 @@ def test_member_value_steady_state_exceeds_finite_horizon(model):
 
 
 # ---------------------------------------------------------------- warnings
-def test_recommended_policy_is_inside_tested_range(model):
-    assert simulate(policy(), model)["warnings"] == []
+def test_recommended_prices_are_inside_tested_range(model):
+    warnings = simulate(policy(), model)["warnings"]
+    assert len(warnings) == 1 and "Offers reached" in warnings[0]       # only the offer-coverage caveat
+
+
+def test_offer_coverage_at_tested_share_has_no_warning(model):
+    share = model.tested_offer_share
+    assert simulate(policy(offer_share=EVERYONE(share)), model)["warnings"] == []
 
 
 def test_other_base_price_is_flagged(model):

@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
-from app import create_app          # noqa: E402
+from app import create_app, find_open_port          # noqa: E402
 from presets import PRESETS         # noqa: E402
 
 
@@ -59,3 +59,13 @@ def test_invalid_input_returns_400_with_field(client, change, field):
 def test_non_json_request_is_rejected(client):
     response = client.post("/api/simulate", data="not json", content_type="text/plain")
     assert response.status_code == 400
+
+
+def test_port_finder_skips_a_port_that_is_taken(monkeypatch):
+    import socket
+    blocker = socket.socket(); blocker.bind(("127.0.0.1", 0)); blocker.listen()
+    taken = blocker.getsockname()[1]
+    monkeypatch.setenv("LOREHAVEN_PORT", str(taken))
+    port = find_open_port()                       # falls back to an OS-chosen free port
+    blocker.close()
+    assert port != taken and port > 0

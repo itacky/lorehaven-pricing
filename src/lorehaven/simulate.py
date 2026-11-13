@@ -62,6 +62,7 @@ class SimulatorModel:
     calibrated_base_price: float            # base price of the data the curves were fit on
     tested_prospect_prices: tuple           # (min, max) prospect prices in that data
     tested_member_prices: tuple             # (min, max) member prices in that data
+    tested_offer_share: float               # share of prospects offered a discount in that data
 
 
 class InvalidPolicy(ValueError):
@@ -83,7 +84,8 @@ def load_model(metrics_path: Path = METRICS_PATH) -> SimulatorModel:
                 for s in SEGMENTS}
     return SimulatorModel(segments=segments, calibrated_base_price=value("simulator.calibrated_base_price"),
                           tested_prospect_prices=(value("simulator.tested_prospect_price_min"), value("simulator.tested_prospect_price_max")),
-                          tested_member_prices=(value("simulator.tested_member_price_min"), value("simulator.tested_member_price_max")))
+                          tested_member_prices=(value("simulator.tested_member_price_min"), value("simulator.tested_member_price_max")),
+                          tested_offer_share=value("simulator.tested_offer_share"))
 
 
 def member_value(segment_model: SegmentModel, member_price: float, horizon_quarters=None) -> float:
@@ -168,6 +170,9 @@ def range_warnings(policy: PricingPolicy, model: SimulatorModel) -> list:
     if policy.base_price != model.calibrated_base_price:
         warnings.append(f"The model is calibrated at the ${model.calibrated_base_price:g} base price. Other base prices "
                         f"are an extrapolation: discounts and list-price changes may not have the same effect.")
+    if any(policy.offer_share[s] > model.tested_offer_share + 0.005 for s in SEGMENTS):
+        warnings.append(f"Offers reached about {model.tested_offer_share:.0%} of prospects in the data. Wider coverage assumes each "
+                        f"person responds the same when everyone gets an offer; test it with a randomized holdout.")
     low, high = model.tested_prospect_prices
     for segment in SEGMENTS:
         for status in ("never", "lapsed"):

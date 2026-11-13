@@ -157,6 +157,9 @@ def record_simulator_parameters(rec, table):
     rec.add("simulator.tested_prospect_price_max", fits["tested_prospect_price_range"][1], "$", "observed", src)
     rec.add("simulator.tested_member_price_min", fits["tested_member_price_range"][0], "$", "observed", src)
     rec.add("simulator.tested_member_price_max", fits["tested_member_price_range"][1], "$", "observed", src)
+    prospects_now = models.prospects(models.current_regime_rows(table))
+    rec.add("simulator.tested_offer_share", float(prospects_now.discount_flag.mean()), "share", "observed", src,
+            "Share of treated prospects offered a discount, q9-q11")
     for segment, share in (("high_podcast", high_share), ("low_podcast", 1 - high_share)):
         rec.add(f"simulator.{segment}.share_of_prospects", share, "share", "observed", src,
                 "Share among never-member prospects, treated regions, q9-q11")
@@ -191,6 +194,10 @@ def record_model_fit_check(rec, table, model):
     checks["relative_error"] = checks.abs_error / checks.observed
     checks.to_csv(RESULTS_DIR / "model_fit_check_in_sample.csv", index=False)
     src = "pipeline.record_model_fit_check"
+    for r in checks.itertuples():
+        key = f"fit_check_in_sample.{r.segment}.{r.status}.price{r.price}"
+        rec.add(key + ".observed", r.observed, "share", "observed", src, f"q9-q11, treated, n={r.n}")
+        rec.add(key + ".predicted", r.predicted, "share", "estimate", src)
     note = "IN-SAMPLE (same q9-q11 data used to fit); by segment, status/tenure, price"
     rec.add("fit_check_in_sample.mean_abs_error", np.average(checks.abs_error, weights=checks.n), "rate points", "estimate", src, note)
     rec.add("fit_check_in_sample.max_abs_error", checks.abs_error.max(), "rate points", "estimate", src, note)
@@ -208,6 +215,48 @@ def record_backcast(rec, table):
         run = key.split(".")[0]
         unit = "members" if "total_members" in key else "share"
         rec.add(f"backcast.{key}", value, unit, "estimate", "lorehaven.backcast", notes[run])
+
+
+def record_headlines(rec):
+    """Derived numbers quoted in the write-up, computed here so every quoted number is a metrics.json key."""
+    m = rec.metrics
+    value = lambda key: m[key]["value"]
+    src = "pipeline.record_headlines"
+    ltv = lambda name: value(f"scenario.{name}.ltv_per_1000_prospects")
+    recommended, today = "prospects_5_off_no_winback_new_5_off_established_1_off", "status_quo_2019"
+    uniform_best = max((f"prospects_5_off_no_winback_members_{k}_off" for k in range(1, 6)), key=ltv)
+    rows = {
+        "ltv_recommended_vs_today_pct": (ltv(recommended) / ltv(today) - 1, "Recommended vs today's policy, 12 quarters"),
+        "ltv_recommended_vs_best_uniform_pct": (ltv(recommended) / ltv(uniform_best) - 1,
+                                                f"Recommended vs best single member discount ({uniform_best}), 12 quarters"),
+        "ltv_recommended_vs_today_pct_h40": (value(f"scenario.{recommended}.h40.ltv_per_1000_prospects")
+                                             / value(f"scenario.{today}.h40.ltv_per_1000_prospects") - 1, "40 quarters"),
+        "ltv_recommended_with_winback_vs_today_pct": (ltv("prospects_5_off_winback_new_5_off_established_1_off") / ltv(today) - 1,
+                                                      "Same as recommended but former members also get the offer"),
+        "signup_odds_change_per_dollar_off": (np.exp(-value("acquisition.price.coef")) - 1, "exp(-beta) - 1, FE logit"),
+        "retention_odds_change_per_dollar_off": (np.exp(-value("retention.price.coef")) - 1, "exp(-beta) - 1, FE logit"),
+    }
+    for group in ("treated", "panem"):
+        for measure in ("revenue_per_customer_quarter", "members_per_customer_quarter", "revenue_per_member_quarter"):
+            before = value(f"base_cut_observed.{group}.2018_spring_fall.{measure}")
+            after = value(f"base_cut_observed.{group}.2019_spring_fall.{measure}")
+            rows[f"base_cut_{group}_{measure}_change_pct"] = (after / before - 1, "DESCRIPTIVE: 2019 vs 2018 spring-fall")
+    for segment in ("high_podcast", "low_podcast"):
+        pf = lambda name: value(f"pull_forward.{segment}.{name}")
+        rows[f"pull_forward_offset_share_{segment}"] = (abs(pf("next_quarter_effect_per_dollar_now") / pf("same_quarter_effect_per_dollar")),
+                                                        "Next-quarter loss as a share of the same-quarter gain per $ of depth")
+    # Holdout design (recommendation): $5 offer default with a persistent randomized holdout.
+    # Precision of the $5-vs-list comparison: SE is proportional to sqrt(1/n_offer + 1/n_list) at fixed traffic.
+    today_shares = (value("ope.logging_propensity.depth5"), value("ope.logging_propensity.depth0"))
+    proposed_shares = (0.85, 0.10)    # ASSUMPTION: proposed design (85% $5 offer, 10% list price, 5% other depths)
+    se = lambda shares: np.sqrt(1 / shares[0] + 1 / shares[1])
+    rows["holdout_design_se_ratio_vs_today"] = (se(proposed_shares) / se(today_shares),
+                                                "SE of $5-vs-list uplift, proposed 85/10 design vs today's logged shares")
+    gain = value("ope.offer_all_5_off.first_quarter_revenue") - value("ope.no_offers.first_quarter_revenue")
+    rows["holdout_cost_per_prospect_quarter_at_10pct"] = (0.10 * gain, "$: 10% of prospects at list forgo the $5-offer gain (OPE, first quarter)")
+    for key, (number, note) in rows.items():
+        unit = "$" if key.startswith("holdout_cost") else "share"
+        rec.add(f"headline.{key}", float(number), unit, "estimate", src, note)
 
 
 def record_member_value(rec, model):
@@ -294,6 +343,7 @@ def main():
     record_model_fit_check(rec, table, model)
     record_scenarios(rec, model)
     record_backcast(rec, table)
+    record_headlines(rec)
     rec.save(RESULTS_DIR / "metrics.json")
     print(f"wrote {len(rec.metrics)} metrics to {RESULTS_DIR / 'metrics.json'}")
     from lorehaven import verify_findings   # local import: verify_findings imports this module

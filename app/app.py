@@ -1,16 +1,24 @@
 """Lorehaven pricing simulator — a thin Flask wrapper around lorehaven.simulate.simulate().
 
-Run:  python app/app.py   then open http://127.0.0.1:5000
+Run:  python app/app.py   (from any folder). It picks a free local port, prints the address and opens it
+      in your browser. Choose a port with LOREHAVEN_PORT=8050; skip the browser with LOREHAVEN_NO_BROWSER=1.
+Needs only Flask: simulate() uses the standard library and reads outputs/results/metrics.json.
 The model is never reimplemented here: inputs are converted to a PricingPolicy, simulate() does the work,
 and parameters come from outputs/results/metrics.json via load_model().
 """
 import json
+import os
+import socket
 import sys
+import threading
+import webbrowser
 from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))      # app/presets.py
+APP_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(APP_DIR))                              # app/presets.py
+sys.path.insert(0, str(APP_DIR.parent / "src"))               # lorehaven package, works without `pip install -e .`
 from presets import PRESETS, STATUS_QUO                       # noqa: E402
 
 from lorehaven.simulate import METRICS_PATH, InvalidPolicy, PricingPolicy, load_model, simulate  # noqa: E402
@@ -112,5 +120,37 @@ def create_app(metrics_path=None) -> Flask:
     return app
 
 
+PREFERRED_PORTS = (8050, 8765, 8080, 5000)   # 5000 is often reserved on Windows (Hyper-V / WSL / AirPlay)
+
+
+def find_open_port() -> int:
+    """First preferred port the OS lets us bind on 127.0.0.1; otherwise let the OS choose one."""
+    requested = os.environ.get("LOREHAVEN_PORT", "").strip()
+    if requested and not (requested.isdigit() and 1 <= int(requested) <= 65535):
+        print(f"LOREHAVEN_PORT='{requested}' is not a valid port (1-65535); choosing one automatically.")
+        requested = ""
+    candidates = (int(requested),) if requested else PREFERRED_PORTS
+    for port in candidates + (0,):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+            try:
+                probe.bind(("127.0.0.1", port))
+                if requested and port == 0:
+                    print(f"Port {requested} is not available; using another free port instead.")
+                return probe.getsockname()[1]
+            except OSError:                    # in use, or forbidden (Windows WinError 10013)
+                continue
+    raise RuntimeError("Could not find a free local port.")
+
+
+def main():
+    app = create_app()
+    port = find_open_port()
+    url = f"http://127.0.0.1:{port}"
+    print(f"\nLorehaven pricing simulator is running at {url}  (press Ctrl+C to stop)\n", flush=True)
+    if not os.environ.get("LOREHAVEN_NO_BROWSER"):
+        threading.Timer(1.0, webbrowser.open, args=(url,)).start()
+    app.run(host="127.0.0.1", port=port, debug=False)
+
+
 if __name__ == "__main__":
-    create_app().run(host="127.0.0.1", port=5000, debug=False)
+    main()

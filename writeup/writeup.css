@@ -1,0 +1,18 @@
+@page { size: Letter; margin: 0.5in 0.6in; }
+body { font-family: "Segoe UI", "DejaVu Sans", Arial, sans-serif; font-size: 8.9pt; line-height: 1.36; color: #1c2433; }
+h1 { font-size: 14pt; margin: 0 0 2px; }
+.byline { color: #5d6779; margin: 0 0 8px; font-size: 8.5pt; }
+h2 { font-size: 10pt; margin: 9px 0 3px; color: #1c2433; border-bottom: 1px solid #e1e0d9; padding-bottom: 2px; }
+p { margin: 0 0 5px; }
+ul { margin: 0 0 5px; padding-left: 16px; }
+li { margin-bottom: 2px; }
+.figs { display: flex; gap: 14px; margin: 6px 0 4px; align-items: flex-start; }
+.figs img { width: 49%; height: auto; }   /* never stretch: keeps the figure's aspect ratio */
+.fig-right { float: right; width: 47%; margin: 2px 0 4px 12px; }
+.fig-right img { width: 100%; height: auto; }
+.caption { font-size: 7.6pt; color: #5d6779; }
+table { border-collapse: collapse; font-size: 8pt; margin: 3px 0 6px; }
+th, td { border-bottom: 1px solid #e1e0d9; padding: 2px 6px; text-align: left; }
+th { color: #5d6779; font-weight: 600; }
+.note { font-size: 8pt; color: #3d4656; }
+.pagebreak { break-before: page; }
