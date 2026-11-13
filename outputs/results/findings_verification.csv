@@ -1,0 +1,45 @@
+claim,claimed,rederived,tolerance,note,abs_diff,status
+panel rows,6121068.0,6121068.0,0.0,,0.0,match
+customers,510089.0,510089.0,0.0,,0.0,match
+duplicate customer x quarter keys,0.0,0.0,0.0,,0.0,match
+customers switching region_id,0.0,0.0,0.0,,0.0,match
+aggregate member_count rows matching panel sums (of 72),72.0,72.0,0.0,,0.0,match
+sub-regions,20.0,20.0,0.0,,0.0,match
+sub-region x quarter cells whose list price breaks the $15->$12 rule,0.0,0.0,0.0,,0.0,match
+rows violating price = base - discount ($1-$5),0.0,0.0,0.0,,0.0,match
+treated members offered a discount (share),1.0,1.0,0.0005,,0.0,match
+treated prospect offer rate,0.2502,0.2502216266364292,0.0005,,2.1626636429239454e-05,match
+min depth share among discounted,0.199,0.1995510660602293,0.001,,0.0005510660602292827,match
+max depth share among discounted,0.201,0.20034536618498772,0.001,,0.0006546338150122955,match
+Panem discounted rows,0.0,0.0,0.0,,0.0,match
+member depth corr with last quarter depth,0.0009,0.0010446286247355863,0.002,,0.00014462862473558634,match
+Westeros winter TV ratings recorded as 0,3.0,3.0,0.0,,0.0,match
+display impressions = 0 with spend > 0 (region x quarter),18.0,18.0,0.0,,0.0,match
+"display propensity share exactly 0, 2017",0.83,0.8344916279315963,0.01,,0.004491627931596298,match
+"display propensity share exactly 0, 2019",0.58,0.5780579467504691,0.01,,0.001942053249530895,match
+sign-up rate base $15 at $15,0.0346,0.03464484679665738,0.0005,,4.484679665738012e-05,match
+sign-up rate base $15 at $10,0.1733,0.17328100470957614,0.0005,,1.8995290423873268e-05,match
+sign-up rate base $12 at $12,0.0598,0.05976752370580892,0.0005,,3.247629419107778e-05,match
+sign-up rate base $12 at $7,0.2522,0.25219802178039763,0.0005,,1.9782196023498955e-06,match
+retention base $15 at $14,0.7098,0.7097934500903165,0.0005,,6.549909683517541e-06,match
+retention base $15 at $10,0.8842,0.8842123427352304,0.0005,,1.2342735230430613e-05,match
+retention base $12 at $11,0.8786,0.8785657281787643,0.0005,,3.42718212357207e-05,match
+retention base $12 at $7,0.9494,0.9494488507756574,0.0005,,4.8850775657416357e-05,match
+Panem member retention at $15,0.6962,0.696219408294799,0.0005,,1.9408294798961556e-05,match
+sign-up logit price coefficient,-0.3656,-0.36558660546424265,0.005,,1.3394535757327297e-05,match
+retention logit price coefficient,-0.2787,-0.2786541921597908,0.005,,4.580784020918882e-05,match
+"retention price coefficient, podcast < 0.5",-0.084,-0.22029885626984472,0.005,EDA used a pooled price x segment interaction with shared FE; here the segment is fit on its own,0.13629885626984473,MISMATCH
+"sign-up price coefficient, podcast < 0.5",-0.606,-0.6016448782294247,0.02,EDA used a pooled interaction; here the segment is fit on its own (never + lapsed pooled),0.004355121770575288,match
+win_back share of prospects,0.073,0.07336491531576754,0.001,,0.00036491531576754443,match
+win_back list-price sign-up (Already Sold),0.16,0.15957296303148363,0.001,,0.00042703696851636996,match
+warm_listener share of prospects,0.349,0.3490789086438123,0.001,,7.890864381232543e-05,match
+warm_listener list-price sign-up (Already Sold),0.078,0.07748444828240046,0.001,,0.0005155517175995383,match
+lapsed_low_podcast share of prospects,0.008,0.008152155238739769,0.001,,0.00015215523873976858,match
+lapsed_low_podcast list-price sign-up (Already Sold),0.054,0.05431652920794495,0.001,,0.0003165292079449489,match
+cold share of prospects,0.569,0.5694040208016804,0.001,,0.0004040208016804492,match
+cold list-price sign-up (Already Sold),0.003,0.0026558817954236576,0.001,,0.00034411820457634244,match
+DiD delta (log-odds),0.829,0.8291054280586627,0.02,,0.00010542805866275984,match
+win-back first-quarter revenue peaks at $4 off ($12 era),4.0,4.0,0.0,,0.0,match
+warm-listener first-quarter revenue highest at $5 off ($12 era),5.0,5.0,0.0,,0.0,match
+strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; with_winback_offers),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r); the 12-quarter cohort simulation reverses it,2.0,MISMATCH
+strategy #6: deeper member discount raises value (sign of LTV $5 off - $1 off; no_winback_offers),1.0,-1.0,0.0,EDA used steady-state V = p r/(1-r); the 12-quarter cohort simulation reverses it,2.0,MISMATCH

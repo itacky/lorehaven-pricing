@@ -1,0 +1,4272 @@
+{
+ "acquisition.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 510089
+ },
+ "acquisition.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 5379608
+ },
+ "acquisition.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.379437167119471
+ },
+ "acquisition.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0011739458292541563
+ },
+ "assumption.launch_quarter": {
+  "label": "assumption",
+  "note": "",
+  "source": "data_prep",
+  "unit": "",
+  "value": "2017 winter; no members before"
+ },
+ "assumption.podcast_cutoff": {
+  "label": "assumption",
+  "note": "",
+  "source": "data_prep",
+  "unit": "score",
+  "value": 0.5
+ },
+ "assumption.season_order": {
+  "label": "assumption",
+  "note": "",
+  "source": "data_prep",
+  "unit": "",
+  "value": "winter->spring->summer->fall"
+ },
+ "data.customers": {
+  "label": "observed",
+  "note": "",
+  "source": "data_prep",
+  "unit": "customers",
+  "value": 510089
+ },
+ "data.panel_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "data_prep",
+  "unit": "rows",
+  "value": 6121068
+ },
+ "did.delta": {
+  "label": "estimate",
+  "note": "Prospects at list price; region + quarter FE; ASSUMPTION parallel trends with Panem as the only control",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.8399076081777272
+ },
+ "did.delta_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.010564720442173157
+ },
+ "did.odds_ratio": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "ratio",
+  "value": 2.3161529733012927
+ },
+ "did.pretrend_chi2": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "chi2",
+  "value": 526.7840451807843
+ },
+ "did.pretrend_p_value": {
+  "label": "estimate",
+  "note": "Joint test that pre-cut treated x quarter terms are zero (customer-clustered)",
+  "source": "lorehaven.models",
+  "unit": "p",
+  "value": 1.2557711108833806e-108
+ },
+ "did.randomized_prediction_delta": {
+  "label": "estimate",
+  "note": "-3 x acquisition price coefficient: what the randomized curve implies for a $3 cut",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 1.138311501358413
+ },
+ "did.randomized_prediction_odds_ratio": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "ratio",
+  "value": 3.1214932757929046
+ },
+ "efficiency.member.high_podcast.base12.price10.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.02340733504505621
+ },
+ "efficiency.member.high_podcast.base12.price10.stay_rate": {
+  "label": "observed",
+  "note": "n=50418",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.919631877504066
+ },
+ "efficiency.member.high_podcast.base12.price11.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0
+ },
+ "efficiency.member.high_podcast.base12.price11.stay_rate": {
+  "label": "observed",
+  "note": "n=50378",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.8962245424590098
+ },
+ "efficiency.member.high_podcast.base12.price7.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.06455319807065829
+ },
+ "efficiency.member.high_podcast.base12.price7.stay_rate": {
+  "label": "observed",
+  "note": "n=50711",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.9607777405296681
+ },
+ "efficiency.member.high_podcast.base12.price8.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05359254041040318
+ },
+ "efficiency.member.high_podcast.base12.price8.stay_rate": {
+  "label": "observed",
+  "note": "n=50296",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.949817082869413
+ },
+ "efficiency.member.high_podcast.base12.price9.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.04069987799192698
+ },
+ "efficiency.member.high_podcast.base12.price9.stay_rate": {
+  "label": "observed",
+  "note": "n=50384",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.9369244204509368
+ },
+ "efficiency.member.high_podcast.base15.price10.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.17356764245989997
+ },
+ "efficiency.member.high_podcast.base15.price10.stay_rate": {
+  "label": "observed",
+  "note": "n=60898",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.8892410259778646
+ },
+ "efficiency.member.high_podcast.base15.price11.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.145705926826863
+ },
+ "efficiency.member.high_podcast.base15.price11.stay_rate": {
+  "label": "observed",
+  "note": "n=60900",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.8613793103448276
+ },
+ "efficiency.member.high_podcast.base15.price12.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.10809548065995433
+ },
+ "efficiency.member.high_podcast.base15.price12.stay_rate": {
+  "label": "observed",
+  "note": "n=60432",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.823768864177919
+ },
+ "efficiency.member.high_podcast.base15.price13.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05740271082509807
+ },
+ "efficiency.member.high_podcast.base15.price13.stay_rate": {
+  "label": "observed",
+  "note": "n=60333",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7730760943430627
+ },
+ "efficiency.member.high_podcast.base15.price14.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0
+ },
+ "efficiency.member.high_podcast.base15.price14.stay_rate": {
+  "label": "observed",
+  "note": "n=60842",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7156733835179646
+ },
+ "efficiency.member.low_podcast.base12.price10.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.059307031382710096
+ },
+ "efficiency.member.low_podcast.base12.price10.stay_rate": {
+  "label": "observed",
+  "note": "n=3556",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.6839145106861643
+ },
+ "efficiency.member.low_podcast.base12.price11.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0
+ },
+ "efficiency.member.low_podcast.base12.price11.stay_rate": {
+  "label": "observed",
+  "note": "n=3503",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.6246074793034542
+ },
+ "efficiency.member.low_podcast.base12.price7.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.16657709369930063
+ },
+ "efficiency.member.low_podcast.base12.price7.stay_rate": {
+  "label": "observed",
+  "note": "n=3630",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7911845730027548
+ },
+ "efficiency.member.low_podcast.base12.price8.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.13186618959384
+ },
+ "efficiency.member.low_podcast.base12.price8.stay_rate": {
+  "label": "observed",
+  "note": "n=3437",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7564736688972942
+ },
+ "efficiency.member.low_podcast.base12.price9.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.08746682410211859
+ },
+ "efficiency.member.low_podcast.base12.price9.stay_rate": {
+  "label": "observed",
+  "note": "n=3553",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7120743034055728
+ },
+ "efficiency.member.low_podcast.base15.price10.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.19361773473912125
+ },
+ "efficiency.member.low_podcast.base15.price10.stay_rate": {
+  "label": "observed",
+  "note": "n=2848",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.776685393258427
+ },
+ "efficiency.member.low_podcast.base15.price11.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.14283285606045415
+ },
+ "efficiency.member.low_podcast.base15.price11.stay_rate": {
+  "label": "observed",
+  "note": "n=2915",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7259005145797599
+ },
+ "efficiency.member.low_podcast.base15.price12.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.10740853195688471
+ },
+ "efficiency.member.low_podcast.base15.price12.stay_rate": {
+  "label": "observed",
+  "note": "n=2856",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.6904761904761905
+ },
+ "efficiency.member.low_podcast.base15.price13.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05213983813397405
+ },
+ "efficiency.member.low_podcast.base15.price13.stay_rate": {
+  "label": "observed",
+  "note": "n=2988",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.6352074966532798
+ },
+ "efficiency.member.low_podcast.base15.price14.extra_stayers_vs_shallowest": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0
+ },
+ "efficiency.member.low_podcast.base15.price14.stay_rate": {
+  "label": "observed",
+  "note": "n=2823",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.5830676585193058
+ },
+ "efficiency.prospect.cold.base12.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.060374958649923205
+ },
+ "efficiency.prospect.cold.base12.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=389963; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.005031246554160267
+ },
+ "efficiency.prospect.cold.base12.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4024370296717103
+ },
+ "efficiency.prospect.cold.base12.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 1.6734638015649115
+ },
+ "efficiency.prospect.cold.base12.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 5.0312465541602664
+ },
+ "efficiency.prospect.cold.base12.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.13752142078205326
+ },
+ "efficiency.prospect.cold.base12.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=25676; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.012501947343823025
+ },
+ "efficiency.prospect.cold.base12.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.17006668398210673
+ },
+ "efficiency.prospect.cold.base12.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 2.4098321653072188
+ },
+ "efficiency.prospect.cold.base12.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 10.062493108320533
+ },
+ "efficiency.prospect.cold.base12.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.29583963398084606
+ },
+ "efficiency.prospect.cold.base12.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=25791; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.029583963398084605
+ },
+ "efficiency.prospect.cold.base12.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.09740388822249293
+ },
+ "efficiency.prospect.cold.base12.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.323745760539582
+ },
+ "efficiency.prospect.cold.base12.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 15.093739662480802
+ },
+ "efficiency.prospect.cold.base12.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.46488102080698934
+ },
+ "efficiency.prospect.cold.base12.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=26097; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05165344675633215
+ },
+ "efficiency.prospect.cold.base12.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.05704635955768912
+ },
+ "efficiency.prospect.cold.base12.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.241990092030104
+ },
+ "efficiency.prospect.cold.base12.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 20.124986216641066
+ },
+ "efficiency.prospect.cold.base12.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.7055660123689164
+ },
+ "efficiency.prospect.cold.base12.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=26033; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.08819575154611455
+ },
+ "efficiency.prospect.cold.base12.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.038922156915397826
+ },
+ "efficiency.prospect.cold.base12.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.202492218478766
+ },
+ "efficiency.prospect.cold.base12.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 25.15623277080133
+ },
+ "efficiency.prospect.cold.base12.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.904850313297749
+ },
+ "efficiency.prospect.cold.base12.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=25854; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.129264330471107
+ },
+ "efficiency.prospect.cold.base12.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 5
+ },
+ "efficiency.prospect.cold.base15.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.02423022788800816
+ },
+ "efficiency.prospect.cold.base15.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=1178693; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0016153485258672106
+ },
+ "efficiency.prospect.cold.base15.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.5930300876865646
+ },
+ "efficiency.prospect.cold.base15.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 2.457184105614745
+ },
+ "efficiency.prospect.cold.base15.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 1.6153485258672107
+ },
+ "efficiency.prospect.cold.base15.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.038134455286008416
+ },
+ "efficiency.prospect.cold.base15.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=78197; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0027238896632863154
+ },
+ "efficiency.prospect.cold.base15.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.3543822689380937
+ },
+ "efficiency.prospect.cold.base15.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.0978083528009956
+ },
+ "efficiency.prospect.cold.base15.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 3.2306970517344213
+ },
+ "efficiency.prospect.cold.base15.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.05925671986693584
+ },
+ "efficiency.prospect.cold.base15.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=78759; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.004558209220533526
+ },
+ "efficiency.prospect.cold.base15.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.19720004767099975
+ },
+ "efficiency.prospect.cold.base15.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.736920999181316
+ },
+ "efficiency.prospect.cold.base15.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 4.846045577601632
+ },
+ "efficiency.prospect.cold.base15.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.0982970467773227
+ },
+ "efficiency.prospect.cold.base15.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=78863; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.008191420564776892
+ },
+ "efficiency.prospect.cold.base15.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.09607694423387202
+ },
+ "efficiency.prospect.cold.base15.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.425155409505253
+ },
+ "efficiency.prospect.cold.base15.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 6.461394103468843
+ },
+ "efficiency.prospect.cold.base15.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.18494378569416342
+ },
+ "efficiency.prospect.cold.base15.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=78094; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.01681307142674213
+ },
+ "efficiency.prospect.cold.base15.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.049601256388642385
+ },
+ "efficiency.prospect.cold.base15.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.260949715695992
+ },
+ "efficiency.prospect.cold.base15.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 8.076742629336053
+ },
+ "efficiency.prospect.cold.base15.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.3256668567445986
+ },
+ "efficiency.prospect.cold.base15.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=78915; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.03256668567445986
+ },
+ "efficiency.prospect.cold.base15.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 5
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.7694532831935204
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=10371; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.06412110693279337
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.7660784880917945
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.274938169826876
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 64.12110693279337
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.9207048458149779
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=681; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.08370044052863436
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4788173963350983
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.837426625401939
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 128.24221386558673
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.3391557496360988
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=687; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1339155749636099
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.3977778403529925
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.981550333117017
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 192.3633207983801
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.4507845934379457
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=701; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.16119828815977175
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.29487272201330633
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.672734731552228
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 256.48442773117347
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.7396280400572246
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=699; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.21745350500715308
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.2650091991731055
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.802806231553914
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 320.60553466396686
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.6937062937062937
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=715; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.24195804195804196
+ },
+ "efficiency.prospect.lapsed_low_podcast.base12.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 4
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.6640316205533597
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=10120; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.04426877470355731
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.7400831053004966
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.8473836075801295
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 44.26877470355731
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.8374233128834356
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=652; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0598159509202454
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4944597038922758
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.9561633669926586
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 88.53754940711462
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.1638846737481032
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=659; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.08952959028831563
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4287747035573123
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.251868253528923
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 132.80632411067194
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.238938053097345
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=678; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.10324483775811209
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.3381928486074088
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.044056779354982
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 177.07509881422925
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.4398782343987824
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=657; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1308980213089802
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.23328941589811156
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.521365563065643
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 221.34387351778656
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.8975903614457832
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=664; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1897590361445783
+ },
+ "efficiency.prospect.lapsed_low_podcast.base15.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 5
+ },
+ "efficiency.prospect.warm_listener.base12.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.6421598438050125
+ },
+ "efficiency.prospect.warm_listener.base12.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=124972; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1368466536504177
+ },
+ "efficiency.prospect.warm_listener.base12.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.7624049556175534
+ },
+ "efficiency.prospect.warm_listener.base12.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.208841992471621
+ },
+ "efficiency.prospect.warm_listener.base12.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 136.8466536504177
+ },
+ "efficiency.prospect.warm_listener.base12.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.9744273421403467
+ },
+ "efficiency.prospect.warm_listener.base12.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=8251; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1794933947400315
+ },
+ "efficiency.prospect.warm_listener.base12.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.5468716695267869
+ },
+ "efficiency.prospect.warm_listener.base12.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.413760662263934
+ },
+ "efficiency.prospect.warm_listener.base12.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 273.6933073008354
+ },
+ "efficiency.prospect.warm_listener.base12.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.502354048964218
+ },
+ "efficiency.prospect.warm_listener.base12.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=8496; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.2502354048964218
+ },
+ "efficiency.prospect.warm_listener.base12.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4330885572913788
+ },
+ "efficiency.prospect.warm_listener.base12.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.2918317994543065
+ },
+ "efficiency.prospect.warm_listener.base12.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 410.53996095125314
+ },
+ "efficiency.prospect.warm_listener.base12.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.8438061041292637
+ },
+ "efficiency.prospect.warm_listener.base12.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=8355; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.31597845601436264
+ },
+ "efficiency.prospect.warm_listener.base12.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.3604534065754799
+ },
+ "efficiency.prospect.warm_listener.base12.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.254430937676606
+ },
+ "efficiency.prospect.warm_listener.base12.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 547.3866146016708
+ },
+ "efficiency.prospect.warm_listener.base12.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.0372114931700422
+ },
+ "efficiency.prospect.warm_listener.base12.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=8492; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3796514366462553
+ },
+ "efficiency.prospect.warm_listener.base12.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.30642234174647975
+ },
+ "efficiency.prospect.warm_listener.base12.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 7.208998070368024
+ },
+ "efficiency.prospect.warm_listener.base12.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 684.2332682520886
+ },
+ "efficiency.prospect.warm_listener.base12.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.1261642675698558
+ },
+ "efficiency.prospect.warm_listener.base12.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=8267; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.44659489536712227
+ },
+ "efficiency.prospect.warm_listener.base12.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 5
+ },
+ "efficiency.prospect.warm_listener.base15.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 0.8965558397271952
+ },
+ "efficiency.prospect.warm_listener.base15.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=879750; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05977038931514635
+ },
+ "efficiency.prospect.warm_listener.base15.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.6298485046705475
+ },
+ "efficiency.prospect.warm_listener.base15.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 2.701596542545242
+ },
+ "efficiency.prospect.warm_listener.base15.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 59.770389315146346
+ },
+ "efficiency.prospect.warm_listener.base15.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.3285503485472956
+ },
+ "efficiency.prospect.warm_listener.base15.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=58959; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.09489645346766397
+ },
+ "efficiency.prospect.warm_listener.base15.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4300909053777962
+ },
+ "efficiency.prospect.warm_listener.base15.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.509331608974958
+ },
+ "efficiency.prospect.warm_listener.base15.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 119.54077863029269
+ },
+ "efficiency.prospect.warm_listener.base15.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.8066298342541436
+ },
+ "efficiency.prospect.warm_listener.base15.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=58825; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1389715257118572
+ },
+ "efficiency.prospect.warm_listener.base15.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.3125201219575003
+ },
+ "efficiency.prospect.warm_listener.base15.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.3637640836006275
+ },
+ "efficiency.prospect.warm_listener.base15.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 179.31116794543905
+ },
+ "efficiency.prospect.warm_listener.base15.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.2950351717810173
+ },
+ "efficiency.prospect.warm_listener.base15.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=58854; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.19125293098175145
+ },
+ "efficiency.prospect.warm_listener.base15.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.2319626597716668
+ },
+ "efficiency.prospect.warm_listener.base15.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.208080116014701
+ },
+ "efficiency.prospect.warm_listener.base15.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 239.08155726058538
+ },
+ "efficiency.prospect.warm_listener.base15.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.8343970668115155
+ },
+ "efficiency.prospect.warm_listener.base15.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=58912; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.25767246061922866
+ },
+ "efficiency.prospect.warm_listener.base15.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.18415385081239763
+ },
+ "efficiency.prospect.warm_listener.base15.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.128606484174577
+ },
+ "efficiency.prospect.warm_listener.base15.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 298.85194657573174
+ },
+ "efficiency.prospect.warm_listener.base15.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.245676864831679
+ },
+ "efficiency.prospect.warm_listener.base15.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=58638; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3245676864831679
+ },
+ "efficiency.prospect.warm_listener.base15.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 5
+ },
+ "efficiency.prospect.win_back.base12.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.5336412465294895
+ },
+ "efficiency.prospect.win_back.base12.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=77078; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.21113677054412414
+ },
+ "efficiency.prospect.win_back.base12.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.7524585310453564
+ },
+ "efficiency.prospect.win_back.base12.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.039727178734758
+ },
+ "efficiency.prospect.win_back.base12.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 211.13677054412415
+ },
+ "efficiency.prospect.win_back.base12.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.08655478031303
+ },
+ "efficiency.prospect.win_back.base12.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=5303; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.2805958891193664
+ },
+ "efficiency.prospect.win_back.base12.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.588400973294632
+ },
+ "efficiency.prospect.win_back.base12.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.8590979818609865
+ },
+ "efficiency.prospect.win_back.base12.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 422.2735410882483
+ },
+ "efficiency.prospect.win_back.base12.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.5883144339803956
+ },
+ "efficiency.prospect.win_back.base12.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=5203; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3588314433980396
+ },
+ "efficiency.prospect.win_back.base12.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4872023510093822
+ },
+ "efficiency.prospect.win_back.base12.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.850260830768529
+ },
+ "efficiency.prospect.win_back.base12.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 633.4103116323723
+ },
+ "efficiency.prospect.win_back.base12.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.900290979631426
+ },
+ "efficiency.prospect.win_back.base12.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=5155; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.4333656644034918
+ },
+ "efficiency.prospect.win_back.base12.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.4226016479577807
+ },
+ "efficiency.prospect.win_back.base12.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.927626284093587
+ },
+ "efficiency.prospect.win_back.base12.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 844.5470821764966
+ },
+ "efficiency.prospect.win_back.base12.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.9968944099378882
+ },
+ "efficiency.prospect.win_back.base12.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=5152; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.49961180124223603
+ },
+ "efficiency.prospect.win_back.base12.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.37990007156728217
+ },
+ "efficiency.prospect.win_back.base12.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 8.063216540981283
+ },
+ "efficiency.prospect.win_back.base12.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 1055.6838527206207
+ },
+ "efficiency.prospect.win_back.base12.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.8903846153846153
+ },
+ "efficiency.prospect.win_back.base12.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=5200; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.5557692307692308
+ },
+ "efficiency.prospect.win_back.base12.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 4
+ },
+ "efficiency.prospect.win_back.base15.depth0.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 1.8348641049671977
+ },
+ "efficiency.prospect.win_back.base15.depth0.signup_rate": {
+  "label": "observed",
+  "note": "n=106700; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.12232427366447984
+ },
+ "efficiency.prospect.win_back.base15.depth1.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.7348778337421545
+ },
+ "efficiency.prospect.win_back.base15.depth1.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 3.7718460667202254
+ },
+ "efficiency.prospect.win_back.base15.depth1.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 122.32427366447985
+ },
+ "efficiency.prospect.win_back.base15.depth1.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.3303735024665255
+ },
+ "efficiency.prospect.win_back.base15.depth1.signup_rate": {
+  "label": "observed",
+  "note": "n=7095; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1664552501761804
+ },
+ "efficiency.prospect.win_back.base15.depth2.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.5405698312560907
+ },
+ "efficiency.prospect.win_back.base15.depth2.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 4.353218695820602
+ },
+ "efficiency.prospect.win_back.base15.depth2.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 244.6485473289597
+ },
+ "efficiency.prospect.win_back.base15.depth2.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 2.941739375175908
+ },
+ "efficiency.prospect.win_back.base15.depth2.signup_rate": {
+  "label": "observed",
+  "note": "n=7106; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.2262876442443006
+ },
+ "efficiency.prospect.win_back.base15.depth3.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.42457154775235884
+ },
+ "efficiency.prospect.win_back.base15.depth3.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 5.213506541572472
+ },
+ "efficiency.prospect.win_back.base15.depth3.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 366.97282099343954
+ },
+ "efficiency.prospect.win_back.base15.depth3.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.4573472757292243
+ },
+ "efficiency.prospect.win_back.base15.depth3.signup_rate": {
+  "label": "observed",
+  "note": "n=7268; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.28811227297743536
+ },
+ "efficiency.prospect.win_back.base15.depth4.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.34273786309436877
+ },
+ "efficiency.prospect.win_back.base15.depth4.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 6.0858518624423885
+ },
+ "efficiency.prospect.win_back.base15.depth4.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 489.2970946579194
+ },
+ "efficiency.prospect.win_back.base15.depth4.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 3.92593627724986
+ },
+ "efficiency.prospect.win_back.base15.depth4.signup_rate": {
+  "label": "observed",
+  "note": "n=7156; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3569032979318055
+ },
+ "efficiency.prospect.win_back.base15.depth5.already_sold_share": {
+  "label": "estimate",
+  "note": "list-price rate / offered rate; ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share of joiners",
+  "value": 0.2882144344773211
+ },
+ "efficiency.prospect.win_back.base15.depth5.discount_per_incremental_joiner": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$",
+  "value": 7.024587519316152
+ },
+ "efficiency.prospect.win_back.base15.depth5.discount_to_already_sold_per_1000": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per 1,000 offered",
+  "value": 611.6213683223992
+ },
+ "efficiency.prospect.win_back.base15.depth5.revenue_per_prospect": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "$ per prospect-quarter",
+  "value": 4.244210526315789
+ },
+ "efficiency.prospect.win_back.base15.depth5.signup_rate": {
+  "label": "observed",
+  "note": "n=7125; randomized within era",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.4244210526315789
+ },
+ "efficiency.prospect.win_back.base15.revenue_best_depth": {
+  "label": "estimate",
+  "note": "Depth with highest first-quarter revenue per prospect among $0-$5",
+  "source": "lorehaven.models",
+  "unit": "$ off",
+  "value": 5
+ },
+ "elasticity.acquisition.price10": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -3.191318376696053
+ },
+ "elasticity.acquisition.price11": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -3.6856005242762153
+ },
+ "elasticity.acquisition.price12": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -4.259368672952204
+ },
+ "elasticity.acquisition.price13": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -4.610329509898591
+ },
+ "elasticity.acquisition.price14": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -5.066441698783473
+ },
+ "elasticity.acquisition.price15": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -5.478365269084867
+ },
+ "elasticity.acquisition.price7": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -1.9151842904549867
+ },
+ "elasticity.acquisition.price8": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -2.3891780470199624
+ },
+ "elasticity.acquisition.price9": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -2.8762753019565457
+ },
+ "elasticity.retention.price10": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.3038885302789829
+ },
+ "elasticity.retention.price11": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.42467016685350306
+ },
+ "elasticity.retention.price12": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.6241743402207548
+ },
+ "elasticity.retention.price13": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.837904821670477
+ },
+ "elasticity.retention.price14": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -1.1036229149557462
+ },
+ "elasticity.retention.price15": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -1.2697460306315458
+ },
+ "elasticity.retention.price7": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.08904593039804289
+ },
+ "elasticity.retention.price8": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.13245719250707313
+ },
+ "elasticity.retention.price9": {
+  "label": "estimate",
+  "note": "E = beta * p * (1 - P), averaged over cells at that price",
+  "source": "lorehaven.models",
+  "unit": "% change per 1% price",
+  "value": -0.19308147963167352
+ },
+ "event_study.treated_x_q0": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": -0.34927445458550926
+ },
+ "event_study.treated_x_q1": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": 0.010307030690477281
+ },
+ "event_study.treated_x_q10": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": 1.5708540892878478
+ },
+ "event_study.treated_x_q11": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": 0.4344169902726119
+ },
+ "event_study.treated_x_q2": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": -0.23463496896326458
+ },
+ "event_study.treated_x_q3": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": -0.1762689833021282
+ },
+ "event_study.treated_x_q4": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": -0.21650310398972716
+ },
+ "event_study.treated_x_q5": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": -0.6218180438800569
+ },
+ "event_study.treated_x_q6": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": 0.06854834853131116
+ },
+ "event_study.treated_x_q7": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": -0.2734943492173154
+ },
+ "event_study.treated_x_q9": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds vs q8",
+  "value": 3.116149946953918
+ },
+ "fit_check.max_abs_error_2019": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_model_fit_check",
+  "unit": "share (rate points)",
+  "value": 0.021281082894204828
+ },
+ "fit_check.mean_abs_error_2019": {
+  "label": "estimate",
+  "note": "Row-weighted mean |predicted - observed| over 2019 $12-era cells (q9-11) by segment, status, price",
+  "source": "pipeline.record_model_fit_check",
+  "unit": "share (rate points)",
+  "value": 0.002423971433065468
+ },
+ "member_value.high_podcast.price10.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 72.19509844967122
+ },
+ "member_value.high_podcast.price10.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 32.51268036025238
+ },
+ "member_value.high_podcast.price10.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 109.32378417069279
+ },
+ "member_value.high_podcast.price10.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 113.14682024111688
+ },
+ "member_value.high_podcast.price11.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 69.85454689322437
+ },
+ "member_value.high_podcast.price11.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 33.789365337454456
+ },
+ "member_value.high_podcast.price11.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 94.6794910717609
+ },
+ "member_value.high_podcast.price11.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 95.92711207099634
+ },
+ "member_value.high_podcast.price12.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 65.3875338682763
+ },
+ "member_value.high_podcast.price12.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 34.34445139847175
+ },
+ "member_value.high_podcast.price12.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 80.34175625138185
+ },
+ "member_value.high_podcast.price12.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 80.6559224072817
+ },
+ "member_value.high_podcast.price7.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 65.51872481642918
+ },
+ "member_value.high_podcast.price7.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 25.381461928235275
+ },
+ "member_value.high_podcast.price7.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 137.59638416339564
+ },
+ "member_value.high_podcast.price7.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 172.99015962441737
+ },
+ "member_value.high_podcast.price8.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 69.91623538123672
+ },
+ "member_value.high_podcast.price8.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 28.203550417220306
+ },
+ "member_value.high_podcast.price8.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 132.6976144792315
+ },
+ "member_value.high_podcast.price8.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 152.37709081533023
+ },
+ "member_value.high_podcast.price9.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 72.2065748795155
+ },
+ "member_value.high_podcast.price9.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 30.61484693129499
+ },
+ "member_value.high_podcast.price9.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 122.6562180129359
+ },
+ "member_value.high_podcast.price9.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 132.12303203695532
+ },
+ "member_value.low_podcast.price10.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 20.555563586051598
+ },
+ "member_value.low_podcast.price10.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.442428370283967
+ },
+ "member_value.low_podcast.price10.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 20.74009502250061
+ },
+ "member_value.low_podcast.price10.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 20.740098049644587
+ },
+ "member_value.low_podcast.price11.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 18.589201987263298
+ },
+ "member_value.low_podcast.price11.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 15.737290025246457
+ },
+ "member_value.low_podcast.price11.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 18.66096809093368
+ },
+ "member_value.low_podcast.price11.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 18.66096825723212
+ },
+ "member_value.low_podcast.price12.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.626777792986775
+ },
+ "member_value.low_podcast.price12.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 14.751835065011582
+ },
+ "member_value.low_podcast.price12.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.651502182291058
+ },
+ "member_value.low_podcast.price12.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.65150218850968
+ },
+ "member_value.low_podcast.price7.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 24.931732073373492
+ },
+ "member_value.low_podcast.price7.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.131595919173343
+ },
+ "member_value.low_podcast.price7.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 26.52648215217163
+ },
+ "member_value.low_podcast.price7.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 26.528750417370972
+ },
+ "member_value.low_podcast.price8.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 23.933659570952074
+ },
+ "member_value.low_podcast.price8.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.694565198812846
+ },
+ "member_value.low_podcast.price8.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 24.79895543848892
+ },
+ "member_value.low_podcast.price8.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 24.799300132180772
+ },
+ "member_value.low_podcast.price9.h12": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 22.39795952786709
+ },
+ "member_value.low_podcast.price9.h4": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 16.783767338736563
+ },
+ "member_value.low_podcast.price9.h40": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 22.820329049715358
+ },
+ "member_value.low_podcast.price9.steady_state": {
+  "label": "estimate",
+  "note": "Member charged this price every quarter; steady state assumes members never age out",
+  "source": "lorehaven.simulate.member_value",
+  "unit": "$ per current member",
+  "value": 22.820367333980254
+ },
+ "ope.high_podcast_only_5_off.first_quarter_revenue": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 1.4623765872541747
+ },
+ "ope.high_podcast_only_5_off.signup_rate": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.15627687528589765
+ },
+ "ope.logging_propensity.depth0": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7497972077976942
+ },
+ "ope.logging_propensity.depth1": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.04988863637529285
+ },
+ "ope.logging_propensity.depth2": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.050080833444233565
+ },
+ "ope.logging_propensity.depth3": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.050200956612321504
+ },
+ "ope.logging_propensity.depth4": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.04999148340235242
+ },
+ "ope.logging_propensity.depth5": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05004088236810544
+ },
+ "ope.no_offers.first_quarter_revenue": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.5226873681212912
+ },
+ "ope.no_offers.signup_rate": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.0374381625886947
+ },
+ "ope.offer_all_3_off.first_quarter_revenue": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 1.2142054406332168
+ },
+ "ope.offer_all_3_off.signup_rate": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.10969989944668802
+ },
+ "ope.offer_all_5_off.first_quarter_revenue": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 1.7164873933260694
+ },
+ "ope.offer_all_5_off.signup_rate": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.1879888659927286
+ },
+ "ope.status_quo_random_25pct.first_quarter_revenue": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.6987605178631249
+ },
+ "ope.status_quo_random_25pct.signup_rate": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.057238824563757194
+ },
+ "ope.targeted_depth.first_quarter_revenue": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 1.7054679915124633
+ },
+ "ope.targeted_depth.signup_rate": {
+  "label": "estimate",
+  "note": "Inverse-propensity estimate, treated prospects, first quarter only (not LTV)",
+  "source": "lorehaven.models",
+  "unit": "per prospect-quarter",
+  "value": 0.18344842645930368
+ },
+ "rates.retention.base12.price10": {
+  "label": "observed",
+  "note": "n=53974",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.904101975025012
+ },
+ "rates.retention.base12.price11": {
+  "label": "observed",
+  "note": "n=53881",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.8785657281787643
+ },
+ "rates.retention.base12.price7": {
+  "label": "observed",
+  "note": "n=54341",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.9494488507756574
+ },
+ "rates.retention.base12.price8": {
+  "label": "observed",
+  "note": "n=53733",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.9374499841810433
+ },
+ "rates.retention.base12.price9": {
+  "label": "observed",
+  "note": "n=53937",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.9221128353449395
+ },
+ "rates.retention.base15.price10": {
+  "label": "observed",
+  "note": "n=63746",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.8842123427352304
+ },
+ "rates.retention.base15.price11": {
+  "label": "observed",
+  "note": "n=63815",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.8551907858653921
+ },
+ "rates.retention.base15.price12": {
+  "label": "observed",
+  "note": "n=63288",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.817753760586525
+ },
+ "rates.retention.base15.price13": {
+  "label": "observed",
+  "note": "n=63321",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.7665703321173071
+ },
+ "rates.retention.base15.price14": {
+  "label": "observed",
+  "note": "n=63665",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.7097934500903165
+ },
+ "rates.signup.base12.price10": {
+  "label": "observed",
+  "note": "n=40177",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.12066605271672848
+ },
+ "rates.signup.base12.price11": {
+  "label": "observed",
+  "note": "n=39911",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.0838615920422941
+ },
+ "rates.signup.base12.price12": {
+  "label": "observed",
+  "note": "n=602384",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.05976752370580892
+ },
+ "rates.signup.base12.price7": {
+  "label": "observed",
+  "note": "n=40036",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.25219802178039763
+ },
+ "rates.signup.base12.price8": {
+  "label": "observed",
+  "note": "n=40376",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.20423023578363383
+ },
+ "rates.signup.base12.price9": {
+  "label": "observed",
+  "note": "n=40308",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.1571648308028183
+ },
+ "rates.signup.base15.price10": {
+  "label": "observed",
+  "note": "n=127400",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.17328100470957614
+ },
+ "rates.signup.base15.price11": {
+  "label": "observed",
+  "note": "n=127002",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.13487976567298152
+ },
+ "rates.signup.base15.price12": {
+  "label": "observed",
+  "note": "n=127930",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.10051590713671539
+ },
+ "rates.signup.base15.price13": {
+  "label": "observed",
+  "note": "n=127379",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.07444712236710918
+ },
+ "rates.signup.base15.price14": {
+  "label": "observed",
+  "note": "n=126934",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.05269667701325098
+ },
+ "rates.signup.base15.price15": {
+  "label": "observed",
+  "note": "n=1907008",
+  "source": "pipeline.record_price_rates",
+  "unit": "share",
+  "value": 0.03464484679665738
+ },
+ "retention.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 187333
+ },
+ "retention.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 741460
+ },
+ "retention.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.2786541921597914
+ },
+ "retention.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.002816985176038562
+ },
+ "robustness.acquisition_quarter_fe.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 357686
+ },
+ "robustness.acquisition_quarter_fe.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 3704531
+ },
+ "robustness.acquisition_quarter_fe.price.coef": {
+  "label": "estimate",
+  "note": "Quarter FE only, treated regions",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.3792782937497241
+ },
+ "robustness.acquisition_quarter_fe.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0011736996841932486
+ },
+ "robustness.retention_quarter_fe.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 140600
+ },
+ "robustness.retention_quarter_fe.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 587701
+ },
+ "robustness.retention_quarter_fe.price.coef": {
+  "label": "estimate",
+  "note": "Quarter FE only, treated regions",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.2784580093903016
+ },
+ "robustness.retention_quarter_fe.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0028154432380409025
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.04304045150355456
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 7.0386469759572945
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 25372.051756257966
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1601.5967237772725
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 35995.20423211068
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 471.46914568980316
+ },
+ "scenario.high_podcast_only_5_off_members_5_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.992270604808541
+ },
+ "scenario.no_discounts_base12.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.13933693408808712
+ },
+ "scenario.no_discounts_base12.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 12.0
+ },
+ "scenario.no_discounts_base12.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.0
+ },
+ "scenario.no_discounts_base12.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 838.7521733090094
+ },
+ "scenario.no_discounts_base12.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 30590.670783911773
+ },
+ "scenario.no_discounts_base12.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 281.02562246201296
+ },
+ "scenario.no_discounts_base12.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.0
+ },
+ "scenario.prospects_5_off_members_0_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.21138596582357874
+ },
+ "scenario.prospects_5_off_members_0_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 10.575673709467315
+ },
+ "scenario.prospects_5_off_members_0_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 8829.936337466286
+ },
+ "scenario.prospects_5_off_members_0_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_members_0_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 65562.59348796277
+ },
+ "scenario.prospects_5_off_members_0_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 577.6284094432463
+ },
+ "scenario.prospects_5_off_members_0_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.2848652581065368
+ },
+ "scenario.prospects_5_off_members_1_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.1802324221662423
+ },
+ "scenario.prospects_5_off_members_1_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 9.971363318848312
+ },
+ "scenario.prospects_5_off_members_1_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 13110.916730707499
+ },
+ "scenario.prospects_5_off_members_1_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_members_1_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 64444.124164624576
+ },
+ "scenario.prospects_5_off_members_1_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 606.4785167814632
+ },
+ "scenario.prospects_5_off_members_1_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1.0
+ },
+ "scenario.prospects_5_off_members_2_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.15335805623343574
+ },
+ "scenario.prospects_5_off_members_2_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 9.299849768938085
+ },
+ "scenario.prospects_5_off_members_2_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 18128.771018417618
+ },
+ "scenario.prospects_5_off_members_2_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_members_2_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 62439.061733412345
+ },
+ "scenario.prospects_5_off_members_2_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 634.6119704792827
+ },
+ "scenario.prospects_5_off_members_2_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1.0
+ },
+ "scenario.prospects_5_off_members_3_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.13024766032619797
+ },
+ "scenario.prospects_5_off_members_3_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 8.573875486146877
+ },
+ "scenario.prospects_5_off_members_3_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 23815.203295589352
+ },
+ "scenario.prospects_5_off_members_3_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_members_3_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 59597.53853312857
+ },
+ "scenario.prospects_5_off_members_3_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 661.8543627091863
+ },
+ "scenario.prospects_5_off_members_3_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1.0
+ },
+ "scenario.prospects_5_off_members_4_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.11039921160751495
+ },
+ "scenario.prospects_5_off_members_4_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 7.804267691839134
+ },
+ "scenario.prospects_5_off_members_4_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 30096.770974445713
+ },
+ "scenario.prospects_5_off_members_4_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_members_4_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 55981.46881003139
+ },
+ "scenario.prospects_5_off_members_4_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 688.0729388688598
+ },
+ "scenario.prospects_5_off_members_4_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1.0
+ },
+ "scenario.prospects_5_off_members_5_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.0933606472908233
+ },
+ "scenario.prospects_5_off_members_5_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 7.0
+ },
+ "scenario.prospects_5_off_members_5_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 36898.45260609924
+ },
+ "scenario.prospects_5_off_members_5_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_members_5_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 51657.833648538945
+ },
+ "scenario.prospects_5_off_members_5_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 713.1422071275317
+ },
+ "scenario.prospects_5_off_members_5_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1.0
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.20081665658897602
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 11.08481572837771
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 4608.051315413053
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 55813.24032996866
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 393.92763147753897
+ },
+ "scenario.prospects_5_off_no_winback_members_0_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.18303685432445807
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.17024821230427295
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 10.380980001786783
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 8719.437256252397
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 55908.082595574095
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 430.66783192582994
+ },
+ "scenario.prospects_5_off_no_winback_members_1_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.9345237846900998
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.1443018787483514
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 9.623630112937585
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 13606.53675083924
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 55102.64943225531
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 467.78655518729886
+ },
+ "scenario.prospects_5_off_no_winback_members_2_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.9467472893101101
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.122338207743006
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 8.825176913621071
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 19212.57181738806
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 53405.91920902482
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 504.7875525860127
+ },
+ "scenario.prospects_5_off_no_winback_members_3_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.9567453713630727
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.10372840877954682
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 7.995554641894168
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 25469.940156619457
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 50855.05732667893
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 541.340786809344
+ },
+ "scenario.prospects_5_off_no_winback_members_4_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.9648868930094063
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.08791099695448525
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 7.1424873025980595
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 32306.13944308788
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 2088.06595739056
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 47502.95164264481
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 577.2081813324754
+ },
+ "scenario.prospects_5_off_no_winback_members_5_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.9715025394803881
+ },
+ "scenario.status_quo_2019.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.08873366202472625
+ },
+ "scenario.status_quo_2019.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 9.208658740835933
+ },
+ "scenario.status_quo_2019.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 10255.353353490089
+ },
+ "scenario.status_quo_2019.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 1015.0568763476862
+ },
+ "scenario.status_quo_2019.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 33832.49862012905
+ },
+ "scenario.status_quo_2019.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 404.8576352370777
+ },
+ "scenario.status_quo_2019.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.9015331560777707
+ },
+ "scenario.status_quo_base15.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.14206406260193216
+ },
+ "scenario.status_quo_base15.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 12.256415498295649
+ },
+ "scenario.status_quo_base15.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 4454.4617827824195
+ },
+ "scenario.status_quo_base15.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 523.4273841301407
+ },
+ "scenario.status_quo_base15.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 19899.417859061574
+ },
+ "scenario.status_quo_base15.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 187.8952252697075
+ },
+ "scenario.status_quo_base15.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, 2019-calibrated, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "",
+  "value": 0.8743647247976538
+ },
+ "segment.high_podcast.join_lapsed.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 98222
+ },
+ "segment.high_podcast.join_lapsed.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 391190
+ },
+ "segment.high_podcast.join_lapsed.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter; own FE per segment and status",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.3850894836069718
+ },
+ "segment.high_podcast.join_lapsed.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0034286337263668334
+ },
+ "segment.high_podcast.join_never.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 279165
+ },
+ "segment.high_podcast.join_never.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 1963326
+ },
+ "segment.high_podcast.join_never.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter; own FE per segment and status",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.43252236618950274
+ },
+ "segment.high_podcast.join_never.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0016341923401451668
+ },
+ "segment.high_podcast.retention.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 175859
+ },
+ "segment.high_podcast.retention.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 703856
+ },
+ "segment.high_podcast.retention.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter; own FE per segment and status",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.2910693103151931
+ },
+ "segment.high_podcast.retention.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0030008549204177076
+ },
+ "segment.low_podcast.join_lapsed.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 10376
+ },
+ "segment.low_podcast.join_lapsed.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 33068
+ },
+ "segment.low_podcast.join_lapsed.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter; own FE per segment and status",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.3364303783253896
+ },
+ "segment.low_podcast.join_lapsed.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.012377534247619287
+ },
+ "segment.low_podcast.join_never.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 274562
+ },
+ "segment.low_podcast.join_never.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 2992024
+ },
+ "segment.low_podcast.join_never.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter; own FE per segment and status",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.6471666062183667
+ },
+ "segment.low_podcast.join_never.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.0038571906859582563
+ },
+ "segment.low_podcast.retention.n_customers": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "customers",
+  "value": 20163
+ },
+ "segment.low_podcast.retention.n_rows": {
+  "label": "observed",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "rows",
+  "value": 37604
+ },
+ "segment.low_podcast.retention.price.coef": {
+  "label": "estimate",
+  "note": "Region x quarter FE; identification: randomized offer/depth within region x quarter; own FE per segment and status",
+  "source": "lorehaven.models",
+  "unit": "log-odds per unit",
+  "value": -0.2202988562698429
+ },
+ "segment.low_podcast.retention.price.se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "log-odds",
+  "value": 0.008950745048859694
+ },
+ "simulator.high_podcast.join_lapsed.price_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 0.004454007986891193
+ },
+ "simulator.high_podcast.join_lapsed_intercept": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 2.576743643673896
+ },
+ "simulator.high_podcast.join_lapsed_price_slope": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": -0.32372391562641273
+ },
+ "simulator.high_podcast.join_never.price_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 0.0036758986107080604
+ },
+ "simulator.high_podcast.join_never_intercept": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 2.183171771366814
+ },
+ "simulator.high_podcast.join_never_price_slope": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": -0.3349033599932553
+ },
+ "simulator.high_podcast.retention.price_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 0.005864571626315311
+ },
+ "simulator.high_podcast.share_of_prospects": {
+  "label": "observed",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "share",
+  "value": 0.4865636340253742
+ },
+ "simulator.high_podcast.stay_intercept": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 5.030179131554387
+ },
+ "simulator.high_podcast.stay_price_slope": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": -0.2604077955019156
+ },
+ "simulator.low_podcast.join_lapsed.price_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 0.015551346208968348
+ },
+ "simulator.low_podcast.join_lapsed_intercept": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 1.2436916134262437
+ },
+ "simulator.low_podcast.join_lapsed_price_slope": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": -0.325965049437003
+ },
+ "simulator.low_podcast.join_never.price_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 0.004987333040321128
+ },
+ "simulator.low_podcast.join_never_intercept": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 2.955415256538049
+ },
+ "simulator.low_podcast.join_never_price_slope": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": -0.6754020927128963
+ },
+ "simulator.low_podcast.retention.price_se_clustered": {
+  "label": "estimate",
+  "note": "",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 0.012003589863842664
+ },
+ "simulator.low_podcast.share_of_prospects": {
+  "label": "observed",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "share",
+  "value": 0.5134363659746257
+ },
+ "simulator.low_podcast.stay_intercept": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": 2.738934103647245
+ },
+ "simulator.low_podcast.stay_price_slope": {
+  "label": "estimate",
+  "note": "Average-quarter logit per segment and status, fit on treated regions in the $12 regime (q9-q11), no quarter FE (price randomized independently of quarter). ASSUMPTION: 2019 conditions persist.",
+  "source": "pipeline.record_simulator_parameters",
+  "unit": "log-odds",
+  "value": -0.20094502662886646
+ },
+ "uplift.cold.all_uplifts_non_negative": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "bool",
+  "value": true
+ },
+ "uplift.cold.already_sold": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.002464530145551351
+ },
+ "uplift.cold.incremental_share_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.9563437946378305
+ },
+ "uplift.cold.out_of_reach_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.9435468537609777
+ },
+ "uplift.cold.p0_list": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.002464530145551351
+ },
+ "uplift.cold.persuadable_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.053988616093470956
+ },
+ "uplift.cold.share_of_prospects": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.5644263740808215
+ },
+ "uplift.cold.uplift_1": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.0026942984630733526
+ },
+ "uplift.cold.uplift_3": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.016541605543452527
+ },
+ "uplift.cold.uplift_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.053988616093470956
+ },
+ "uplift.lapsed_low_podcast.all_uplifts_non_negative": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "bool",
+  "value": true
+ },
+ "uplift.lapsed_low_podcast.already_sold": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05431652920794495
+ },
+ "uplift.lapsed_low_podcast.incremental_share_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7514470589496044
+ },
+ "uplift.lapsed_low_podcast.out_of_reach_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7814689740608142
+ },
+ "uplift.lapsed_low_podcast.p0_list": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05431652920794495
+ },
+ "uplift.lapsed_low_podcast.persuadable_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.16421449673124092
+ },
+ "uplift.lapsed_low_podcast.share_of_prospects": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.007365034872160605
+ },
+ "uplift.lapsed_low_podcast.uplift_1": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.017333461994219562
+ },
+ "uplift.lapsed_low_podcast.uplift_3": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.07879307222034129
+ },
+ "uplift.lapsed_low_podcast.uplift_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.16421449673124092
+ },
+ "uplift.warm_listener.all_uplifts_non_negative": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "bool",
+  "value": true
+ },
+ "uplift.warm_listener.already_sold": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.06935749391373933
+ },
+ "uplift.warm_listener.incremental_share_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.7956836618888989
+ },
+ "uplift.warm_listener.out_of_reach_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.6605386796036605
+ },
+ "uplift.warm_listener.p0_list": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.06935749391373933
+ },
+ "uplift.warm_listener.persuadable_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.2701038264826002
+ },
+ "uplift.warm_listener.share_of_prospects": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3619273262931259
+ },
+ "uplift.warm_listener.uplift_1": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.03630233867465662
+ },
+ "uplift.warm_listener.uplift_3": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.13737355781407304
+ },
+ "uplift.warm_listener.uplift_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.2701038264826002
+ },
+ "uplift.win_back.all_uplifts_non_negative": {
+  "label": "estimate",
+  "note": "",
+  "source": "lorehaven.models",
+  "unit": "bool",
+  "value": true
+ },
+ "uplift.win_back.already_sold": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.15957296303148363
+ },
+ "uplift.win_back.incremental_share_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.6682718592412608
+ },
+ "uplift.win_back.out_of_reach_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.5189646477790419
+ },
+ "uplift.win_back.p0_list": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.15957296303148363
+ },
+ "uplift.win_back.persuadable_at_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3214623891894744
+ },
+ "uplift.win_back.share_of_prospects": {
+  "label": "observed",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.06628126475389193
+ },
+ "uplift.win_back.uplift_1": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.05404786267606311
+ },
+ "uplift.win_back.uplift_3": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.1888547624668304
+ },
+ "uplift.win_back.uplift_5": {
+  "label": "estimate",
+  "note": "Treated prospects, LPM with region x quarter FE; decomposition ASSUMES no one is deterred by a discount",
+  "source": "lorehaven.models",
+  "unit": "share",
+  "value": 0.3214623891894744
+ },
+ "verification.n_claims": {
+  "label": "observed",
+  "note": "see findings_verification.csv",
+  "source": "lorehaven.verify_findings",
+  "unit": "claims",
+  "value": 44
+ },
+ "verification.n_match": {
+  "label": "observed",
+  "note": "see findings_verification.csv",
+  "source": "lorehaven.verify_findings",
+  "unit": "claims",
+  "value": 41
+ },
+ "verification.n_mismatch": {
+  "label": "observed",
+  "note": "see findings_verification.csv",
+  "source": "lorehaven.verify_findings",
+  "unit": "claims",
+  "value": 3
+ }
+}

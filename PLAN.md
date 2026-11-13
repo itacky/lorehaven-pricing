@@ -58,7 +58,7 @@ simulator that a non-technical pricing lead can run.
 | 2 | Fixed effects | **Region × quarter** is the main specification; quarter-only reported as a robustness check. |
 | 3 | Backcast | **Both**: in-sample (fit 2017–2019) and out-of-sample (fit 2017–2018, predict 2019); both errors go to `metrics.json`. |
 | 4 | Git | Commits made from this session, with deletion permission granted for the repo folder. Author: a GitHub no-reply address (no personal email in history). |
-| 5 | Raw CSVs | Not copied by Claude, to avoid ~430 MB of OneDrive sync. README documents where to place them; Iman places them before running the tool and tests locally. |
+| 5 | Raw CSVs | Copied into `data/raw/` (gitignored, md5-verified identical) so the repo runs end to end; Iman's cloud copy remains the source of record. Code reads `LOREHAVEN_DATA_DIR` (default `data/raw/`). The tool runtime uses only exported parameters in `outputs/results/`. |
 | 6 | Session log | Export the transcript at the end to `logs/session_transcript.md`, with personal details removed. |
 
 ## 5. Plan mapped to deliverables

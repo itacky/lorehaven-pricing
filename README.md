@@ -1,6 +1,6 @@
 # Lorehaven pricing analysis & simulator
 
-Take-home for Audible Economics & Data Science. Status: **Phase 0 — scaffold** (see `PLAN.md`).
+Take-home for Audible Economics & Data Science. Status: **Phase 1 — analysis complete** (see `PLAN.md`).
 The tool, usage instructions and assumptions are completed in Phase 3.
 
 ## Data (not committed)
@@ -19,6 +19,13 @@ python -m venv .venv
 .venv\Scripts\activate          # Windows   (macOS/Linux: source .venv/bin/activate)
 pip install -r requirements.txt
 ```
+
+## Reproduce the analysis
+```
+pip install -e .
+python -m lorehaven.pipeline        # ~1 min: models, scenarios, metrics.json, then FINDINGS.md verification
+```
+Set `LOREHAVEN_DATA_DIR` if the CSVs live outside `data/raw/`.
 
 ## Repository layout
 | Path | Contents |
