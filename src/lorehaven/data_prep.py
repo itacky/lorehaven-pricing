@@ -33,6 +33,10 @@ PROPENSITY_DTYPES = {
 SCORE_COLUMNS = [c for c in PROPENSITY_DTYPES if c.endswith("_score")]
 
 
+# Inputs:  aggregate.csv, customer_panel.csv, customer_propensities.csv in data/raw (or LOREHAVEN_DATA_DIR)
+# Outputs: one customer x quarter analysis table (cached at data/interim/analysis_table.parquet)
+
+
 def data_dir() -> Path:
     """Return the folder holding the raw CSVs (LOREHAVEN_DATA_DIR or data/raw), or fail with a clear message."""
     path = Path(os.environ.get("LOREHAVEN_DATA_DIR", REPO_ROOT / "data" / "raw"))

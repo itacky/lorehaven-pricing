@@ -18,6 +18,10 @@ from scipy import stats
 CLUSTER_COLUMN = "customer_id"
 
 
+# Inputs:  the analysis table from data_prep.build_analysis_table()
+# Outputs: fitted models and result tables returned in memory (pipeline.py records them); no files written
+
+
 # ---------------------------------------------------------------- generic estimators
 def _fixed_effect_dummies(frame: pd.DataFrame, fixed_effect_columns: list) -> pd.DataFrame:
     """First FE column gets a full set of dummies (no constant); later FE columns drop one level."""

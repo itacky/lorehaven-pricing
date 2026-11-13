@@ -24,6 +24,10 @@ RANDOM_DEPTHS = (1, 2, 3, 4, 5)         # today's engine: depth drawn uniformly 
 METRICS_PATH = Path(__file__).resolve().parents[2] / "outputs" / "results" / "metrics.json"
 
 
+# Inputs:  a PricingPolicy, and the simulator parameters read from outputs/results/metrics.json
+# Outputs: per-quarter members and revenue, summary KPIs and warnings (returned; no files written)
+
+
 @dataclass
 class PricingPolicy:
     base_price: float = 12.0

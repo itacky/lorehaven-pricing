@@ -27,6 +27,10 @@ plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 7, "axes.edgecol
                      "text.parse_math": False})   # '$' is a currency sign here, not math markup
 
 
+# Inputs:  outputs/results/metrics.json and CSV tables in outputs/results/
+# Outputs: the three write-up figures in outputs/figures/ (PNG)
+
+
 def _metrics():
     """Read outputs/results/metrics.json into a dict."""
     return json.loads((RESULTS_DIR / "metrics.json").read_text())

@@ -21,6 +21,10 @@ POOLED = "high_podcast"   # one pooled segment; key name only matters to the pri
 STATUS_GROUPS = {"join_never": ("prospect", 0), "join_lapsed": ("prospect", 1)}
 
 
+# Inputs:  the analysis table, plus member counts from aggregate.csv for comparison
+# Outputs: predicted vs actual member counts per region and quarter, and error summaries (returned)
+
+
 def _fit_backcast_models(table, quarters) -> dict:
     """Fit the sign-up and retention models (region + quarter fixed effects) on the given quarters only."""
     rows = table[table.quarter_index.isin(quarters)]

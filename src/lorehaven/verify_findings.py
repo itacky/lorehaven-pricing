@@ -16,6 +16,10 @@ from lorehaven.pipeline import RESULTS_DIR
 COUNT, RATE, COEF = 0, 0.0005, 0.005   # tolerances: exact counts, 0.05pp for rates, 0.005 for coefficients
 
 
+# Inputs:  the analysis table, aggregate.csv and outputs/results/metrics.json
+# Outputs: outputs/results/findings_verification.csv, plus verification.* counts added to metrics.json
+
+
 def claims(table: pd.DataFrame, aggregate: pd.DataFrame) -> list:
     """Re-derive each numeric claim from the early exploration with fresh code and return claimed vs re-derived values."""
     eda = table[table.quarter_index >= 1]

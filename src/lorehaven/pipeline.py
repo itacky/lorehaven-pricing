@@ -26,6 +26,10 @@ SCENARIO_UNITS = {"ltv_per_1000_prospects": "$ per 1,000 prospects", "first_quar
                   "share_of_member_quarters_discounted": "share"}
 
 
+# Inputs:  raw CSVs via data_prep (full run), or the existing metrics.json (--derived-only)
+# Outputs: outputs/results/metrics.json (single source of truth) and the CSV tables in outputs/results/
+
+
 class MetricsRecorder:
     def __init__(self):
         """Start with an empty metrics dictionary."""
