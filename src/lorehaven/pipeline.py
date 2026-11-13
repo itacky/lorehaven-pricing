@@ -342,15 +342,19 @@ def record_scenarios(rec, model):
 def main():
     """Run the full analysis from the raw data and write metrics.json, then re-verify the earlier findings."""
     rec = MetricsRecorder()
+    # 1. Load and clean the raw data into one customer x quarter table (status, prices, known data gaps set to missing)
     table = data_prep.build_analysis_table()
     src = "lorehaven.models"
+    # 2. Record the stated assumptions and the data size, so every later number can be traced back
     rec.add("assumption.season_order", "winter->spring->summer->fall", "", "assumption", "data_prep")
     rec.add("assumption.launch_quarter", "2017 winter; no members before", "", "assumption", "data_prep")
     rec.add("assumption.podcast_cutoff", data_prep.PODCAST_SEGMENT_CUTOFF, "score", "assumption", "data_prep")
     rec.add("data.customers", table.customer_id.nunique(), "customers", "observed", "data_prep")
     rec.add("data.panel_rows", len(table), "rows", "observed", "data_prep")
 
+    # 3. Observed sign-up and stay rates at each price (the raw evidence before any model)
     record_price_rates(rec, table)
+    # 4. MAIN RESULT: price response from the randomized discounts (logit, region x quarter FE, clustered SE)
     note = "Region x quarter FE, customer-clustered SE; identification: randomized offer/depth within region x quarter"
     acquisition = models.acquisition_model(table)
     retention = models.retention_model(table)
@@ -358,28 +362,41 @@ def main():
     record_logit(rec, "retention", retention, src, note)
     record_elasticities(rec, "acquisition", acquisition)
     record_elasticities(rec, "retention", retention)
+    # 5. What the randomized curve predicts for the $3 base cut (the benchmark the DiD is compared against)
     rec.add("did.randomized_prediction_delta", float(-3 * acquisition["coef"]["price"]), "log-odds", "estimate", src,
             "-3 x acquisition price coefficient: what the randomized curve implies for a $3 cut")
+    # 6. Separate price-response models per podcast segment: sign-up (never and former members) and retention
     for segment, fits in models.segment_models(table).items():
         for part, fit in fits.items():
             record_logit(rec, f"segment.{segment}.{part}", fit, src, note + "; own FE per segment and status")
+    # 7. Robustness: same models with quarter-only fixed effects, discounting regions only
     record_logit(rec, "robustness.acquisition_quarter_fe",
                  models.acquisition_model(table, fixed_effects=("quarter_index",), treated_only=True), src, "Quarter FE only, treated")
     record_logit(rec, "robustness.retention_quarter_fe",
                  models.retention_model(table, fixed_effects=("quarter_index",), treated_only=True), src, "Quarter FE only, treated")
 
+    # 8. Supporting evidence on the 2019 $15 -> $12 cut: DiD vs Panem, pre-trend test, event study (direction only)
     record_base_cut(rec, table)
+    # 9. Who the offer actually wins: would-join-anyway vs persuadable by segment, offer efficiency, off-policy values
     record_segments(rec, table)
+    # 10. Calibrate the simulator on the $12 era (q9-q11) and save, because the simulator reads its parameters from metrics.json
     record_simulator_parameters(rec, table)
-    rec.save(RESULTS_DIR / "metrics.json")            # simulator reads its parameters from here
+    rec.save(RESULTS_DIR / "metrics.json")
     model = load_model(RESULTS_DIR / "metrics.json")
+    # 11. Revenue from one established member at each price and horizon (simple steady-state view)
     record_member_value(rec, model)
+    # 12. In-sample check: do the simulator's curves reproduce the 2019 ($12 era) rates they were fit on?
     record_model_fit_check(rec, table, model)
+    # 13. Simulate every named policy (today, recommended, alternatives, holdout arms) at 12, 20 and 40 quarters
     record_scenarios(rec, model)
+    # 14. Validation: replay history with the simulator (fit on 2017-18, predict 2019) and record the errors
     record_backcast(rec, table)
+    # 15. Derived numbers quoted in the write-up (headline gains, holdout value and precision, pull-forward shares)
     record_headlines(rec)
+    # 16. Write the single source of truth that the write-up, tool and notebook all read
     rec.save(RESULTS_DIR / "metrics.json")
     print(f"wrote {len(rec.metrics)} metrics to {RESULTS_DIR / 'metrics.json'}")
+    # 17. Independently re-derive the early exploration's claims and add the match counts to metrics.json
     from lorehaven import verify_findings   # local import: verify_findings imports this module
     verify_findings.main()
 
