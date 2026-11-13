@@ -1,10 +1,19 @@
-# Lorehaven: were the price changes effective, and what next?
-<p class="byline">Immanuel Tacky · Audible Economics &amp; Data Science take-home · numbers generated from <code>outputs/results/metrics.json</code></p>
+<header class="masthead">
+<div class="masthead-text">
+<h1>Lorehaven: were the price changes effective, and what next?</h1>
+<p class="byline">Immanuel Tacky · Audible Economics &amp; Data Science take-home · every number generated from <code>metrics.json</code></p>
+</div>
+<img class="masthead-logo" src="../app/static/audible_logo.png" alt="Audible">
+</header>
+
+<section class="callout" markdown="1">
 
 ## Bottom line
 - **Discounts work, and the evidence is causal.** Discount depth ($1–$5) was randomized by design. Who got an offer is assumed random: the brief says business rules decide it, but no observable predicts it (assumption A2). Each $1 off raises the odds of signing up by {{headline.signup_odds_change_per_dollar_off|pct0}} and the odds of a member staying by {{headline.retention_odds_change_per_dollar_off|pct0}}.
 - **The 2019 cut from $15 to $12 is consistent with higher sign-ups, but it is not cleanly identified.** Panem is the only comparison region and its trends were not parallel before the cut. The best-identified size is what the randomized price curve implies for $3 ({{did.randomized_prediction_delta|num2}} log-odds).
 - **Recommendation: keep the $12 base. Replace the random 25% offer with a $5 introductory offer for every new prospect. Discount members by tenure: $5 off at the first two renewals, $1 off after that.** In simulation this earns {{headline.ltv_recommended_vs_today_pct|pct0}} more revenue per new prospect than today's policy over 3 years ({{headline.ltv_recommended_vs_today_pct_h40|pct0}} over 10), and {{headline.ltv_recommended_vs_best_uniform_pct|pct0}} more than the best single member discount. It assumes people respond the same when every prospect gets an offer as when about a quarter did, so the rollout should test this.
+
+</section>
 
 ## How I evaluated it
 Customers were re-priced every quarter by a random draw, so comparing customers in the same region and quarter at different prices identifies the effect of price, with no parallel-trends assumption needed. Inside the discounting regions, offer eligibility (25% of prospects) and depth (20% at each of $1–$5) are balanced on every observable: propensity scores, ad exposure, history, sub-region, quarter and customer-ID patterns. I fit logit models of sign-up (prospects) and retention (members) on price, with region × quarter fixed effects and customer-clustered errors. Elasticities range from {{elasticity.acquisition.price7|num2}} to {{elasticity.acquisition.price15|num2}} for sign-up and {{elasticity.retention.price7|num2}} to {{elasticity.retention.price14|num2}} for retention, (under a logit, elasticity grows with price by construction). For the $12 cut, I compared list-price prospects in the cut regions against Panem, which never had discounts. To compare policies, a simulator follows a cohort of 1,000 new prospects for 12 quarters using response curves fit on the 2019 $12 regime.
