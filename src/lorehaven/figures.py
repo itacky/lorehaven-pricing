@@ -28,6 +28,7 @@ plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 7, "axes.edgecol
 
 
 def _metrics():
+    """Read outputs/results/metrics.json into a dict."""
     return json.loads((RESULTS_DIR / "metrics.json").read_text())
 
 
@@ -107,6 +108,7 @@ def figure_policy_value():
 
 
 def main():
+    """Draw all three write-up figures into outputs/figures."""
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     figure_who_needs_the_offer()
     figure_retention_by_tenure()

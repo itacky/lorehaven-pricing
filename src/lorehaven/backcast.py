@@ -22,6 +22,7 @@ STATUS_GROUPS = {"join_never": ("prospect", 0), "join_lapsed": ("prospect", 1)}
 
 
 def _fit_backcast_models(table, quarters) -> dict:
+    """Fit the sign-up and retention models (region + quarter fixed effects) on the given quarters only."""
     rows = table[table.quarter_index.isin(quarters)]
     fits = {}
     prospects = models.prospects(rows)
@@ -42,6 +43,7 @@ def _intercept(fit, region, quarters) -> float:
 
 
 def _quarter_model(fits, region, effect_quarter) -> SegmentModel:
+    """Build the simulator's response curves for one region and quarter from the fitted models."""
     values = {"share_of_prospects": 1.0}
     for part, fit in fits.items():
         values[f"{part}_intercept"] = _intercept(fit, region, effect_quarter)
@@ -50,6 +52,7 @@ def _quarter_model(fits, region, effect_quarter) -> SegmentModel:
 
 
 def _policy_in_force(region, quarter) -> PricingPolicy:
+    """Return the pricing policy that was actually in place for a region in a given quarter."""
     if region == data_prep.CONTROL_REGION:
         return PricingPolicy(base_price=15, offer_share={s: 0.0 for s in ("high_podcast", "low_podcast")},
                              prospect_discount={s: 0.0 for s in ("high_podcast", "low_podcast")},
@@ -68,6 +71,7 @@ def _actual_state(table, region, quarter) -> dict:
 
 
 def _replay(table, fits, region, first_quarter, last_quarter, effect_quarter_of) -> list:
+    """Step one region forward quarter by quarter with the simulator and return predicted member counts."""
     if first_quarter == 0:
         state = {"never": float((table[(table.region_name == region) & (table.quarter_index == 0)]).shape[0]),
                  "lapsed": 0.0, **{g: 0.0 for g in TENURE_GROUPS}}
@@ -83,6 +87,7 @@ def _replay(table, fits, region, first_quarter, last_quarter, effect_quarter_of)
 
 
 def run_backcast(table) -> dict:
+    """Run the in-sample and both out-of-sample backcasts and compare predictions with actual member counts."""
     aggregate = data_prep.load_aggregate()[["region_name", "quarter_index", "member_count"]]
     regions = sorted(table.region_name.astype(str).unique())
     results = {}
@@ -100,6 +105,7 @@ def run_backcast(table) -> dict:
 
 
 def summarize(results: dict) -> dict:
+    """Turn the backcast tables into headline error figures (MAPE overall, treated, Panem, end totals)."""
     summary = {}
     for name, frame in results.items():
         summary[f"{name}.mape"] = frame.abs_pct_error.mean()

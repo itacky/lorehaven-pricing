@@ -28,9 +28,11 @@ SCENARIO_UNITS = {"ltv_per_1000_prospects": "$ per 1,000 prospects", "first_quar
 
 class MetricsRecorder:
     def __init__(self):
+        """Start with an empty metrics dictionary."""
         self.metrics = {}
 
     def add(self, key, value, unit, label, source, note=""):
+        """Record one metric with its unit, its label (observed, estimate or assumption), source and note."""
         if isinstance(value, (np.floating, np.integer, np.bool_)):
             value = value.item()
         if label not in ("observed", "estimate", "assumption"):
@@ -38,11 +40,13 @@ class MetricsRecorder:
         self.metrics[key] = {"value": value, "unit": unit, "label": label, "source": source, "note": note}
 
     def save(self, path: Path):
+        """Write all recorded metrics to a JSON file."""
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(self.metrics, indent=1, sort_keys=True))
 
 
 def record_logit(rec, name, fit, source, note):
+    """Record a fitted logit's coefficients, clustered standard errors and sample sizes."""
     for term in fit["coef"].index:
         rec.add(f"{name}.{term}.coef", fit["coef"][term], "log-odds per unit", "estimate", source, note)
         rec.add(f"{name}.{term}.se_clustered", fit["se_clustered"][term], "log-odds", "estimate", source)
@@ -76,6 +80,7 @@ def record_elasticities(rec, name, fit):
 
 
 def record_base_cut(rec, table):
+    """Record the difference-in-differences, pre-trend test and event study for the 2019 base cut."""
     src = "lorehaven.models.base_cut_did"
     did = models.base_cut_did(table)
     d = did["did"]
@@ -100,6 +105,7 @@ def record_base_cut(rec, table):
 
 
 def record_segments(rec, table):
+    """Record the would-join-anyway vs persuadable split, offer efficiency and off-policy results by segment."""
     src = "lorehaven.models"
     for era_name, base in (("all_eras", None), ("base12", 12)):
         uplift = models.uplift_by_segment(table, base_price=base)
@@ -150,6 +156,7 @@ def record_segments(rec, table):
 
 
 def record_simulator_parameters(rec, table):
+    """Record the simulator's response curves, segment shares and tested price ranges."""
     src = "lorehaven.models.simulator_fits"
     fits = models.simulator_fits(table)
     note = ("Average-quarter logit, treated regions in the $12 regime (q9-q11), no quarter FE (price randomized "
@@ -208,6 +215,7 @@ def record_model_fit_check(rec, table, model):
 
 
 def record_backcast(rec, table):
+    """Run the backcasts, save backcast.csv and record their error figures."""
     results = backcast.run_backcast(table)
     pd.concat([frame.assign(run=name) for name, frame in results.items()]).to_csv(RESULTS_DIR / "backcast.csv", index=False)
     notes = {"in_sample": "Fit on 2017-2019, replayed from launch (accounting / fit check, not validation)",
@@ -289,6 +297,7 @@ def record_member_value(rec, model):
 
 
 def scenario_policies() -> dict:
+    """Return the named pricing policies compared in the write-up and figures."""
     everyone = lambda value: {s: value for s in SEGMENTS}
     scenarios = {"status_quo_2019": PricingPolicy(base_price=12, random_depths=True),
                  "no_discounts_base12": PricingPolicy(base_price=12, offer_share=everyone(0.0), prospect_discount=everyone(0.0),
@@ -315,6 +324,7 @@ def scenario_policies() -> dict:
 
 
 def record_scenarios(rec, model):
+    """Simulate every named policy at 12, 20 and 40 quarters and record the results."""
     for name, policy in scenario_policies().items():
         for horizon in (12, 20, 40):
             policy.horizon_quarters = horizon
@@ -330,6 +340,7 @@ def record_scenarios(rec, model):
 
 
 def main():
+    """Run the full analysis from the raw data and write metrics.json, then re-verify the earlier findings."""
     rec = MetricsRecorder()
     table = data_prep.build_analysis_table()
     src = "lorehaven.models"

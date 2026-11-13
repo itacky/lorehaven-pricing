@@ -107,16 +107,19 @@ def wald_test(result: dict, terms: list) -> dict:
 
 # ---------------------------------------------------------------- populations
 def prospects(table: pd.DataFrame, treated_only=False) -> pd.DataFrame:
+    """Keep rows for prospects (not a member last quarter), optionally in the discounting regions only."""
     rows = table[table.is_prospect == 1]
     return rows[rows.is_treated_region == 1] if treated_only else rows
 
 
 def members(table: pd.DataFrame, treated_only=False) -> pd.DataFrame:
+    """Keep rows for members who could renew this quarter, optionally in the discounting regions only."""
     rows = table[table.status == "member"]
     return rows[rows.is_treated_region == 1] if treated_only else rows
 
 
 def _with_price(rows: pd.DataFrame) -> pd.DataFrame:
+    """Return a copy of the rows with the price paid or offered as a float 'price' column."""
     rows = rows.copy()
     rows["price"] = rows.membership_price.astype(float)
     return rows
@@ -156,6 +159,7 @@ TENURE_GROUPS = {"first_renewal": (1, 1), "second_renewal": (2, 2), "established
 
 
 def current_regime_rows(table) -> pd.DataFrame:
+    """Keep discounting-region rows from the $12 era (quarters 9-11) used to calibrate the simulator."""
     rows = table[(table.is_treated_region == 1) & table.quarter_index.isin(CURRENT_REGIME_QUARTERS)].copy()
     rows["current_regime"] = "q9_q11"
     return rows
@@ -256,6 +260,7 @@ PROSPECT_SEGMENTS = {  # (is_lapsed, is_high_podcast) -> label
 
 
 def label_segments(rows: pd.DataFrame) -> pd.Series:
+    """Name each prospect's segment from whether they are a former member and their podcast engagement."""
     keys = list(zip(rows.is_lapsed, rows.is_high_podcast))
     return pd.Series([PROSPECT_SEGMENTS[k] for k in keys], index=rows.index)
 

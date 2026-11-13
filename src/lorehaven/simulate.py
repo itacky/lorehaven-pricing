@@ -53,6 +53,7 @@ class SegmentModel:
     stay_established_price_slope: float
 
     def stay_probability(self, tenure_group: str, price: float) -> float:
+        """Probability that a member in this tenure group renews at the given price."""
         return logistic(getattr(self, f"stay_{tenure_group}_intercept") + getattr(self, f"stay_{tenure_group}_price_slope") * price)
 
 
@@ -68,11 +69,13 @@ class SimulatorModel:
 class InvalidPolicy(ValueError):
     """Raised for invalid inputs; .field names the PricingPolicy field to fix."""
     def __init__(self, message, field=None):
+        """Store the message and the name of the input field that caused it."""
         super().__init__(message)
         self.field = field
 
 
 def logistic(x: float) -> float:
+    """Convert log-odds into a probability."""
     return 1.0 / (1.0 + math.exp(-x))
 
 
@@ -101,11 +104,13 @@ def member_value(segment_model: SegmentModel, member_price: float, horizon_quart
 
 
 def _require_number(field_name, label, x):
+    """Raise InvalidPolicy unless the value is an ordinary finite number."""
     if isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x):
         raise InvalidPolicy(f"{label} must be a number (got {x!r}).", field_name)
 
 
 def _require_whole_number(field_name, label, x, low, high):
+    """Raise InvalidPolicy unless the value is a whole number within the allowed range."""
     if isinstance(x, bool) or not isinstance(x, int) or not low <= x <= high:
         raise InvalidPolicy(f"{label} must be a whole number from {low} to {high} (got {x!r}).", field_name)
 
@@ -159,6 +164,7 @@ def prospect_price_mix(policy: PricingPolicy, segment: str, status: str = "never
 
 
 def member_price_mix(policy: PricingPolicy, tenure_group: str) -> list:
+    """Return the (share, price) pairs a member in this tenure group pays under the policy."""
     if policy.random_depths:
         return [(1 / len(RANDOM_DEPTHS), policy.base_price - d) for d in RANDOM_DEPTHS]
     discount = policy.established_member_discount if tenure_group == "established" else policy.new_member_discount
@@ -166,6 +172,7 @@ def member_price_mix(policy: PricingPolicy, tenure_group: str) -> list:
 
 
 def range_warnings(policy: PricingPolicy, model: SimulatorModel) -> list:
+    """List plain-language warnings for settings outside what the data tested."""
     warnings = []
     if policy.base_price != model.calibrated_base_price:
         warnings.append(f"The model is calibrated at the ${model.calibrated_base_price:g} base price. Other base prices "
@@ -192,6 +199,7 @@ def range_warnings(policy: PricingPolicy, model: SimulatorModel) -> list:
 
 
 def _start_state(policy: PricingPolicy, model: SimulatorModel) -> dict:
+    """Set up the starting cohort: all prospects, split by segment, with no members yet."""
     return {s: {"never": policy.starting_prospects * model.segments[s].share_of_prospects, "lapsed": 0.0,
                 **{g: 0.0 for g in TENURE_GROUPS}} for s in SEGMENTS}
 
@@ -231,6 +239,7 @@ def _advance_segment(policy, segment_model, segment_state, segment) -> dict:
 
 
 def simulate(policy: PricingPolicy, model: SimulatorModel) -> dict:
+    """Run the policy quarter by quarter and return per-quarter results, summary KPIs and warnings."""
     validate_policy(policy)
     state = _start_state(policy, model)
     quarters = []

@@ -34,6 +34,7 @@ SCORE_COLUMNS = [c for c in PROPENSITY_DTYPES if c.endswith("_score")]
 
 
 def data_dir() -> Path:
+    """Return the folder holding the raw CSVs (LOREHAVEN_DATA_DIR or data/raw), or fail with a clear message."""
     path = Path(os.environ.get("LOREHAVEN_DATA_DIR", REPO_ROOT / "data" / "raw"))
     if not path.exists():
         raise FileNotFoundError(f"Data folder not found: {path}. Put the CSVs in data/raw/ "
@@ -42,6 +43,7 @@ def data_dir() -> Path:
 
 
 def quarter_index(year: pd.Series, season: pd.Series) -> pd.Series:
+    """Convert year and season into a quarter number, 0 = winter 2017 through 11 = fall 2019."""
     return ((year.astype(int) - 2017) * 4 + season.astype(str).map(SEASON_ORDER)).astype("int8")
 
 
@@ -57,12 +59,14 @@ def load_aggregate() -> pd.DataFrame:
 
 
 def load_panel(columns=None) -> pd.DataFrame:
+    """Load the customer x quarter panel CSV with compact data types."""
     usecols = columns or list(PANEL_DTYPES)
     dtypes = {c: PANEL_DTYPES[c] for c in usecols}
     return pd.read_csv(data_dir() / "customer_panel.csv", usecols=usecols, dtype=dtypes)
 
 
 def load_propensities() -> pd.DataFrame:
+    """Load the yearly propensity scores, treating display scores of exactly 0 as missing."""
     props = pd.read_csv(data_dir() / "customer_propensities.csv", usecols=list(PROPENSITY_DTYPES),
                         dtype=PROPENSITY_DTYPES)
     props["display_score_missing"] = (props.customer_display_score == 0).astype("int8")

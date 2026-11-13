@@ -17,6 +17,7 @@ COUNT, RATE, COEF = 0, 0.0005, 0.005   # tolerances: exact counts, 0.05pp for ra
 
 
 def claims(table: pd.DataFrame, aggregate: pd.DataFrame) -> list:
+    """Re-derive each numeric claim from the early exploration with fresh code and return claimed vs re-derived values."""
     eda = table[table.quarter_index >= 1]
     treated = eda[eda.is_treated_region == 1]
     prospects = treated[treated.is_prospect == 1]
@@ -113,6 +114,7 @@ def claims(table: pd.DataFrame, aggregate: pd.DataFrame) -> list:
 
 
 def main():
+    """Check every claim, save findings_verification.csv and add the match counts to metrics.json."""
     table = data_prep.build_analysis_table()
     aggregate = pd.read_csv(data_prep.data_dir() / "aggregate.csv")
     aggregate["quarter_index"] = data_prep.quarter_index(aggregate.year, aggregate.season)
