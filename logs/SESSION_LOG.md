@@ -21,7 +21,12 @@
 - **Five gated phases** (scaffold → analysis → critic → tool → write-up → AI note). I waived the per-phase approval gates in Phase 1 ("keep going through the phases until im needed") but kept one commit per phase.
 - **A single source of truth.** Every number in the write-up, tool and notebook is read from `outputs/results/metrics.json`. None are typed in by hand.
 - **Independent checks.** A fresh-context, read-only critic reviewed the analysis (20 issues) and the write-up (15 issues). 42 of 46 claims from the early exploration were re-derived independently: 4 did not match and were flagged rather than hidden. There are 59 automated tests plus an out-of-sample backcast.
-- **Human steering that changed the result:** the would-join-anyway vs persuadable split, keeping randomization in the recommendation, and the tool's run instructions (tested on my own Windows machine).
+- **Human steering that changed the result:**
+  - flagging the TV and display data problems;
+  - pushing for difference-in-differences, which was kept as the check on the base cut;
+  - the would-join-anyway vs persuadable split;
+  - keeping randomization in the recommendation;
+  - the tool's run instructions, tested on my own Windows machine.
 
 ---
 
@@ -37,6 +42,7 @@
 > due to size you also don't have to read the entire data files. you have the schemas. You can learn what is in the files by doing transformations.
 
 **What Claude did.** It read the brief and profiled the three files using group-bys only:
+
 - The panel covers the whole population: `member_count` in the aggregate file equals the panel sum in all 72 region-seasons.
 - Panem never gets a discount and stays at $15. The other regions cut to $12 from 2019 spring.
 - Discount depth is $1–$5, in almost equal counts at each depth.
@@ -45,14 +51,34 @@
 
 It proposed the randomized depth as the main analysis and the difference-in-differences on the base cut as supporting evidence. It then asked me four decisions.
 
-**My decisions (paraphrased):**
-- Explain the randomized-depth approach.
-- Lifetime value is the success metric.
-- The tool can be HTML or Flask but should be lightweight, with UI inspiration from a folder of screenshots.
-- "Costs" means discount costs only; content costs are out of scope.
+**My decisions (verbatim; the inspiration folder's local path is removed):**
+> 1. Interesting. Difference in Differences was what I had in mind. Can you explain randomized depth and why it's more appropriate.
+> 2. So we can measure effectiveness by LTV. Since Audible is largely a Subscription based company and this is a subscription service, short term revenue metrics probably won't capture the full picture. We can have some of those short term ones as secondary metrics, or have a guardrail metric also. If you have any other suggestions feel free to suggest
+> 3. Tool can be interactive html, or flask based. Streamlit can work too, but I just want this to be a very lightwight easy to run solution like what we have developed in the past. Feel free to use [my UI inspiration folder] as some potential UI/UX inspiration.
+> 4. Yes
 
-**Exploration questions I asked (paraphrased):**
-- the data structure, how offers were assigned, and the missing TV/display values;
+> Concerning Costs, our team is only concerned with the digital costs associated with the digital pricing strategies since these are the costs we can control. We will not be focusing on content costs for this project.
+>
+> This is good so far, but I want us to look into things a bit more. I will ask a few questions to ensure the right angles are being looked at.
+
+**Data quality: I flagged the TV and display columns (verbatim):**
+> can you explore the files and tell me how the data is structured and how prices and discounts were actually assigned? Also look for missing/incorrect data, I did see some things in the TV ratings and display ratings that might warrant attention.
+
+Claude's audit confirmed the problems and found related ones (`FINDINGS.md`, data-quality table):
+
+| Issue | Evidence | How it was handled |
+|---|---|---|
+| Westeros TV ratings are 0 every winter | TV spend was $56 / $87 / $141 in those seasons; other regions show 1M–15M ratings | Treated as missing; TV is not used in any model |
+| Display impressions are 0 in 2018 fall, 2019 spring and 2019 fall, in all regions | Display spend was $8 / $7 / $14 | Treated as missing; not used |
+| Display impressions are a whole number × region population | Identical per person across regions | Simulated field, so not informative |
+| Display propensity is mostly exact zeros, varying by year | Share exactly 0: 83% (2017), 0% (2018), 58% (2019) | Zeros treated as missing, with a `display_missing` flag in the randomization checks |
+| Westeros search roughly halves every winter | 0.14–0.20 vs about 0.38–0.48 elsewhere | Possible tracking gap (hypothesis only); absorbed by the region × quarter fixed effects |
+| Radio and display score averages shift by year | Radio 0.646 → 0.491 → 0.444 | Any comparison by score is made within the same year |
+
+The fixes are coded once, in `src/lorehaven/data_prep.py`: Westeros winter TV ratings, display impressions recorded as 0 despite spend, and display-score zeros are all set to missing. So every model, test and the notebook use the same cleaned inputs.
+
+**Further exploration questions I asked (paraphrased):**
+
 - randomization checks against the propensity scores;
 - which customer types respond to price, and at what threshold;
 - labelling segments as incremental vs would-join-anyway;
@@ -64,6 +90,7 @@ It proposed the randomized depth as the main analysis and the difference-in-diff
 ### 2. Master prompt and Phase 0: scaffold (12 Nov, evening; commit `9759efc`)
 
 **Prompt:** I gave Claude a master prompt (saved verbatim in `prompts/00_master_prompt.md`). It sets out:
+
 - the repo structure and three agents (analyst, critic, tool-builder);
 - one source of truth for numbers;
 - a decision log with fixed columns;
@@ -80,6 +107,7 @@ then
 > create an extra copy for your own sanity please
 
 **What Claude did.**
+
 - Scaffolded the repo and wrote the three agent definitions.
 - Pinned the environment and moved the earlier exploration scripts into `notebooks/eda/` as an audit trail.
 - Copied the CSVs into a git-ignored `data/raw/`.
@@ -93,12 +121,14 @@ then
 **Mid-phase request (paraphrased):** separate customers who would subscribe anyway from those who are persuadable, so we avoid unnecessarily deep discounts.
 
 **What Claude did.**
+
 - Rebuilt the analysis as tested code in `src/`.
 - Fit logit models of sign-up and retention on price, with region × quarter fixed effects and customer-clustered standard errors.
 - Added segment models, an uplift analysis (would-join-anyway vs persuadable), off-policy evaluation, a pull-forward check, a difference-in-differences on the base cut, and the `simulate()` engine.
 - Re-derived 46 claims from the early exploration: 42 matched and 4 were flagged as mismatches.
 
 **AI suggestions I rejected (from the log):**
+
 - A pooled segment model with shared fixed effects. It gave the wrong retention slope for less-engaged customers.
 - Modelling lapsed customers as an intercept shift. It over-predicted their sign-ups.
 - Calibrating the simulator from averaged fixed effects. The worst cell was off by 18.8 percentage points, against 2.1 with the replacement.
@@ -108,6 +138,7 @@ then
 ### 4. Phase 2: critic review (12 Nov, evening; commit `65b0b56`)
 
 A **fresh-context, read-only critic** reviewed the Phase 1 commit and raised 20 issues. Highlights:
+
 - the extrapolation warnings used the wrong tested range;
 - the difference-in-differences standard errors were too small and its pre-trend test failed;
 - segment results pooled the $15 and $12 eras;
@@ -120,6 +151,7 @@ The main session also caught its own error: the first tenure and score checks we
 ### 5. Phase 3: tool, tests, backcast (12 Nov, evening; commit `91c7ae3`)
 
 **What Claude did.**
+
 - Built a Flask simulator that calls `simulate()`, with validation, extrapolation warnings and starting presets.
 - Wrote a test suite.
 - Ran a backcast: fit on 2017–18 and predict 2019. Against an average-2018 baseline, the error is 10% for the discounting regions and 43% for Panem. The pre-planned same-season baseline missed the discounting regions by 32%. All three numbers are reported in the write-up.
@@ -130,6 +162,7 @@ The main session also caught its own error: the first tenure and score checks we
 The accent colour switched to Audible orange.
 
 **When the tool failed on my machine** (two error reports, then "please verify it works before handing it off to me for my next attempt"):
+
 - `ModuleNotFoundError`: fixed with path handling.
 - Windows reserving port 5000: fixed by picking a free port automatically.
 - Claude added a double-click launcher (`run_tool.bat`) and then verified it on my machine by opening the tool in Chrome.
@@ -147,6 +180,7 @@ The accent colour switched to Audible orange.
 > yes rerun it so we can finish this project.
 
 The second critic reviewed the write-up and raised 15 issues (4 high). All were addressed (`logs/critic_phase4.md`). For example:
+
 - "rising in every segment" was false;
 - a full-coverage assumption was added, and the tool now warns about it;
 - both backcast baselines are now reported;
@@ -166,6 +200,7 @@ Claude also logged a correction to an earlier decision-log row rather than rewri
 > ok can we explore som alternative UX UI designs? this is not bad, but it could be better. I added a couple of more screenshots to the inspo folder
 
 Claude mocked up three directions on a design canvas, all using the model's real numbers:
+
 - (A) a dashboard console;
 - (B) the policy written as an editable sentence;
 - (C) today vs. yours, side by side.
@@ -202,6 +237,7 @@ This was visual styling only: an Audible masthead, a "Bottom line" callout, oran
 
 | Error | Caught by | Fix |
 |---|---|---|
+| Bad values in the marketing data: TV ratings recorded as 0 despite spend, display impressions and scores of exactly 0 | Me (flagged before modelling); Claude confirmed and found related gaps | Treated as missing in `data_prep.py`; TV and display left out of the models |
 | "Deep member discounts pay for themselves" (steady-state formula) | Claude, during Phase 1 re-derivation | Reversed; led to tenure-based member pricing |
 | Pooled segment model gave a wrong retention slope | Phase 1 cross-check against the exploration | Separate fits per segment |
 | Simulator calibration off by up to 18.8pp | In-sample fit check | Calibrated directly on the $12 regime (2.1pp worst cell) |
