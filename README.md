@@ -59,8 +59,9 @@ Each assumption is listed in `PLAN.md` §3 and labelled in `metrics.json` (`labe
   observed. Anything outside these ranges is flagged as an extrapolation.
 - **Revenue** is what members actually pay, so it is already net of discounts. The only cost counted is the
   discount itself. Content costs are out of scope.
-- **Behaviour.** Customers do not time cancellations or sign-ups around expected offers. Measured pull-forward
-  is small (`pull_forward.*` in metrics.json).
+- **Behaviour.** Customers do not time cancellations or sign-ups around expected offers. The pull-forward check
+  (`pull_forward.*` in metrics.json) is descriptive only: it conditions on prospects who did not join, so it
+  cannot separate real timing shifts from who is left. A persistent holdout would measure it cleanly.
 - **Accuracy.** The backcast fits on 2017-2018 and predicts 2019 (`backcast.*`). It is close in the
   discounting regions and poor in Panem. Use the tool to compare policies, not to forecast member counts.
 
@@ -76,7 +77,7 @@ data/raw/customer_propensities.csv
 default tests need very little.
 ```
 python -m lorehaven.pipeline        # about 1 minute: models, scenarios, backcast, metrics.json, FINDINGS.md verification
-pytest                              # 59 fast tests: validation, edge cases, monotonicity, warnings, tool API, backcast errors
+pytest                              # 72 fast tests: validation (incl. NaN/inf), edge cases, monotonicity, warnings, tool API, backcast errors
 LOREHAVEN_RUN_SLOW=1 pytest         # adds a full backcast re-run from the raw CSVs (~4-5 GB RAM)
 ```
 Outputs are written to `outputs/results/`:

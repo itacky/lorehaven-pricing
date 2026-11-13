@@ -78,7 +78,7 @@ Critic reviews:
 - **Independent re-derivation:** 42 of 46 FINDINGS.md claims reproduced by new code. The 4 that weren't are flagged in `outputs/results/findings_verification.csv`.
 - **Randomization checks** before any causal claim: balance, joint tests, AUC ≈ 0.50.
 - **Fit check and backcast:** in-sample fit check; backcast out of sample (fit on 2017–18, predict 2019), reported including where it fails (Panem).
-- **Tests:** 59 fast plus 1 opt-in, covering validation, edge cases, accounting identities, monotonicity, warnings, the tool API and the backcast.
+- **Tests:** 72 fast plus 1 opt-in, covering validation, edge cases, accounting identities, monotonicity, warnings, the tool API and the backcast.
 - **Numbers by construction:** every number in the write-up and the tool's text is filled in from `metrics.json`; the build fails on an unknown key.
 - **Two independent critic reviews.**
 - **Manual run** of the tool on the target Windows machine.

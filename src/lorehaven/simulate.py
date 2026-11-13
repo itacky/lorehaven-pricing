@@ -101,7 +101,7 @@ def member_value(segment_model: SegmentModel, member_price: float, horizon_quart
 
 
 def _require_number(field_name, label, x):
-    if isinstance(x, bool) or not isinstance(x, (int, float)) or math.isnan(x):
+    if isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x):
         raise InvalidPolicy(f"{label} must be a number (got {x!r}).", field_name)
 
 

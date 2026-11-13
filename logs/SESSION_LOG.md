@@ -1,14 +1,14 @@
 # Session log: Lorehaven pricing take-home
 
 **Who:** Immanuel Tacky (candidate) working with Claude (Opus 5.5) as an agentic assistant: shell, files, a browser for checks, and subagents for the critic role.
-**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only minor follow-ups: the write-up's visual styling and this log. Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
+**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only follow-ups: the write-up's visual styling, this log, and fixes from an external review (section 11). Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
 **What this is:** a condensed, ordered record of the working session. My prompts are quoted **word-for-word** where marked "verbatim" and **paraphrased** where marked "paraphrased". Each step points to the commit and decision-log rows that back it, so every claim here can be checked in the repo.
 
 | Record | Where | What it holds |
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 64 rows: every AI suggestion and what I did with it (43 accepted, 10 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 70 rows: every AI suggestion and what I did with it (48 accepted, 11 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -20,7 +20,7 @@
 - **Approach agreed before any modelling.** Claude profiled the data with aggregations only and proposed an approach. I made the key calls before Phase 0: randomized discount depth as the main identification, lifetime value as the metric, a lightweight tool, and costs limited to discounts.
 - **Five gated phases** (scaffold → analysis → critic → tool → write-up → AI note). I waived the per-phase approval gates in Phase 1 ("keep going through the phases until im needed") but kept one commit per phase.
 - **A single source of truth.** Every number in the write-up, tool and notebook is read from `outputs/results/metrics.json`. None are typed in by hand.
-- **Independent checks.** A fresh-context, read-only critic reviewed the analysis (20 issues) and the write-up (15 issues). 42 of 46 claims from the early exploration were re-derived independently: 4 did not match and were flagged rather than hidden. There are 59 automated tests plus an out-of-sample backcast.
+- **Independent checks.** A fresh-context, read-only critic reviewed the analysis (20 issues) and the write-up (15 issues). 42 of 46 claims from the early exploration were re-derived independently: 4 did not match and were flagged rather than hidden. There are 72 automated tests plus an out-of-sample backcast. An external review on 13 Nov led to four further fixes (section 11).
 - **Human steering that changed the result:**
   - flagging the TV and display data problems;
   - pushing for difference-in-differences, which was kept as the check on the base cut;
@@ -174,7 +174,7 @@ The accent colour switched to Audible orange.
 
 > Also, can you create a notebook that highlights the EDA, calculations, evals, and steps, etc. we went through to inform our process? I may want to go through some of it with the audience. remember everything in this notbook should be clearly defined and explained also
 
-**A steering question (paraphrased):** wasn't the random 25% offer what let us estimate incremental effects in the first place? If so, dropping it in the recommendation throws that away. As a result, the recommendation became a $5 default offer with a **persistent randomized holdout**: 85% at $5, 10% at list price, 5% at other depths. Claude quantified it: the standard error is ×0.72 of today's, at about $0.10 per prospect-quarter.
+**A steering question (paraphrased):** wasn't the random 25% offer what let us estimate incremental effects in the first place? If so, dropping it in the recommendation throws that away. As a result, the recommendation became a $5 default offer with a **persistent randomized holdout**: 85% at $5, 10% at list price, 5% at other depths. Claude quantified it: the standard error is ×0.72 of today's, at about $0.10 per prospect-quarter. That figure assumed equal variance in both arms; it was later restated as a 0.45–0.72 range (section 11).
 
 **Prompt (verbatim):**
 > yes rerun it so we can finish this project.
@@ -222,7 +222,7 @@ Claude had first guessed the acronym "EDS" from the brief's title and held it ba
 
 ### 10. Minor follow-ups (13 Nov; commit `dd46d28` and this log)
 
-The assignment was complete by this point. Two small additions came afterwards.
+The assignment was complete by this point. The additions below came afterwards.
 
 **Prompt (verbatim):**
 > Can we improve the look of the writup as well? I would like to see the audible brand present there also
@@ -230,6 +230,29 @@ The assignment was complete by this point. Two small additions came afterwards.
 This was visual styling only: an Audible masthead, a "Bottom line" callout, orange section markers and page footers. The content and numbers did not change, and the write-up is still 2 pages with 3 figures.
 
 **Prompt (verbatim):** "can you create a session log/transcript for this so I can share with my interviewers?" This produced this file.
+
+### 11. External review and fixes (13 Nov)
+
+I had a second assistant (Astra) review the finished project, then asked Claude: "do you agree or disagree with any of this?" Astra's points, paraphrased:
+
+1. The +133% assumes every new prospect gets $5 off, but the recommended 85/10/5 rollout was never simulated.
+2. The pull-forward check conditions on prospects who did not join, so it cannot show that causal pull-forward is small.
+3. The 0.72× standard-error claim relies on an equal-variance approximation.
+4. A non-finite horizon (NaN, infinity) crashes the tool with HTTP 500.
+
+Astra also asked to keep long-run gains conditional on the simulator, add a short production-readiness paragraph, keep the 2-page limit, log the changes and run the tests.
+
+Claude checked each point against the code before answering. It agreed with all four and confirmed the crash. For points 1 and 3 it proposed fixes that went slightly further than the suggestions, with numbers. **I said (verbatim):** "sure go ahead"
+
+| Point | What changed |
+|---|---|
+| 1. Rollout value | Simulated as persistent arms (85% $5, 10% list, 5% $3): **+113% vs today over 12 quarters, +58% over 40**, against +133% and +69% if every prospect got $5 off. Both are now in the write-up. The numbers come from new pipeline scenarios, not typed by hand |
+| 2. Pull-forward | Reframed as descriptive in the write-up, tool, README and notebook. A persistent holdout is named as the clean measurement |
+| 3. Standard error | Kept but qualified: a Bernoulli-variance version (0.45×) was added, and the write-up gives the 0.45–0.72 range with both assumptions named |
+| 4. Validation | Non-finite values are rejected with a plain message for every numeric field. 13 new tests; 72 fast tests pass |
+| Extras | A "Before production" paragraph (persistent hashed assignment, assigned vs delivered logging, policy and model versions, monitoring, rollback). Long-run gains now say "in the simulator". The write-up is still 2 pages |
+
+All the existing numbers were reproduced exactly when the scenarios were re-run (`python -m lorehaven.pipeline --derived-only`).
 
 ---
 
@@ -247,6 +270,9 @@ This was visual styling only: an Audible masthead, a "Bottom line" callout, oran
 | Overstated claims in the write-up ("every segment", base cut "raised" sign-ups) | Critic, Phase 4 | Reworded; assumptions stated |
 | Commit message miscounted critic outcomes | Claude, later | Correction logged, history kept |
 | Team acronym guessed (EDS) | Claude flagged it, I corrected it | AERO |
+| Headline gain quoted for a full rollout, not the recommended holdout design | External review (Astra) | Rollout simulated: +113% vs +133% |
+| Pull-forward presented as causal; standard error from an equal-variance shortcut | External review (Astra) | Pull-forward reframed as descriptive; SE given as a 0.45–0.72 range |
+| NaN or infinity in the tool caused a server error | External review (Astra) | Validation and 13 tests added |
 
 ## What is not in this log
 

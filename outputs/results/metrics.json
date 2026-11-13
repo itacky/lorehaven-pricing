@@ -3247,12 +3247,47 @@
   "unit": "$",
   "value": 0.10481758679930767
  },
+ "headline.holdout_design_ltv_per_1000": {
+  "label": "estimate",
+  "note": "$: 85% $5 / 10% list / 5% $3 off, persistent arms, 12 quarters, under the simulator",
+  "source": "pipeline.record_headlines",
+  "unit": "$",
+  "value": 43099.242339075936
+ },
+ "headline.holdout_design_ltv_per_1000_h40": {
+  "label": "estimate",
+  "note": "$: 85% $5 / 10% list / 5% $3 off, persistent arms, 40 quarters, under the simulator",
+  "source": "pipeline.record_headlines",
+  "unit": "$",
+  "value": 164348.63486551135
+ },
+ "headline.holdout_design_ltv_vs_today_pct": {
+  "label": "estimate",
+  "note": "85/10/5 rollout vs today's policy, 12 quarters",
+  "source": "pipeline.record_headlines",
+  "unit": "share",
+  "value": 1.1307202864758388
+ },
+ "headline.holdout_design_ltv_vs_today_pct_h40": {
+  "label": "estimate",
+  "note": "85/10/5 rollout vs today's policy, 40 quarters",
+  "source": "pipeline.record_headlines",
+  "unit": "share",
+  "value": 0.5833543709847047
+ },
  "headline.holdout_design_se_ratio_vs_today": {
   "label": "estimate",
-  "note": "SE of $5-vs-list uplift, proposed 85/10 design vs today's logged shares",
+  "note": "SE of $5-vs-list uplift, design vs today's logged shares; APPROXIMATION: equal outcome variance",
   "source": "pipeline.record_headlines",
   "unit": "share",
   "value": 0.7227617828051296
+ },
+ "headline.holdout_design_se_ratio_vs_today_bernoulli": {
+  "label": "estimate",
+  "note": "Same ratio with Bernoulli variance p(1-p) at observed $12-era sign-up rates",
+  "source": "pipeline.record_headlines",
+  "unit": "share",
+  "value": 0.4507169597544374
  },
  "headline.ltv_recommended_vs_best_uniform_pct": {
   "label": "estimate",
@@ -4261,6 +4296,69 @@
   "source": "lorehaven.simulate",
   "unit": "share",
   "value": 0.0
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "share per quarter",
+  "value": 0.11719386684440836
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "$",
+  "value": 9.568107183141635
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 7756.622572032878
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 951.1230848778105
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.h20.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "20 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 59407.74591810259
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.h40.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "40 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 139324.53270586816
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 30517.87300571177
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "members per 1,000 prospects",
+  "value": 331.4682658387547
+ },
+ "scenario.prospects_3_off_no_winback_new_5_off_established_1_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0; WARNINGS: Offers reached about 25% of prospects in the data. Wider coverage assumes each person responds the same when everyone gets an offer; test it with a randomized holdout.",
+  "source": "lorehaven.simulate",
+  "unit": "share",
+  "value": 0.9620716257345666
  },
  "scenario.prospects_5_off_no_winback_members_0_off.average_quarterly_churn": {
   "label": "estimate",
@@ -5773,6 +5871,69 @@
   "source": "lorehaven.simulate",
   "unit": "share",
   "value": 1.0
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "share per quarter",
+  "value": 0.0856622976176612
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "$",
+  "value": 10.014375696499775
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 3156.590602738767
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 453.71927804493055
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.h20.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "20 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 32663.415789546216
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.h40.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "40 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 80199.44699201435
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.ltv_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "$ per 1,000 prospects",
+  "value": 15920.073178064367
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "members per 1,000 prospects",
+  "value": 184.68528999240266
+ },
+ "scenario.prospects_list_no_winback_new_5_off_established_1_off.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, $12-regime calibration, d=0",
+  "source": "lorehaven.simulate",
+  "unit": "share",
+  "value": 0.808114900121454
  },
  "scenario.status_quo_2019.average_quarterly_churn": {
   "label": "estimate",

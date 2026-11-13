@@ -1,6 +1,7 @@
 """Run the full analysis and write outputs/results/metrics.json (single source of truth).
 
-Usage:  python -m lorehaven.pipeline      (also re-runs the FINDINGS.md verification at the end)
+Usage:  python -m lorehaven.pipeline                 (full run; also re-runs the FINDINGS.md verification)
+        python -m lorehaven.pipeline --derived-only  (scenarios and headline numbers only; no raw data needed)
 Every reported number is written with a label: observed | estimate | assumption.
 
 Analysis sample (one, documented): all regions and quarters 0-11 for the fixed-effect models
@@ -17,6 +18,8 @@ from lorehaven import backcast, data_prep, models
 from lorehaven.simulate import SEGMENTS, PricingPolicy, load_model, logistic, member_value, simulate
 
 RESULTS_DIR = data_prep.REPO_ROOT / "outputs" / "results"
+# ASSUMPTION (recommendation): persistent arms of the rollout. Each prospect is assigned once and keeps the arm.
+HOLDOUT_ARMS = {"5_off": 0.85, "list": 0.10, "3_off": 0.05}
 SCENARIO_UNITS = {"ltv_per_1000_prospects": "$ per 1,000 prospects", "first_quarter_revenue_per_1000": "$ per 1,000 prospects",
                   "members_at_end_per_1000": "members per 1,000 prospects", "average_revenue_per_member_quarter": "$",
                   "average_quarterly_churn": "share per quarter", "discount_cost_per_1000": "$ per 1,000 prospects",
@@ -246,16 +249,31 @@ def record_headlines(rec):
         rows[f"pull_forward_offset_share_{segment}"] = (abs(pf("next_quarter_effect_per_dollar_now") / pf("same_quarter_effect_per_dollar")),
                                                         "Next-quarter loss as a share of the same-quarter gain per $ of depth")
     # Holdout design (recommendation): $5 offer default with a persistent randomized holdout.
-    # Precision of the $5-vs-list comparison: SE is proportional to sqrt(1/n_offer + 1/n_list) at fixed traffic.
+    # Precision of the $5-vs-list sign-up comparison at the same prospect traffic, today's logged shares vs the design.
+    #   SE  proportional to  sqrt( v_5 / s_5 + v_0 / s_0 )
+    #   s_5, s_0 = share of prospects at $5 off and at list price;  v = outcome variance in each arm.
+    # Equal-variance version: v_5 = v_0.  Bernoulli version: v = p (1 - p), p = observed sign-up rate at $7 and $12 ($12 era).
     today_shares = (value("ope.logging_propensity.depth5"), value("ope.logging_propensity.depth0"))
-    proposed_shares = (0.85, 0.10)    # ASSUMPTION: proposed design (85% $5 offer, 10% list price, 5% other depths)
-    se = lambda shares: np.sqrt(1 / shares[0] + 1 / shares[1])
-    rows["holdout_design_se_ratio_vs_today"] = (se(proposed_shares) / se(today_shares),
-                                                "SE of $5-vs-list uplift, proposed 85/10 design vs today's logged shares")
+    proposed_shares = (HOLDOUT_ARMS["5_off"], HOLDOUT_ARMS["list"])
+    p_offer, p_list = value("rates.signup.base12.price7"), value("rates.signup.base12.price12")
+    se_equal = lambda shares: np.sqrt(1 / shares[0] + 1 / shares[1])
+    se_bernoulli = lambda shares: np.sqrt(p_offer * (1 - p_offer) / shares[0] + p_list * (1 - p_list) / shares[1])
+    rows["holdout_design_se_ratio_vs_today"] = (se_equal(proposed_shares) / se_equal(today_shares),
+                                                "SE of $5-vs-list uplift, design vs today's logged shares; APPROXIMATION: equal outcome variance")
+    rows["holdout_design_se_ratio_vs_today_bernoulli"] = (se_bernoulli(proposed_shares) / se_bernoulli(today_shares),
+                                                          "Same ratio with Bernoulli variance p(1-p) at observed $12-era sign-up rates")
+    # Value of the rollout itself: arms are persistent, so under the simulator its LTV is the share-weighted LTV of each arm.
+    arm_scenario = lambda arm: f"prospects_{arm}_no_winback_new_5_off_established_1_off"
+    for suffix, label in (("", "12 quarters"), (".h40", "40 quarters")):
+        design = sum(share * value(f"scenario.{arm_scenario(arm)}{suffix}.ltv_per_1000_prospects") for arm, share in HOLDOUT_ARMS.items())
+        today_ltv = value(f"scenario.{today}{suffix}.ltv_per_1000_prospects")
+        tag = suffix.replace(".", "_")
+        rows[f"holdout_design_ltv_per_1000{tag}"] = (design, f"$: 85% $5 / 10% list / 5% $3 off, persistent arms, {label}, under the simulator")
+        rows[f"holdout_design_ltv_vs_today_pct{tag}"] = (design / today_ltv - 1, f"85/10/5 rollout vs today's policy, {label}")
     gain = value("ope.offer_all_5_off.first_quarter_revenue") - value("ope.no_offers.first_quarter_revenue")
     rows["holdout_cost_per_prospect_quarter_at_10pct"] = (0.10 * gain, "$: 10% of prospects at list forgo the $5-offer gain (OPE, first quarter)")
     for key, (number, note) in rows.items():
-        unit = "$" if key.startswith("holdout_cost") else "share"
+        unit = "$" if key.startswith(("holdout_cost", "holdout_design_ltv_per")) else "share"
         rec.add(f"headline.{key}", float(number), unit, "estimate", src, note)
 
 
@@ -285,6 +303,11 @@ def scenario_policies() -> dict:
                 scenarios[f"prospects_5_off_{label}_new_{new_off}_off_established_{established_off}_off"] = PricingPolicy(
                     base_price=12, offer_share=everyone(1.0), prospect_discount=everyone(5.0), new_member_discount=float(new_off),
                     established_member_discount=float(established_off), lapsed_get_offers=winback)
+    # Holdout arms of the recommended rollout: same member pricing, different introductory offer.
+    for arm, (share, depth) in {"list": (0.0, 0.0), "3_off": (1.0, 3.0)}.items():
+        scenarios[f"prospects_{arm}_no_winback_new_5_off_established_1_off"] = PricingPolicy(
+            base_price=12, offer_share=everyone(share), prospect_discount=everyone(depth),
+            new_member_discount=5.0, established_member_discount=1.0, lapsed_get_offers=False)
     scenarios["high_podcast_only_5_off_no_winback_new_5_off_established_1_off"] = PricingPolicy(
         base_price=12, offer_share={"high_podcast": 1.0, "low_podcast": 0.0}, prospect_discount=everyone(5.0),
         new_member_discount=5.0, established_member_discount=1.0, lapsed_get_offers=False)
@@ -350,5 +373,17 @@ def main():
     verify_findings.main()
 
 
+def refresh_derived():
+    """Re-run only the steps that need metrics.json, not the raw data: simulator scenarios and headline numbers.
+    Usage:  python -m lorehaven.pipeline --derived-only"""
+    rec = MetricsRecorder()
+    rec.metrics = json.loads((RESULTS_DIR / "metrics.json").read_text())
+    record_scenarios(rec, load_model(RESULTS_DIR / "metrics.json"))
+    record_headlines(rec)
+    rec.save(RESULTS_DIR / "metrics.json")
+    print(f"refreshed scenarios and headlines; {len(rec.metrics)} metrics in {RESULTS_DIR / 'metrics.json'}")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    refresh_derived() if "--derived-only" in sys.argv else main()

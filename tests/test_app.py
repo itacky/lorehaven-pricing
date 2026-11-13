@@ -47,6 +47,17 @@ def test_status_quo_matches_its_own_baseline(client):
     ({"new_member_discount": -1}, "new_member_discount"),
     ({"horizon_quarters": 2.5}, "horizon_quarters"),
     ({"discount_rate_pct": 100}, "discount_rate_pct"),
+    # non-finite values parse as floats; they must give a validation error, not a server error
+    ({"horizon_quarters": "nan"}, "horizon_quarters"),
+    ({"horizon_quarters": "inf"}, "horizon_quarters"),
+    ({"horizon_quarters": "-Infinity"}, "horizon_quarters"),
+    ({"horizon_quarters": 1e999}, "horizon_quarters"),
+    ({"base_price": "nan"}, "base_price"),
+    ({"base_price": "inf"}, "base_price"),
+    ({"offer_share_low": "nan"}, "offer_share_low"),
+    ({"discount_high": "inf"}, "discount_high"),
+    ({"new_member_discount": "nan"}, "new_member_discount"),
+    ({"discount_rate_pct": "nan"}, "discount_rate_pct"),
 ])
 def test_invalid_input_returns_400_with_field(client, change, field):
     response = client.post("/api/simulate", json={**PRESETS["recommended"]["values"], **change})

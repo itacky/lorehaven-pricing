@@ -81,7 +81,7 @@
         <li>Price responses are measured from Lorehaven's randomized discounts and calibrated to 2019 conditions with the ${{ facts.base }} base price. Other base prices are flagged as an extrapolation.</li>
         <li>Tested prices: ${{ facts.prospect_low }}–${{ facts.prospect_high }} for new customers and ${{ facts.member_low }}–${{ facts.member_high }} for members. Anything outside is flagged.</li>
         <li>Revenue is what members actually pay, so it is already net of discounts. Content costs are not included.</li>
-        <li>Customers do not change behaviour because they expect future offers (for example, cancelling to get a win-back deal). Measured pull-forward from one quarter's offer to the next is small (about {{ facts.pull_forward_low_pct }}–{{ facts.pull_forward_high_pct }}%).</li>
+        <li>Customers do not change behaviour because they expect future offers (for example, cancelling to get a win-back deal). Pull-forward is not identified: among prospects who did not join, a deeper offer is followed by slightly lower sign-up next quarter (about {{ facts.pull_forward_low_pct }}–{{ facts.pull_forward_high_pct }}% of the gain). That figure is descriptive only.</li>
         <li>Tested against history: fit on 2017–2018 only, the model predicted 2019 member counts in the discounting regions within about {{ facts.backcast_treated_pct }}% on average, but missed the region without discounts by about {{ facts.backcast_control_pct }}%. Treat the numbers as a comparison between policies, not a forecast.</li>
         <li>Every quarter looks like an average 2019 quarter: no seasonality and no marketing changes.</li>
       </ul>

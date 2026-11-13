@@ -7,6 +7,7 @@ The model is never reimplemented here: inputs are converted to a PricingPolicy, 
 and parameters come from outputs/results/metrics.json via load_model().
 """
 import json
+import math
 import os
 import socket
 import sys
@@ -47,6 +48,8 @@ def _number(form: dict, name: str, whole=False):
         value = float(raw)
     except (TypeError, ValueError):
         raise InvalidPolicy(f"{FORM_LABELS[name]} must be a number (got '{raw}').", name)
+    if not math.isfinite(value):                       # 'nan', 'inf', 1e999 ... parse as floats but are not usable
+        raise InvalidPolicy(f"{FORM_LABELS[name]} must be an ordinary number (got '{raw}').", name)
     if whole:
         if value != int(value):
             raise InvalidPolicy(f"{FORM_LABELS[name]} must be a whole number of quarters (got {raw}).", name)
