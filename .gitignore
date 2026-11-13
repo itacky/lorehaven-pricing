@@ -1,0 +1,19 @@
+# Raw data is never committed. Place the three CSVs in data/raw/ (see README).
+data/raw/*
+!data/raw/.gitkeep
+*.7z
+*.zip
+*.parquet
+# Python / environment
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Secrets (none expected; belt and braces)
+.env
+*.key

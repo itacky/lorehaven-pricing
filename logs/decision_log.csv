@@ -1,0 +1,12 @@
+ts,phase,agent,suggestion,action,reason
+2026-11-12T21:25-05:00,0,main,"Reuse existing lorehaven-pricing folder; move prior EDA scripts to notebooks/eda and their outputs to outputs/eda",accept,"Keeps prior EDA as audit trail without mixing it into src/"
+2026-11-12T21:25-05:00,0,main,"Pin pandas 2.2.3 / numpy 2.1.3 / scipy 1.14.1 / statsmodels 0.14.4 / pyarrow 18.1.0 / matplotlib 3.9.4 / pytest 8.3.4",accept,"Wheels exist for Python 3.10 (user machine) and 3.13; prior EDA ran on pandas 3.0.5 so Phase 1 re-derivation doubles as a reproducibility check"
+2026-11-12T21:25-05:00,0,main,"Add PLAN.md at repo root (not in prescribed structure)",accept,"Phase 0 asks for a written plan; one auditable place for problem, metrics, assumptions, open questions"
+2026-11-12T21:25-05:00,0,main,"Update file paths in FINDINGS.md to notebooks/eda and outputs/eda",edit,"Paths only; no claim or number changed (diff in Phase 0 commit)"
+2026-11-12T21:27-05:00,0,main,"Fix hard-coded import path in notebooks/eda/02b_thresholds.py after move",edit,"Path only; script logic unchanged"
+2026-11-12T21:28-05:00,0,main,"Tool form: thin Flask app calling Python simulate() (add flask==3.1.0)",accept,"Approved by Iman; avoids a second JS copy of the model"
+2026-11-12T21:28-05:00,0,main,"Region x quarter FE as main spec; quarter-only FE as robustness",accept,"Approved by Iman; nests quarter FE and absorbs Panem base price"
+2026-11-12T21:28-05:00,0,main,"Backcast both in-sample and out-of-sample (fit 2017-18, predict 2019)",accept,"Approved by Iman; in-sample alone is only a fit check"
+2026-11-12T21:28-05:00,0,main,"Commit from session with GitHub no-reply author identity",accept,"Approved by Iman; keeps personal email out of history"
+2026-11-12T21:28-05:00,0,main,"Do not copy raw CSVs into OneDrive data/raw; document placement in README",accept,"No explicit recommendation was made; chose the option that avoids 430 MB sync; Iman can override"
+2026-11-12T21:29-05:00,0,main,"Add to tool-builder: UI/UX iterative, styling separated from logic",accept,"Iman request: stay open to further UI changes or a different direction"

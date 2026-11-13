@@ -1,0 +1,60 @@
+
+===== ACQ: observed rates by price point =====
+   era  price       n   rate   ci95  arc_elasticity_vs_prev
+base12      7   40036 0.2522 0.0043                     NaN
+base12      8   40376 0.2042 0.0039                 -1.5764
+base12      9   40308 0.1572 0.0036                 -2.2140
+base12     10   40177 0.1207 0.0032                 -2.4960
+base12     11   39911 0.0839 0.0027                 -3.7789
+base12     12  602384 0.0598 0.0006                 -3.8583
+base15     10  127400 0.1733 0.0021                     NaN
+base15     11  127002 0.1349 0.0019                 -2.6169
+base15     12  127930 0.1005 0.0016                 -3.3576
+base15     13  127379 0.0744 0.0014                 -3.7249
+base15     14  126934 0.0527 0.0012                 -4.6189
+base15     15 1907008 0.0346 0.0003                 -5.9937
+
+ACQ logit: beta = -0.3656 per $ (se 0.0012); odds multiply by exp(beta) = 0.6938 per +$1
+   era  price  obs_rate  logit_pred  point_elasticity
+base12      7    0.2522      0.2699           -1.8684
+base12      8    0.2042      0.2075           -2.3178
+base12      9    0.1572      0.1551           -2.7798
+base12     10    0.1207      0.1139           -3.2395
+base12     11    0.0839      0.0822           -3.6910
+base12     12    0.0598      0.0591           -4.1279
+base15     10    0.1733      0.1757           -3.0136
+base15     11    0.1349      0.1316           -3.4924
+base15     12    0.1005      0.0966           -3.9633
+base15     13    0.0744      0.0697           -4.4215
+base15     14    0.0527      0.0500           -4.8622
+base15     15    0.0346      0.0355           -5.2893
+ACQ segment logit: beta(podcast<0.5) = -0.6058, beta(podcast>=0.5) = -0.3999, interaction se = 0.0033
+
+===== RET: observed rates by price point =====
+   era  price     n   rate   ci95  arc_elasticity_vs_prev
+base12      7 54341 0.9494 0.0018                     NaN
+base12      8 53733 0.9374 0.0020                 -0.0954
+base12      9 53937 0.9221 0.0023                 -0.1402
+base12     10 53974 0.9041 0.0025                 -0.1874
+base12     11 53881 0.8786 0.0028                 -0.3008
+base15     10 63746 0.8842 0.0025                     NaN
+base15     11 63815 0.8552 0.0027                 -0.3504
+base15     12 63288 0.8178 0.0030                 -0.5147
+base15     13 63321 0.7666 0.0033                 -0.8077
+base15     14 63665 0.7098 0.0035                 -1.0383
+
+RET logit: beta = -0.2787 per $ (se 0.0028); odds multiply by exp(beta) = 0.7568 per +$1
+   era  price  obs_rate  logit_pred  point_elasticity
+base12      7    0.9494      0.9543           -0.0890
+base12      8    0.9374      0.9406           -0.1325
+base12      9    0.9221      0.9230           -0.1931
+base12     10    0.9041      0.9008           -0.2765
+base12     11    0.8786      0.8730           -0.3894
+base15     10    0.8842      0.8826           -0.3270
+base15     11    0.8552      0.8517           -0.4544
+base15     12    0.8178      0.8133           -0.6242
+base15     13    0.7666      0.7687           -0.8379
+base15     14    0.7098      0.7171           -1.1036
+RET segment logit: beta(podcast<0.5) = -0.0838, beta(podcast>=0.5) = -0.3054, interaction se = 0.0065
+
+REFERENCE (not randomized): Panem members at $15, stay rate = 0.6962 (n=153,759); by year: {2017: 0.5778, 2018: 0.6449, 2019: 0.7565}

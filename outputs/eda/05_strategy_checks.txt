@@ -1,0 +1,35 @@
+A) DiD, base cut $15->$12, prospects at list price (log-odds scale; robust SE; NOTE: only 1 control region, so SEs are optimistic)
+   DiD delta = 0.829 (se 0.222); odds ratio = 2.29
+   Placebo (pre-period only, fake cut at t>=5): 0.138 (se 0.045)
+   Randomized-depth prediction for a $3 cut: 1.097; odds ratio = 2.99
+   raw list-price sign-up rates (pre / post):
+post      False   True 
+grp                    
+panem    0.0492  0.0412
+treated  0.0346  0.0598
+
+B) Reference price, members (n=438,593), linear prob. with region x season FE:
+   price_now:  -3.200 pp per $ (se 0.037)
+   price_last: -0.112 pp per $ (se 0.037)
+   stay rate by current price x direction of change vs last season:
+change            price fell  price rose    same
+membership_price                                
+7                     0.9559         NaN  0.9453
+8                     0.9473      0.9386  0.9392
+9                     0.9347      0.9225  0.9293
+10                    0.8917      0.9113  0.9000
+11                    0.8579      0.8791  0.8739
+12                    0.8173      0.8240  0.8289
+13                    0.7627      0.7742  0.7724
+14                       NaN      0.7185  0.7104
+
+C) First-season revenue per prospect ($), by segment and offer depth:
+   era         segment  list  $1_off  $2_off  $3_off  $4_off  $5_off
+base12  lapsed | P<0.5 0.769   0.915   1.341   1.461   1.748   1.704
+base12 lapsed | P>=0.5 2.534   3.038   3.576   3.892   3.959   3.895
+base12   never | P<0.5 0.060   0.138   0.295   0.465   0.706   0.905
+base12  never | P>=0.5 1.642   1.988   2.507   2.840   3.030   3.130
+base15  lapsed | P<0.5 0.664   0.839   1.165   1.235   1.430   1.924
+base15 lapsed | P>=0.5 1.835   2.356   2.955   3.457   3.942   4.264
+base15   never | P<0.5 0.026   0.040   0.061   0.100   0.184   0.326
+base15  never | P>=0.5 1.014   1.468   1.948   2.416   2.916   3.323

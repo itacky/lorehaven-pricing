@@ -1,0 +1,62 @@
+
+== by ALL ==
+      segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+all prospects 3346845                 1.0   0.0407    0.0196    0.0734    0.1515             0.0407          0.1515            0.8078                  0.7884                        3.0798                        6.3423      True
+-- same, by base-price era --
+   era       segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+base12 all prospects  803192                 1.0   0.0598    0.0244    0.0973    0.1924             0.0598          0.1924            0.7479                  0.7630                        3.4454                        6.5534      True
+base15 all prospects 2543653                 1.0   0.0346    0.0180    0.0658    0.1387             0.0346          0.1387            0.8267                  0.8001                        2.9234                        6.2493      True
+
+== by podcast band ==
+   segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+P0.40-0.55  418920              0.1252   0.0226    0.0099    0.0413    0.0946             0.0226          0.0946            0.8827                  0.8070                        3.2967                        6.1955      True
+    P<0.40 1614287              0.4823   0.0014    0.0023    0.0162    0.0542             0.0014          0.0542            0.9444                  0.9748                        1.6157                        5.1295      True
+   P>=0.55 1313638              0.3925   0.0948    0.0428    0.1541    0.2894             0.0948          0.2894            0.6159                  0.7533                        3.2143                        6.6378      True
+-- same, by base-price era --
+   era    segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+base12 P0.40-0.55   69830              0.0869   0.0489    0.0169    0.0791    0.1712             0.0489          0.1712            0.7799                  0.7776                        3.8945                        6.4298      True
+base12     P<0.40  477902              0.5950   0.0039    0.0074    0.0459    0.1226             0.0039          0.1226            0.8735                  0.9693                        1.5262                        5.1582      True
+base12    P>=0.55  255460              0.3181   0.1676    0.0539    0.1998    0.3272             0.1676          0.3272            0.5052                  0.6612                        4.1110                        7.5617      True
+base15 P0.40-0.55  349090              0.1372   0.0174    0.0084    0.0338    0.0793             0.0174          0.0793            0.9034                  0.8204                        3.0604                        6.0950      True
+base15     P<0.40 1136385              0.4468   0.0004    0.0001    0.0037    0.0257             0.0004          0.0257            0.9739                  0.9861                        3.7283                        5.0705      True
+base15    P>=0.55 1058178              0.4160   0.0772    0.0401    0.1432    0.2802             0.0772          0.2802            0.6426                  0.7840                        2.9242                        6.3777      True
+
+== by podcast x social cell ==
+              segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+ P0.40-0.55 | S<0.425   45846              0.0137   0.0035   -0.0002    0.0222    0.0600             0.0035          0.0600            0.9366                  0.9455                      -13.8087                        5.2883     False
+P0.40-0.55 | S>=0.425  373074              0.1115   0.0250    0.0113    0.0437    0.0990             0.0250          0.0990            0.8760                  0.7985                        3.2080                        6.2617      True
+     P<0.40 | S<0.425  158108              0.0472   0.0014    0.0027    0.0152    0.0528             0.0014          0.0528            0.9457                  0.9733                        1.5286                        5.1372      True
+    P<0.40 | S>=0.425 1456179              0.4351   0.0014    0.0022    0.0163    0.0544             0.0014          0.0544            0.9442                  0.9749                        1.6280                        5.1287      True
+    P>=0.55 | S<0.425  172148              0.0514   0.0098    0.0082    0.0480    0.1228             0.0098          0.1228            0.8674                  0.9259                        2.2008                        5.4000      True
+   P>=0.55 | S>=0.425 1141490              0.3411   0.1076    0.0482    0.1700    0.3146             0.1076          0.3146            0.5778                  0.7452                        3.2313                        6.7101      True
+-- same, by base-price era --
+   era               segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+base12  P0.40-0.55 | S<0.425    8603              0.0107   0.0119    0.0012    0.0841    0.1474             0.0119          0.1474            0.8407                  0.9254                       11.2314                        5.4034      True
+base12 P0.40-0.55 | S>=0.425   61227              0.0762   0.0542    0.0189    0.0784    0.1748             0.0542          0.1748            0.7711                  0.7634                        3.8596                        6.5499      True
+base12      P<0.40 | S<0.425   48837              0.0608   0.0046    0.0084    0.0443    0.1193             0.0046          0.1193            0.8761                  0.9627                        1.5523                        5.1938      True
+base12     P<0.40 | S>=0.425  429065              0.5342   0.0038    0.0073    0.0460    0.1230             0.0038          0.1230            0.8732                  0.9701                        1.5232                        5.1543      True
+base12     P>=0.55 | S<0.425   46049              0.0573   0.0208    0.0174    0.1223    0.2525             0.0208          0.2525            0.7267                  0.9240                        2.1980                        5.4115      True
+base12    P>=0.55 | S>=0.425  209411              0.2607   0.1999    0.0619    0.2167    0.3446             0.1999          0.3446            0.4555                  0.6328                        4.2294                        7.9010      True
+base15  P0.40-0.55 | S<0.425   37243              0.0146   0.0015   -0.0008    0.0078    0.0397             0.0015          0.0397            0.9588                  0.9635                       -0.8177                        5.1892     False
+base15 P0.40-0.55 | S>=0.425  311847              0.1226   0.0193    0.0098    0.0370    0.0841             0.0193          0.0841            0.8966                  0.8137                        2.9621                        6.1447      True
+base15      P<0.40 | S<0.425  109271              0.0430   0.0000    0.0002    0.0020    0.0234             0.0000          0.0234            0.9765                  0.9990                        1.1624                        5.0052      True
+base15     P<0.40 | S>=0.425 1027114              0.4038   0.0004    0.0001    0.0039    0.0260             0.0004          0.0260            0.9736                  0.9849                        4.0598                        5.0767      True
+base15     P>=0.55 | S<0.425  126099              0.0496   0.0058    0.0048    0.0211    0.0745             0.0058          0.0745            0.9197                  0.9274                        2.2040                        5.3915      True
+base15    P>=0.55 | S>=0.425  932079              0.3664   0.0869    0.0451    0.1595    0.3079             0.0869          0.3079            0.6052                  0.7799                        2.9245                        6.4108      True
+
+== by status x podcast ==
+        segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+ lapsed | P<0.5   27284              0.0082   0.0543    0.0173    0.0788    0.1642             0.0543          0.1642            0.7815                  0.7514                        4.1336                        6.6538      True
+lapsed | P>=0.5  245541              0.0734   0.1596    0.0540    0.1889    0.3215             0.1596          0.3215            0.5190                  0.6683                        3.9524                        7.4820      True
+  never | P<0.5 1905707              0.5694   0.0027    0.0029    0.0175    0.0562             0.0027          0.0562            0.9412                  0.9549                        1.9299                        5.2364      True
+ never | P>=0.5 1168313              0.3491   0.0775    0.0382    0.1401    0.2712             0.0775          0.2712            0.6513                  0.7778                        3.0263                        6.4286      True
+-- same, by base-price era --
+   era         segment       n  share_of_prospects  p0_list  uplift_1  uplift_3  uplift_5  would_join_anyway  persuaded_by_5  not_reached_by_5  incremental_share_at_5  dollars_per_incr_signup_at_1  dollars_per_incr_signup_at_5  monotone
+base12  lapsed | P<0.5   13854              0.0172   0.0641    0.0191    0.0983    0.1793             0.0641          0.1793            0.7566                  0.7366                        4.3601                        6.7880      True
+base12 lapsed | P>=0.5  103091              0.1284   0.2111    0.0650    0.2213    0.3453             0.2111          0.3453            0.4435                  0.6206                        4.2458                        8.0570      True
+base12   never | P<0.5  519414              0.6467   0.0050    0.0075    0.0467    0.1242             0.0050          0.1242            0.8707                  0.9611                        1.6722                        5.2025      True
+base12  never | P>=0.5  166833              0.2077   0.1368    0.0439    0.1788    0.3102             0.1368          0.3102            0.5529                  0.6939                        4.1174                        7.2055      True
+base15  lapsed | P<0.5   13430              0.0053   0.0443    0.0156    0.0587    0.1481             0.0443          0.1481            0.8076                  0.7699                        3.8332                        6.4941      True
+base15 lapsed | P>=0.5  142450              0.0560   0.1223    0.0460    0.1658    0.3041             0.1223          0.3041            0.5736                  0.7131                        3.6606                        7.0113      True
+base15   never | P<0.5 1386293              0.5450   0.0018    0.0011    0.0066    0.0309             0.0018          0.0309            0.9674                  0.9459                        2.5892                        5.2860      True
+base15  never | P>=0.5 1001480              0.3937   0.0676    0.0373    0.1337    0.2647             0.0676          0.2647            0.6677                  0.7966                        2.8127                        6.2768      True
