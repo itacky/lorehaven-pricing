@@ -34,9 +34,12 @@ def test_answer_numbers_come_from_metrics(client):
     metrics = json.loads(METRICS_PATH.read_text())
     value = lambda key: metrics[key]["value"]
     page = client.get("/").get_data(as_text=True)
-    assert f"raises the odds of signing up by {round(100 * value('headline.signup_odds_change_per_dollar_off'))}%" in page
+    assert f"+{round(100 * value('headline.signup_odds_change_per_dollar_off'))}%" in page
     assert f"{100 * value('headline.holdout_design_ltv_vs_today_pct'):+.0f}%" in page
-    assert f"{round(100 * value('assumption.holdout_arm_share.5_off'))}% of new prospects at $5 off" in page
+    assert f"Randomized holdout: {round(100 * value('assumption.holdout_arm_share.5_off'))}% $5" in page
+    ratio = value("headline.holdout_design_ltv_per_1000") / value("scenario.status_quo_2019.ltv_per_1000_prospects")
+    assert f"{ratio:.1f}×" in page
+    assert f"{round(100 * value('uplift.base12.cold.incremental_share_at_5'))}%" in page
 
 
 @pytest.mark.parametrize("preset_id", list(PRESETS))

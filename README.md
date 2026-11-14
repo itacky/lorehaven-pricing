@@ -55,10 +55,12 @@ the tool, Flask is the one package it needs (`pip install flask==3.1.0`). The to
 
 ## Using the tool
 The page reads top to bottom in the order of the brief:
-1. **The answer.** Were the 2017-2019 price changes effective (discounts, the 2019 base cut, today's member
-   discounts), next to the recommendation and its simulated value. *Load it in the simulator* applies it.
-2. **The evidence.** Who a $5 offer wins (would-join-anyway vs persuadable), why member discounts belong at
-   the first renewals, and what each policy earns over the chosen horizon.
+1. **The answer.** A scorecard for the 2017-2019 changes: a verdict on each (discounts, the 2019 base cut,
+   today's member discounts), how strong the evidence is, and the key number. Below it, the four-step
+   recommendation and its simulated value. *Load it in the simulator* applies it.
+2. **The evidence, in three numbers.** Click a number to see its detail: who a $5 offer wins (would-join-anyway
+   vs persuadable, by segment), renewal for new vs established members, and what each policy earns over the
+   chosen horizon.
 3. **Test a policy.** The simulator. Set a policy in the **Simulator settings** panel on the right:
    - **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $3 discount for all members*, or *No discounts*.
    - **Base price per quarter**: the list price. The model is calibrated at $12; any other base price is flagged.

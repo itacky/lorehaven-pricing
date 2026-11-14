@@ -8,7 +8,7 @@
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 78 rows: every AI suggestion and what I did with it (55 accepted, 12 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 79 rows: every AI suggestion and what I did with it (56 accepted, 12 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -265,6 +265,9 @@ All the existing numbers were reproduced exactly when the scenarios were re-run 
 | 2. Agent instructions | `analyst`, `critic` and `tool-builder` rewritten (v2). Each now covers when it runs, inputs, steps, outputs with exact formats, do/don't, and handoffs, matching how the roles were actually run |
 | 3. Repository instructions | New `CLAUDE.md`: overview, shared rules, where the plan, findings, decision log and `metrics.json` live and how to treat each, handoffs, repo map. `AGENTS.md` points to it |
 | 4. Mac/Anaconda | Cause: `bash run_tool.sh` doesn't read `~/.zshrc`, so `python3` was Apple's 3.9. The launcher now searches `LOREHAVEN_PYTHON`, the active conda env, PATH, conda's base and environments, and the usual install folders, and gives a clear fix if nothing fits. Claude reproduced the reviewer's failure, then tested 8 scenarios and a real start. The README has a troubleshooting section |
+
+
+**Follow-up (verbatim):** "can you show me a few alternative looks for the evidence panel?" … "and also for the answer panel too". Claude mocked up three answer panels and three evidence panels on the design canvas. **I chose (verbatim):** "answer can should be panel g and evidence should be panel f". The answer is now a scorecard: a verdict, how strong the evidence is and the key number for each change, with the four recommendation steps below. The evidence is three headline numbers (96% · 43% → 91% · 2.1×) that open their detail when clicked.
 
 ---
 

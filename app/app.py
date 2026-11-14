@@ -96,6 +96,7 @@ def answer_facts(value) -> dict:
     signed = lambda key: f"{100 * value(key):+.0f}%"
     money_k = lambda key: f"${value(key) / 1000:.1f}k"
     uplift = lambda segment: pct(f"uplift.base12.{segment}.incremental_share_at_5")
+    list_rate = lambda segment: f"{100 * value(f'uplift.base12.{segment}.p0_list'):.1f}%"
     stay = lambda segment, tenure: pct(f"fit_check_in_sample.{segment}.member_{tenure}.price11.observed")
     holdout = {arm: pct(f"assumption.holdout_arm_share.{arm}") for arm in ("5_off", "list", "3_off")}
     return {
@@ -114,13 +115,13 @@ def answer_facts(value) -> dict:
         # who a $5 offer wins: share of $5-offer joiners who would NOT have joined at list price ($12 era)
         "uplift_rows": [
             {"label": "Cold prospects", "detail": "never members, less engaged", "share": uplift("cold"),
-             "prospects": pct("uplift.base12.cold.share_of_prospects")},
+             "prospects": pct("uplift.base12.cold.share_of_prospects"), "list_rate": list_rate("cold")},
             {"label": "Former members, less engaged", "detail": "", "share": uplift("lapsed_low_podcast"),
-             "prospects": pct("uplift.base12.lapsed_low_podcast.share_of_prospects")},
+             "prospects": pct("uplift.base12.lapsed_low_podcast.share_of_prospects"), "list_rate": list_rate("lapsed_low_podcast")},
             {"label": "Warm listeners", "detail": "never members, engaged", "share": uplift("warm_listener"),
-             "prospects": pct("uplift.base12.warm_listener.share_of_prospects")},
+             "prospects": pct("uplift.base12.warm_listener.share_of_prospects"), "list_rate": list_rate("warm_listener")},
             {"label": "Win-backs", "detail": "former members, engaged", "share": uplift("win_back"),
-             "prospects": pct("uplift.base12.win_back.share_of_prospects")},
+             "prospects": pct("uplift.base12.win_back.share_of_prospects"), "list_rate": list_rate("win_back")},
         ],
         # who stays at $11: first renewal vs established, observed in the $12 era
         "stay_rows": [
@@ -130,6 +131,9 @@ def answer_facts(value) -> dict:
         "did_jump": f"{value('event_study.treated_x_q9'):.2f}",
         "did_predicted": f"{value('did.randomized_prediction_delta'):.2f}",
         "tested_offer_share_pct": pct("simulator.tested_offer_share"),
+        "holdout_ltv_ratio": f"{value('headline.holdout_design_ltv_per_1000') / value('scenario.status_quo_2019.ltv_per_1000_prospects'):.1f}",
+        "uplift_others_low": min(uplift(s) for s in ("lapsed_low_podcast", "warm_listener", "win_back")),
+        "uplift_others_high": max(uplift(s) for s in ("lapsed_low_podcast", "warm_listener", "win_back")),
     }
 
 

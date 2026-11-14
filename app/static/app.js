@@ -245,6 +245,27 @@ document.querySelectorAll(".js-load-recommended").forEach((button) => button.add
   document.getElementById("simulator").scrollIntoView({ behavior: "smooth", block: "start" });
 }));
 
+// Evidence: three headline-number tiles act as tabs; the chosen one shows its detail below.
+const evidenceTabs = [...document.querySelectorAll(".evidence-tile")];
+function selectEvidence(tab) {
+  evidenceTabs.forEach((t) => {
+    const selected = t === tab;
+    t.setAttribute("aria-selected", String(selected));
+    t.tabIndex = selected ? 0 : -1;
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !selected;
+  });
+}
+evidenceTabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => selectEvidence(tab));
+  tab.addEventListener("keydown", (event) => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+    if (!step) return;
+    const next = evidenceTabs[(i + step + evidenceTabs.length) % evidenceTabs.length];
+    selectEvidence(next); next.focus();
+  });
+});
+if (evidenceTabs.length) selectEvidence(evidenceTabs[0]);
+
 // Sidebar: highlight the section currently on screen (The answer / Evidence / Test a policy / Limitations).
 const navLinks = [...document.querySelectorAll(".nav-links a")];
 const sections = navLinks.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
