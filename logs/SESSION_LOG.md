@@ -8,7 +8,7 @@
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 80 rows: every AI suggestion and what I did with it (56 accepted, 13 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 81 rows: every AI suggestion and what I did with it (57 accepted, 13 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -271,6 +271,18 @@ These four points were my own review. The first version of this log recorded the
 
 **Follow-up (verbatim):** "can you show me a few alternative looks for the evidence panel?" … "and also for the answer panel too". Claude mocked up three answer panels and three evidence panels on the design canvas. **I chose (verbatim):** "answer can should be panel g and evidence should be panel f". The answer is now a scorecard: a verdict, how strong the evidence is and the key number for each change, with the four recommendation steps below. The evidence is three headline numbers (96% · 43% → 91% · 2.1×) that open their detail when clicked.
 
+
+### 13. Figure 1 redesign (14 Nov)
+
+**Prompt (verbatim, abridged):**
+> for the writeup, can you put fig 1 and fig 2 under the actual diagrams? […] Also for fig 1. Can you show me some alternative ways of visualizing this data/story? This view might not be immediately clear to some people
+
+Captions ("Fig. 1/2/3." plus a one-line takeaway) went under each figure. Claude drew four alternatives, A–D. I asked for more, explaining (verbatim, abridged):
+
+> The current version technically has all the information but it's somewhat misleading because it makes it looks like win-backs are the group that brings in the most sign ups when in reality its the warm listeners, followed by cold prospects, then win-backs.
+
+Three more (E, F, H) showed join rate, volume and who is new together. **I chose F**: join rate and sign-ups per 1,000 prospects side by side, with rows ordered by volume. **I also asked (verbatim):** "the 21% 65%, 13% and 2% needs to eqal 100". Segment shares are now rounded with largest remainders (21/64/13/2) in the figure and in the tool. The write-up is still 2 pages.
+
 ---
 
 ## Where the AI got it wrong, and what caught it
@@ -287,6 +299,7 @@ These four points were my own review. The first version of this log recorded the
 | Overstated claims in the write-up ("every segment", base cut "raised" sign-ups) | Critic, Phase 4 | Reworded; assumptions stated |
 | Commit message miscounted critic outcomes | Claude, later | Correction logged, history kept |
 | Team acronym guessed (EDS) | Claude flagged it, I corrected it | AERO |
+| Fig. 1 suggested win-backs bring the most sign-ups (rates shown, segment sizes not) | Me | Redesigned as rate + volume (F); shares rounded to sum to 100 |
 | Headline gain quoted for a full rollout, not the recommended holdout design | External review (Astra) | Rollout simulated: +113% vs +133% |
 | Pull-forward presented as causal; standard error from an equal-variance shortcut | External review (Astra) | Pull-forward reframed as descriptive; SE given as a 0.45–0.72 range |
 | NaN or infinity in the tool caused a server error | External review (Astra) | Validation and 13 tests added |

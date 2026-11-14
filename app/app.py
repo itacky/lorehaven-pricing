@@ -22,6 +22,7 @@ sys.path.insert(0, str(APP_DIR))                              # app/presets.py
 sys.path.insert(0, str(APP_DIR.parent / "src"))               # lorehaven package, works without `pip install -e .`
 from presets import PRESETS, STATUS_QUO                       # noqa: E402
 
+from lorehaven.formatting import percents_summing_to_100  # noqa: E402
 from lorehaven.simulate import METRICS_PATH, InvalidPolicy, PricingPolicy, load_model, simulate  # noqa: E402
 
 # PricingPolicy field -> form input name (so errors can point at the right box)
@@ -99,6 +100,8 @@ def answer_facts(value) -> dict:
     list_rate = lambda segment: f"{100 * value(f'uplift.base12.{segment}.p0_list'):.1f}%"
     stay = lambda segment, tenure: pct(f"fit_check_in_sample.{segment}.member_{tenure}.price11.observed")
     holdout = {arm: pct(f"assumption.holdout_arm_share.{arm}") for arm in ("5_off", "list", "3_off")}
+    segments = ("cold", "lapsed_low_podcast", "warm_listener", "win_back")
+    share_pct = percents_summing_to_100({s: value(f"uplift.base12.{s}.share_of_prospects") for s in segments})   # adds to 100
     return {
         "signup_odds_pct": pct("headline.signup_odds_change_per_dollar_off"),
         "retention_odds_pct": pct("headline.retention_odds_change_per_dollar_off"),
@@ -115,13 +118,13 @@ def answer_facts(value) -> dict:
         # who a $5 offer wins: share of $5-offer joiners who would NOT have joined at list price ($12 era)
         "uplift_rows": [
             {"label": "Cold prospects", "detail": "never members, less engaged", "share": uplift("cold"),
-             "prospects": pct("uplift.base12.cold.share_of_prospects"), "list_rate": list_rate("cold")},
+             "prospects": share_pct["cold"], "list_rate": list_rate("cold")},
             {"label": "Former members, less engaged", "detail": "", "share": uplift("lapsed_low_podcast"),
-             "prospects": pct("uplift.base12.lapsed_low_podcast.share_of_prospects"), "list_rate": list_rate("lapsed_low_podcast")},
+             "prospects": share_pct["lapsed_low_podcast"], "list_rate": list_rate("lapsed_low_podcast")},
             {"label": "Warm listeners", "detail": "never members, engaged", "share": uplift("warm_listener"),
-             "prospects": pct("uplift.base12.warm_listener.share_of_prospects"), "list_rate": list_rate("warm_listener")},
+             "prospects": share_pct["warm_listener"], "list_rate": list_rate("warm_listener")},
             {"label": "Win-backs", "detail": "former members, engaged", "share": uplift("win_back"),
-             "prospects": pct("uplift.base12.win_back.share_of_prospects"), "list_rate": list_rate("win_back")},
+             "prospects": share_pct["win_back"], "list_rate": list_rate("win_back")},
         ],
         # who stays at $11: first renewal vs established, observed in the $12 era
         "stay_rows": [

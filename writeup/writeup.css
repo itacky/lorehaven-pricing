@@ -28,10 +28,13 @@ li::marker { color: var(--orange-deep); font-weight: 700; }
 .callout h2 { margin-top: 2px; }
 .callout ul { margin-bottom: 3px; }
 
-.figs { display: flex; gap: 14px; margin: 6px 0 4px; align-items: flex-start; }
-.figs img { width: 49%; height: auto; }   /* never stretch: keeps the figure's aspect ratio */
+.figs { display: flex; justify-content: space-between; gap: 14px; margin: 4px 0 3px; align-items: flex-start; }
+.figs figure { width: 47%; margin: 0; }
+.figs img, .fig-right img { width: 100%; height: auto; display: block; }   /* never stretch: keeps the figure's aspect ratio */
+.fig-right figure { margin: 0; }
+figcaption { font-size: 7.4pt; color: var(--muted); margin-top: 1px; line-height: 1.25; }
+figcaption b { color: var(--ink); }
 .fig-right { float: right; width: 47%; margin: 2px 0 4px 12px; }
-.fig-right img { width: 100%; height: auto; }
 .caption { font-size: 7.6pt; color: var(--muted); }
 table { border-collapse: collapse; font-size: 8pt; margin: 3px 0 6px; }
 th, td { border-bottom: 1px solid var(--line); padding: 2px 6px; text-align: left; }

@@ -10,16 +10,18 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.patches import Rectangle
 
 from lorehaven.pipeline import RESULTS_DIR
 from lorehaven.data_prep import REPO_ROOT
+from lorehaven.formatting import percents_summing_to_100
 
 FIGURES_DIR = REPO_ROOT / "outputs" / "figures"
 FIGURE_SIZE = (3.6, 2.6)   # inches; identical for all three so text prints at the same physical size
 ORANGE, BLUE, AQUA = "#c46a00", "#2a78d6", "#1a9e8f"
 INK, MUTED, GRID, NEUTRAL = "#1c2433", "#5d6779", "#e1e0d9", "#b7bfcc"
-SEGMENT_LABELS = {"win_back": "Win-backs\n(former members, engaged)", "warm_listener": "Warm listeners\n(never members, engaged)",
-                  "lapsed_low_podcast": "Former members,\nless engaged", "cold": "Cold\n(never members, less engaged)"}
+SHORT_SEGMENT_LABELS = {"win_back": "Win-backs", "warm_listener": "Warm listeners", "lapsed_low_podcast": "Former, less engaged",
+                        "cold": "Cold prospects"}
 
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 7, "axes.edgecolor": GRID, "axes.labelcolor": MUTED,
                      "xtick.color": MUTED, "ytick.color": MUTED, "axes.spines.top": False, "axes.spines.right": False,
@@ -37,27 +39,38 @@ def _metrics():
 
 
 def figure_who_needs_the_offer():
-    """Stacked bar per prospect segment, $12 era: joiners at list price vs extra joiners at $5 off."""
+    """Two panels per prospect segment ($12 era): join rate with $5 off, and sign-ups per 1,000 prospects.
+    Both split into would join anyway (list-price rate) and join because of the offer (uplift at $5 off)."""
     uplift = pd.read_csv(RESULTS_DIR / "uplift_by_segment_base12.csv").set_index("segment")
-    order = ["win_back", "warm_listener", "lapsed_low_podcast", "cold"]
-    uplift = uplift.loc[order]
-    fig, ax = plt.subplots(figsize=FIGURE_SIZE, layout="constrained")
-    y = range(len(order))[::-1]
-    ax.barh(y, 100 * uplift.p0_list, color=BLUE, height=0.55, label="Would join at list price (already sold)")
-    ax.barh(y, 100 * uplift.uplift_5, left=100 * uplift.p0_list, color=ORANGE, height=0.55,
-            edgecolor="white", linewidth=1.5, label="Join only with $5 off (persuadable)")
-    for yi, (segment, row) in zip(y, uplift.iterrows()):
-        total = 100 * (row.p0_list + row.uplift_5)
-        ax.text(total + 1.5, yi, f"{total:.0f}% join\n{100 * row.share_of_prospects:.0f}% of prospects",
-                va="center", fontsize=6.5, color=INK, linespacing=1.1)
-    ax.set_yticks(list(y), [SEGMENT_LABELS[s] for s in order], fontsize=6.5)
-    ax.set_xlim(0, 75)
-    ax.set_xlabel("Sign-up rate per quarter (%)")
-    ax.xaxis.grid(True, color=GRID, linewidth=0.8)
-    ax.set_axisbelow(True)
-    fig.suptitle("1. Who a $5 offer wins ($12 era)", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
-    fig.legend(loc="outside lower center", fontsize=6.5, frameon=False, ncol=1,
-               title="Assumes offers were as good as random and no one is put off by one", title_fontsize=6)
+    uplift["anyway_per_1000"] = 1000 * uplift.share_of_prospects * uplift.p0_list
+    uplift["new_per_1000"] = 1000 * uplift.share_of_prospects * uplift.uplift_5
+    uplift["total_per_1000"] = uplift.anyway_per_1000 + uplift.new_per_1000
+    order = uplift.total_per_1000.sort_values(ascending=False).index.tolist()     # most sign-ups first
+    share_pct = percents_summing_to_100(uplift.share_of_prospects.to_dict())
+    fig, (rate_ax, volume_ax) = plt.subplots(1, 2, figsize=FIGURE_SIZE, layout="constrained", sharey=True,
+                                             gridspec_kw={"width_ratios": [1, 1.05]})
+    for y, segment in enumerate(order[::-1]):
+        row = uplift.loc[segment]
+        rate_ax.barh(y, 100 * row.p0_list, color=BLUE, height=0.55)
+        rate_ax.barh(y, 100 * row.uplift_5, left=100 * row.p0_list, color=ORANGE, height=0.55, edgecolor="white", linewidth=1)
+        rate_ax.text(100 * (row.p0_list + row.uplift_5) + 1.5, y, f"{100 * (row.p0_list + row.uplift_5):.0f}%", va="center", fontsize=6, color=INK)
+        volume_ax.barh(y, row.anyway_per_1000, color=BLUE, height=0.55)
+        volume_ax.barh(y, row.new_per_1000, left=row.anyway_per_1000, color=ORANGE, height=0.55, edgecolor="white", linewidth=1)
+        volume_ax.text(row.total_per_1000 + 2, y, f"{row.total_per_1000:.0f}", va="center", fontsize=6, color=INK)
+    rate_ax.set_yticks(range(len(order)), [f"{SHORT_SEGMENT_LABELS[s]}\n{share_pct[s]}% of prospects" for s in order[::-1]], fontsize=6)
+    rate_ax.set_xlim(0, 72)
+    volume_ax.set_xlim(0, 118)
+    rate_ax.set_title("Join rate (%)", fontsize=6.5, color=MUTED, loc="left", fontweight="bold")
+    volume_ax.set_title("Sign-ups per 1,000", fontsize=6.5, color=MUTED, loc="left", fontweight="bold")
+    for ax in (rate_ax, volume_ax):
+        ax.xaxis.grid(True, color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+        ax.tick_params(axis="y", length=0)
+    fig.suptitle("Who a $5 offer brings in: rate and volume", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
+    legend = [Rectangle((0, 0), 1, 1, color=BLUE, label="Would join anyway"),
+              Rectangle((0, 0), 1, 1, color=ORANGE, label="Join because of the $5 offer")]
+    fig.legend(handles=legend, loc="outside lower center", ncol=2, fontsize=6.5, frameon=False,
+               title="Assumes offers were as good as random and no one is put off by one. $12 era.", title_fontsize=5.6)
     fig.savefig(FIGURES_DIR / "fig1_who_the_offer_wins.png")
     plt.close(fig)
 
@@ -79,7 +92,7 @@ def figure_retention_by_tenure():
         ax.yaxis.grid(True, color=GRID, linewidth=0.8)
         ax.set_axisbelow(True)
     axes[0].set_ylabel("Stay next quarter (%)")
-    fig.suptitle("2. New members are the price-sensitive ones", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
+    fig.suptitle("New members are the price-sensitive ones", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="outside lower center", ncol=3, fontsize=6.5, frameon=False,
                title="Member tenure (dots = observed; lines = model fit to the same data)", title_fontsize=6.5)
@@ -106,7 +119,7 @@ def figure_policy_value():
     ax.set_xlim(0, max(r[1] for r in rows) * 1.18)
     ax.xaxis.grid(True, color=GRID, linewidth=0.8)
     ax.set_axisbelow(True)
-    fig.suptitle("3. Value of each policy (12 quarters, base $12)", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
+    fig.suptitle("Value of each policy (12 quarters, base $12)", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
     fig.savefig(FIGURES_DIR / "fig3_policy_value.png")
     plt.close(fig)
 

@@ -175,3 +175,11 @@ def test_prices_below_tested_range_are_flagged(model):
 def test_all_outputs_are_finite(model):
     result = simulate(policy(horizon_quarters=40), model)
     assert all(math.isfinite(v) for v in result["kpis"].values())
+
+
+# ---------------------------------------------------------------- display rounding
+def test_percents_summing_to_100_uses_largest_remainders():
+    from lorehaven.formatting import percents_summing_to_100
+    shares = {"warm": 0.2077, "cold": 0.6467, "win_back": 0.1284, "former": 0.0172}   # naive rounding gives 101
+    assert percents_summing_to_100(shares) == {"warm": 21, "cold": 64, "win_back": 13, "former": 2}
+    assert sum(percents_summing_to_100({"a": 1, "b": 1, "c": 1}).values()) == 100

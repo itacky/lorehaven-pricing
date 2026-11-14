@@ -28,10 +28,13 @@ li::marker { color: var(--orange-deep); font-weight: 700; }
 .callout h2 { margin-top: 2px; }
 .callout ul { margin-bottom: 3px; }
 
-.figs { display: flex; gap: 14px; margin: 6px 0 4px; align-items: flex-start; }
-.figs img { width: 49%; height: auto; }   /* never stretch: keeps the figure's aspect ratio */
+.figs { display: flex; justify-content: space-between; gap: 14px; margin: 4px 0 3px; align-items: flex-start; }
+.figs figure { width: 47%; margin: 0; }
+.figs img, .fig-right img { width: 100%; height: auto; display: block; }   /* never stretch: keeps the figure's aspect ratio */
+.fig-right figure { margin: 0; }
+figcaption { font-size: 7.4pt; color: var(--muted); margin-top: 1px; line-height: 1.25; }
+figcaption b { color: var(--ink); }
 .fig-right { float: right; width: 47%; margin: 2px 0 4px 12px; }
-.fig-right img { width: 100%; height: auto; }
 .caption { font-size: 7.6pt; color: var(--muted); }
 table { border-collapse: collapse; font-size: 8pt; margin: 3px 0 6px; }
 th, td { border-bottom: 1px solid var(--line); padding: 2px 6px; text-align: left; }
@@ -57,13 +60,13 @@ th { color: var(--muted); font-weight: 600; }
 <h2>How I evaluated it</h2>
 <p>Customers were re-priced every quarter by a random draw, so comparing customers in the same region and quarter at different prices identifies the effect of price, with no parallel-trends assumption needed. Inside the discounting regions, offer eligibility (25% of prospects) and depth (20% at each of $1–$5) are balanced on every observable: propensity scores, ad exposure, history, sub-region, quarter and customer-ID patterns. I fit logit models of sign-up (prospects) and retention (members) on price, with region × quarter fixed effects and customer-clustered errors. Elasticities range from -1.92 to -5.51 for sign-up and -0.09 to -1.10 for retention, (under a logit, elasticity grows with price by construction). For the $12 cut, I compared list-price prospects in the cut regions against Panem, which never had discounts. To compare policies, a simulator follows a cohort of 1,000 new prospects for 12 quarters using response curves fit on the 2019 $12 regime.</p>
 <h2>Findings</h2>
-<div class="figs"><img src="../outputs/figures/fig1_who_the_offer_wins.png"><img src="../outputs/figures/fig2_retention_by_tenure.png"></div>
+<div class="figs"><figure><img src="../outputs/figures/fig1_who_the_offer_wins.png" alt="Join rate and sign-ups per 1,000 prospects by segment, with and without the $5 offer"><figcaption><b>Fig. 1.</b> Warm listeners bring the most sign-ups; most joiners are new.</figcaption></figure><figure><img src="../outputs/figures/fig2_retention_by_tenure.png" alt="Renewal rate by price and tenure"><figcaption><b>Fig. 2.</b> New members respond most to price.</figcaption></figure></div>
 
 <p><strong>1. A $5 offer mostly wins people who would not otherwise join (Fig. 1).</strong> At the $12 base, 69% of warm listeners who join with $5 off would not have joined at list price. The figure is 62% for win-backs (former members) and 96% for the "cold" majority with low podcast engagement. Because the discount is only paid by those who join, every segment earns more in its first quarter with an offer than without one. Targeting by segment adds nothing measurable. Using the logged random assignment, first-quarter revenue per prospect is $0.89 under today's policy, $1.77 for a uniform $5 offer, and $1.77 for a segment-tuned offer (standard error about $0.02).</p>
 <p><strong>2. Established members mostly stay anyway; new members are the price-sensitive ones (Fig. 2).</strong> At $11, 92% of established engaged members stay, against 83% at their first renewal. For less-engaged members, first-renewal retention rises from 43% at $11 to 67% at $7. Today every member gets a random $1–$5 discount every quarter, which spends most of the member discount budget on people who would stay at a higher price.</p>
 <p><strong>3. The $12 base cut is consistent with higher sign-ups, but not cleanly identified.</strong> List-price sign-up in the cut regions jumped relative to Panem in the first quarter after the cut (3.12 log-odds), then faded to 0.43 two quarters later. The first-quarter jump is far larger than the randomized curve implies for a $3 cut (1.14), which points to a shock in the same quarter. Pre-cut differences were not stable either (pre-trend p &lt; 0.001). Descriptively, comparing 2019 with the same seasons of 2018: revenue per customer rose +45% in the cut regions against +37% in Panem. Members per customer rose +92%, which more than offset a -25% change in revenue per member. Panem's trend is the only comparison, so this is supporting evidence, not proof.</p>
 <h2>Recommendation</h2>
-<div class="fig-right"><img src="../outputs/figures/fig3_policy_value.png"></div>
+<div class="fig-right"><figure><img src="../outputs/figures/fig3_policy_value.png" alt="Revenue per 1,000 prospects by policy"><figcaption><b>Fig. 3.</b> Tenure-based member discounts earn the most.</figcaption></figure></div>
 
 <ol>
 <li><strong>Keep the base at $12.</strong> The model is calibrated there. Test any further list-price change in a controlled experiment rather than taking it from the model: in the data, the same price drew different responses as a discount and as a list price.</li>
