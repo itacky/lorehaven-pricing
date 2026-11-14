@@ -17,7 +17,7 @@ pricing lead with no technical background can open, understand and use in a few 
 - `outputs/results/metrics.json`: model parameters, tested ranges (`simulator.tested_*`), and every number the
   page shows.
 - `PLAN.md` (deliverable definitions), the latest decision-log rows for the tool, and the request (for example
-  a reviewer's feedback, or a design direction chosen by Iman).
+  feedback from Iman or a reviewer, or a design direction chosen by Iman).
 - UI direction: `color_guide_inspo` screenshots (light grey page, white cards, KPI tiles, one main chart),
   Audible orange (#f29a2e logo, #c46a00 / #b35c00 for text-safe accents) and navy ink #1d2140, AERO team badge.
 

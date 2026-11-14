@@ -1,14 +1,14 @@
 # Session log: Lorehaven pricing take-home
 
 **Who:** Immanuel Tacky (candidate) working with Claude (Opus 5.5) as an agentic assistant: shell, files, a browser for checks, and subagents for the critic role.
-**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only follow-ups: the write-up's visual styling, this log, and fixes from an external review and reviewer feedback (sections 11–12). Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
+**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only follow-ups: the write-up's visual styling, this log, and fixes from an external review and from my own review (sections 11–12). Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
 **What this is:** a condensed, ordered record of the working session. My prompts are quoted **word-for-word** where marked "verbatim" and **paraphrased** where marked "paraphrased". Each step points to the commit and decision-log rows that back it, so every claim here can be checked in the repo.
 
 | Record | Where | What it holds |
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 79 rows: every AI suggestion and what I did with it (56 accepted, 12 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 80 rows: every AI suggestion and what I did with it (56 accepted, 13 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -254,10 +254,12 @@ Claude checked each point against the code before answering. It agreed with all 
 
 All the existing numbers were reproduced exactly when the scenarios were re-run (`python -m lorehaven.pipeline --derived-only`).
 
-### 12. Reviewer feedback (13 Nov, evening)
+### 12. My own review: four fixes (13 Nov, evening)
 
 **Prompt (verbatim, abridged):**
 > I got some more feedback on the take-home, and I want us to address these four things I noticed: 1. Make the dashboard's purpose and recommendation clearer. […] 2. Improve the sub-agent instructions. […] 3. Add repository-level AI instructions. […] 4. Fix the Mac/Anaconda setup. The reviewer uses Anaconda on a Mac, and `run_tool.sh` couldn't find their Python installation. […]
+
+These four points were my own review. The first version of this log recorded them as a reviewer's feedback, because of how I worded the request; corrected here.
 
 | Point | What changed |
 |---|---|
@@ -288,7 +290,7 @@ All the existing numbers were reproduced exactly when the scenarios were re-run 
 | Headline gain quoted for a full rollout, not the recommended holdout design | External review (Astra) | Rollout simulated: +113% vs +133% |
 | Pull-forward presented as causal; standard error from an equal-variance shortcut | External review (Astra) | Pull-forward reframed as descriptive; SE given as a 0.45–0.72 range |
 | NaN or infinity in the tool caused a server error | External review (Astra) | Validation and 13 tests added |
-| Mac launcher trusted the first `python3` on PATH (Apple's 3.9), so Anaconda users were blocked | Reviewer (Mac + Anaconda) | Python search across conda, Homebrew, python.org and pyenv; `LOREHAVEN_PYTHON` override; troubleshooting in README |
+| Mac launcher trusted the first `python3` on PATH (Apple's 3.9), so Anaconda users were blocked | Me (Mac + Anaconda setup) | Python search across conda, Homebrew, python.org and pyenv; `LOREHAVEN_PYTHON` override; troubleshooting in README |
 | Holdout split typed into the app instead of read from `metrics.json` | Claude, while building the new dashboard | Recorded as an assumption key in the pipeline |
 
 ## What is not in this log

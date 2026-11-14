@@ -16,7 +16,7 @@ Deliverables:
 - A pricing tool for a non-technical pricing lead (`app/`), with README, pinned environment, validation and
   tests.
 
-Audience: the Audible Economics team. Status: complete. Later work responds to reviewer feedback.
+Audience: the Audible Economics team. Status: complete. Later commits are refinements from Iman's own review and an external AI review.
 
 **Current answer**, as quoted in the write-up and the tool. These are values from `metrics.json`; don't
 restate them anywhere else:
