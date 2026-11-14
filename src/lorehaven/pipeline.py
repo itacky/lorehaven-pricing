@@ -287,6 +287,9 @@ def record_headlines(rec):
     for key, (number, note) in rows.items():
         unit = "$" if key.startswith(("holdout_cost", "holdout_design_ltv_per")) else "share"
         rec.add(f"headline.{key}", float(number), unit, "estimate", src, note)
+    for arm, share in HOLDOUT_ARMS.items():
+        rec.add(f"assumption.holdout_arm_share.{arm}", share, "share of new prospects", "assumption", src,
+                "Recommended rollout: persistent arms, each prospect assigned once")
 
 
 def record_member_value(rec, model):

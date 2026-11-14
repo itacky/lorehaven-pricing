@@ -18,25 +18,119 @@
       <div class="team"><span class="team-badge" aria-hidden="true">AERO</span><span class="team-name">Economics, Research &amp; Optimization</span></div>
     </div>
     <div class="nav-links">
-      <a href="#simulator" class="active">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-6"/></svg>Simulator</a>
-      <a href="#compare">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20V10M12 20V4M18 20v-7"/></svg>Compare policies</a>
-      <a href="#assumptions">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>Assumptions</a>
+      <a href="#answer" class="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>The answer</a>
+      <a href="#evidence">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20V10M12 20V4M18 20v-7"/></svg>Evidence</a>
+      <a href="#simulator">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-6"/></svg>Test a policy</a>
+      <a href="#limits">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>Limitations</a>
     </div>
     <div class="promo">
       <p class="promo-title">Recommended policy</p>
-      <p class="promo-text">${{ facts.base }} base, $5 intro offer to everyone, $5 off the first two renewals, then $1.</p>
-      <button type="button" id="load-recommended">Load it</button>
+      <p class="promo-text">${{ facts.base }} base, $5 intro offer as the default with a holdout, $5 off the first two renewals, then $1.</p>
+      <button type="button" class="js-load-recommended">Load it</button>
     </div>
   </nav>
 
-  <main class="main" id="simulator">
-    <header class="main-header">
+  <main class="main">
+    <header class="main-header" id="answer">
       <div>
-        <h1>Pricing simulator</h1>
-        <p>Per 1,000 prospects, your policy against today's.</p>
+        <h1>Lorehaven pricing: did the price changes work, and what next?</h1>
+        <p>The answer first, then the evidence behind it, then a simulator to test other policies. All numbers are per 1,000 new prospects and come from the analysis results.</p>
+      </div>
+    </header>
+
+    <div class="answer">
+      <section class="card verdict-card" aria-labelledby="verdict-title">
+        <h2 id="verdict-title">Were the 2017–2019 price changes effective?</h2>
+        <div class="verdict">
+          <span class="badge yes">Yes</span>
+          <div><p class="verdict-head">Discounts work, and the effect is measured, not assumed.</p>
+            <p>Discount size was randomized, so price is the only difference between the groups. Each $1 off raises the odds of signing up by {{ facts.signup_odds_pct }}% and the odds a member stays by {{ facts.retention_odds_pct }}%.</p></div>
+        </div>
+        <div class="verdict">
+          <span class="badge maybe">Likely</span>
+          <div><p class="verdict-head">The 2019 cut from $15 to ${{ facts.base }} probably helped sign-ups, but it is not proven.</p>
+            <p>Panem is the only region without the cut, and its trend already differed beforehand. The jump right after the cut ({{ facts.did_jump }} log-odds) is far larger than the price effect alone predicts ({{ facts.did_predicted }}), so something else changed that quarter too.</p></div>
+        </div>
+        <div class="verdict">
+          <span class="badge no">Wasteful</span>
+          <div><p class="verdict-head">Discounting every member at random spends most of the money on people who would stay anyway.</p>
+            <p>At $11, {{ facts.stay_rows[0].established }}% of established engaged members stay, against {{ facts.stay_rows[0].first }}% at their first renewal.</p></div>
+        </div>
+      </section>
+
+      <section class="card recommend-card" aria-labelledby="recommend-title">
+        <h2 id="recommend-title">What we recommend</h2>
+        <ol class="recommend-list">
+          <li><strong>Keep the base at ${{ facts.base }}.</strong> Test any further list-price change in a controlled experiment.</li>
+          <li><strong>Make a $5 introductory offer the default, with a randomized holdout:</strong> {{ facts.holdout_arms['5_off'] }}% of new prospects at $5 off, {{ facts.holdout_arms['list'] }}% at list price, {{ facts.holdout_arms['3_off'] }}% at $3 off.</li>
+          <li><strong>Discount members by tenure:</strong> $5 off at the first two renewals, $1 off after that.</li>
+          <li><strong>Keep win-back offers to a test group</strong> until we can see whether people cancel to collect them.</li>
+        </ol>
+        <div class="payoff">
+          <p class="payoff-number">{{ facts.holdout_vs_today }}</p>
+          <p class="payoff-text">revenue per new prospect vs today over 3 years in the simulator ({{ facts.holdout_ltv }} vs {{ facts.today_ltv }}). {{ facts.holdout_vs_today_h40 }} over 10 years. Without the holdout it would be {{ facts.full_rollout_vs_today }}.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="primary js-load-recommended">Load it in the simulator</button>
+          <a href="#evidence">See the evidence</a>
+        </div>
+        <p class="small fine-print">The simulator sets one offer per segment, so "Load it" shows the full $5 rollout ({{ facts.full_rollout_vs_today }}). The holdout's value ({{ facts.holdout_vs_today }}) is computed from its three arms.</p>
+      </section>
+    </div>
+
+    <h2 class="section-title" id="evidence">The evidence</h2>
+    <div class="pair-cards">
+      <section class="card" aria-labelledby="uplift-title">
+        <h3 id="uplift-title" class="card-title">A $5 offer mostly wins people who would not otherwise join</h3>
+        <p class="small muted">Of the people who join with $5 off, the share who would not have joined at list price (${{ facts.base }} era).</p>
+        <div class="hbars">
+          {% for row in facts.uplift_rows %}
+          <div class="hbar-row">
+            <span class="hbar-label">{{ row.label }}{% if row.detail %}<span class="muted"> · {{ row.detail }}</span>{% endif %}<span class="muted"> · {{ row.prospects }}% of prospects</span></span>
+            <div class="hbar-track"><div class="hbar-fill" style="width: {{ row.share }}%"></div></div>
+            <strong class="hbar-value">{{ row.share }}%</strong>
+          </div>
+          {% endfor %}
+        </div>
+        <p class="small muted">So the offer pays for itself in every segment: first-quarter revenue per prospect is {{ facts.first_quarter_offer_all }} with a $5 offer to everyone vs {{ facts.first_quarter_today }} today.</p>
+      </section>
+
+      <section class="card" aria-labelledby="tenure-title">
+        <h3 id="tenure-title" class="card-title">New members are the price-sensitive ones</h3>
+        <p class="small muted">Share who renew at an $11 price, first renewal vs established members (observed, ${{ facts.base }} era).</p>
+        <div class="tenure-grid">
+          {% for row in facts.stay_rows %}
+          <div class="tenure-group">
+            <p class="tenure-label">{{ row.label }}</p>
+            <div class="vbars">
+              <div class="vbar"><span class="vbar-value">{{ row.first }}%</span><div class="vbar-fill first" style="height: {{ (row.first * 1.25) | round }}px"></div></div>
+              <div class="vbar"><span class="vbar-value">{{ row.established }}%</span><div class="vbar-fill est" style="height: {{ (row.established * 1.25) | round }}px"></div></div>
+            </div>
+            <div class="vbar-labels"><span>First renewal</span><span>Established</span></div>
+          </div>
+          {% endfor %}
+        </div>
+        <p class="small muted">So member discounts belong early: tenure-based discounts beat the best single flat discount by {{ facts.vs_best_uniform }} in the simulator.</p>
+      </section>
+    </div>
+
+    <section class="card" id="compare" aria-labelledby="compare-title">
+      <div class="card-head">
+        <h3 id="compare-title" class="card-title">What each policy earns</h3>
+        <span class="muted small" id="compare-caption">Lifetime revenue per 1,000 prospects</span>
+      </div>
+      <div id="compare-bars" class="compare"></div>
+      <p class="small muted">Simulated. Follows the horizon chosen in the simulator below.</p>
+    </section>
+
+    <header class="section-head" id="simulator">
+      <div>
+        <h2 class="section-title">Test a policy</h2>
+        <p class="small muted">Change the settings in the panel on the right. Results compare your policy with today's.</p>
       </div>
       <div class="segmented" role="group" aria-label="Horizon" id="horizon-buttons">
         <button type="button" data-quarters="12" aria-pressed="true">3 years</button>
@@ -45,11 +139,11 @@
       </div>
     </header>
 
-    <section class="kpis" id="kpis" aria-label="Results" aria-live="polite"></section>
+    <section class="kpis" id="kpis" aria-label="Simulation results" aria-live="polite"></section>
 
     <section class="card" aria-labelledby="chart-title">
       <div class="card-head">
-        <h2 id="chart-title">Members per 1,000 prospects</h2>
+        <h3 id="chart-title" class="card-title">Members per 1,000 prospects</h3>
         <div class="legend">
           <span><span class="key scenario"></span>Your policy</span>
           <span><span class="key baseline"></span>Today's policy</span>
@@ -61,40 +155,33 @@
 
     <div class="pair-cards">
       <section class="card" aria-labelledby="guardrails-title">
-        <h2 id="guardrails-title">Guardrails</h2>
+        <h3 id="guardrails-title" class="card-title">Guardrails</h3>
         <div id="guardrails" class="guardrails"></div>
       </section>
       <section id="warnings" class="card notice" aria-live="polite"></section>
     </div>
 
-    <section class="card" id="compare" aria-labelledby="compare-title">
-      <div class="card-head">
-        <h2 id="compare-title">Compare policies</h2>
-        <span class="muted small" id="compare-caption">Lifetime revenue per 1,000 prospects</span>
-      </div>
-      <div id="compare-bars" class="compare"></div>
-    </section>
-
-    <section class="card" id="assumptions" aria-labelledby="assumptions-title">
-      <h2 id="assumptions-title">What this assumes</h2>
+    <h2 class="section-title" id="limits">Limitations: what these numbers cannot tell you</h2>
+    <section class="card" aria-label="Limitations">
       <ul class="assumptions">
-        <li>Price responses are measured from Lorehaven's randomized discounts and calibrated to 2019 conditions with the ${{ facts.base }} base price. Other base prices are flagged as an extrapolation.</li>
-        <li>Tested prices: ${{ facts.prospect_low }}–${{ facts.prospect_high }} for new customers and ${{ facts.member_low }}–${{ facts.member_high }} for members. Anything outside is flagged.</li>
-        <li>Revenue is what members actually pay, so it is already net of discounts. Content costs are not included.</li>
-        <li>Customers do not change behaviour because they expect future offers (for example, cancelling to get a win-back deal). Pull-forward is not identified: among prospects who did not join, a deeper offer is followed by slightly lower sign-up next quarter (about {{ facts.pull_forward_low_pct }}–{{ facts.pull_forward_high_pct }}% of the gain). That figure is descriptive only.</li>
-        <li>Tested against history: fit on 2017–2018 only, the model predicted 2019 member counts in the discounting regions within about {{ facts.backcast_treated_pct }}% on average, but missed the region without discounts by about {{ facts.backcast_control_pct }}%. Treat the numbers as a comparison between policies, not a forecast.</li>
-        <li>Every quarter looks like an average 2019 quarter: no seasonality and no marketing changes.</li>
+        <li><strong>A comparison, not a forecast.</strong> Fit on 2017–2018 only, the model predicted 2019 member counts in the discounting regions within about {{ facts.backcast_treated_pct }}% (the first baseline we planned missed by {{ facts.backcast_same_season_pct }}%) and missed Panem by about {{ facts.backcast_control_pct }}%. Use it to rank policies.</li>
+        <li><strong>Offering everyone a discount is untested.</strong> Offers reached about {{ facts.tested_offer_share_pct }}% of prospects in the data. The simulator assumes people respond the same at full coverage, which is why the recommendation keeps a randomized holdout.</li>
+        <li><strong>The base-price cut is not cleanly identified.</strong> One comparison region and non-parallel trends, so its size is not claimed.</li>
+        <li><strong>Tested prices only.</strong> ${{ facts.prospect_low }}–${{ facts.prospect_high }} for new customers and ${{ facts.member_low }}–${{ facts.member_high }} for members, at a ${{ facts.base }} base. Anything outside is flagged as an extrapolation.</li>
+        <li><strong>Pull-forward is described, not measured.</strong> Among prospects who did not join, a deeper offer is followed by slightly lower sign-up next quarter (about {{ facts.pull_forward_low_pct }}–{{ facts.pull_forward_high_pct }}% of the gain), but that comparison is not causal. Customers gaming win-back offers cannot be seen at all.</li>
+        <li><strong>Every quarter looks like an average 2019 quarter:</strong> no seasonality or marketing changes. Revenue is net of discounts; content costs are out of scope.</li>
       </ul>
     </section>
   </main>
 
-  <aside class="rail" aria-label="Your policy">
+  <aside class="rail" aria-label="Simulator settings">
     <form id="controls" novalidate>
       <div class="rail-head">
-        <h2>Your policy</h2>
+        <h2>Simulator settings</h2>
         <button type="button" class="ghost" id="reset-today">Reset to today</button>
       </div>
 
+      <p class="hint">Set a policy to test. Results appear under "Test a policy".</p>
       <label class="field">Start from
         <select name="preset" id="preset"></select>
       </label>

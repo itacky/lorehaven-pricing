@@ -1,4 +1,5 @@
 """The Flask tool: page loads, presets run, invalid inputs return a clear 400 pointing at the field."""
+import json
 import sys
 from pathlib import Path
 
@@ -7,6 +8,8 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from app import create_app, find_open_port          # noqa: E402
 from presets import PRESETS         # noqa: E402
+
+from lorehaven.simulate import METRICS_PATH         # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -18,6 +21,22 @@ def test_page_loads_with_numbers_from_metrics(client):
     response = client.get("/")
     assert response.status_code == 200
     assert b"{{" not in response.data          # every template value was filled
+
+
+def test_page_leads_with_the_answer_then_evidence_simulator_and_limits(client):
+    page = client.get("/").get_data(as_text=True)
+    order = [page.index(f'id="{section}"') for section in ("answer", "evidence", "simulator", "limits")]
+    assert order == sorted(order)
+    assert "Were the 2017–2019 price changes effective?" in page and "What we recommend" in page
+
+
+def test_answer_numbers_come_from_metrics(client):
+    metrics = json.loads(METRICS_PATH.read_text())
+    value = lambda key: metrics[key]["value"]
+    page = client.get("/").get_data(as_text=True)
+    assert f"raises the odds of signing up by {round(100 * value('headline.signup_odds_change_per_dollar_off'))}%" in page
+    assert f"{100 * value('headline.holdout_design_ltv_vs_today_pct'):+.0f}%" in page
+    assert f"{round(100 * value('assumption.holdout_arm_share.5_off'))}% of new prospects at $5 off" in page
 
 
 @pytest.mark.parametrize("preset_id", list(PRESETS))

@@ -1,14 +1,14 @@
 # Session log: Lorehaven pricing take-home
 
 **Who:** Immanuel Tacky (candidate) working with Claude (Opus 5.5) as an agentic assistant: shell, files, a browser for checks, and subagents for the critic role.
-**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only follow-ups: the write-up's visual styling, this log, and fixes from an external review (section 11). Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
+**When:** the assignment was done on the evening of 12 Nov 2026 (Toronto time): analysis, tool, write-up, AI note and push to GitHub, with the final UI and branding touches just after midnight. On 13 Nov there were only follow-ups: the write-up's visual styling, this log, and fixes from an external review and reviewer feedback (sections 11–12). Git shows commit times in UTC, five hours ahead of Toronto, so the 12 Nov evening commits appear as 13 Nov there.
 **What this is:** a condensed, ordered record of the working session. My prompts are quoted **word-for-word** where marked "verbatim" and **paraphrased** where marked "paraphrased". Each step points to the commit and decision-log rows that back it, so every claim here can be checked in the repo.
 
 | Record | Where | What it holds |
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 70 rows: every AI suggestion and what I did with it (48 accepted, 11 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 78 rows: every AI suggestion and what I did with it (55 accepted, 12 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -20,7 +20,7 @@
 - **Approach agreed before any modelling.** Claude profiled the data with aggregations only and proposed an approach. I made the key calls before Phase 0: randomized discount depth as the main identification, lifetime value as the metric, a lightweight tool, and costs limited to discounts.
 - **Five gated phases** (scaffold → analysis → critic → tool → write-up → AI note). I waived the per-phase approval gates in Phase 1 ("keep going through the phases until im needed") but kept one commit per phase.
 - **A single source of truth.** Every number in the write-up, tool and notebook is read from `outputs/results/metrics.json`. None are typed in by hand.
-- **Independent checks.** A fresh-context, read-only critic reviewed the analysis (20 issues) and the write-up (15 issues). 42 of 46 claims from the early exploration were re-derived independently: 4 did not match and were flagged rather than hidden. There are 72 automated tests plus an out-of-sample backcast. An external review on 13 Nov led to four further fixes (section 11).
+- **Independent checks.** A fresh-context, read-only critic reviewed the analysis (20 issues) and the write-up (15 issues). 42 of 46 claims from the early exploration were re-derived independently: 4 did not match and were flagged rather than hidden. There are 74 automated tests plus an out-of-sample backcast. An external review on 13 Nov led to four further fixes (section 11).
 - **Human steering that changed the result:**
   - flagging the TV and display data problems;
   - pushing for difference-in-differences, which was kept as the check on the base cut;
@@ -254,6 +254,18 @@ Claude checked each point against the code before answering. It agreed with all 
 
 All the existing numbers were reproduced exactly when the scenarios were re-run (`python -m lorehaven.pipeline --derived-only`).
 
+### 12. Reviewer feedback (13 Nov, evening)
+
+**Prompt (verbatim, abridged):**
+> I got some more feedback on the take-home, and I want us to address these four things I noticed: 1. Make the dashboard's purpose and recommendation clearer. […] 2. Improve the sub-agent instructions. […] 3. Add repository-level AI instructions. […] 4. Fix the Mac/Anaconda setup. The reviewer uses Anaconda on a Mac, and `run_tool.sh` couldn't find their Python installation. […]
+
+| Point | What changed |
+|---|---|
+| 1. Dashboard | The page now leads with the answer: a verdict on the 2017–2019 changes (discounts: measured effect; base cut: likely, not proven; random member discounts: wasteful) beside the recommendation and its simulated value. Then the evidence, the simulator and the limitations, with a sidebar that follows these four sections. All numbers are read from `metrics.json`; the holdout split was moved from the app into `metrics.json` as an assumption |
+| 2. Agent instructions | `analyst`, `critic` and `tool-builder` rewritten (v2). Each now covers when it runs, inputs, steps, outputs with exact formats, do/don't, and handoffs, matching how the roles were actually run |
+| 3. Repository instructions | New `CLAUDE.md`: overview, shared rules, where the plan, findings, decision log and `metrics.json` live and how to treat each, handoffs, repo map. `AGENTS.md` points to it |
+| 4. Mac/Anaconda | Cause: `bash run_tool.sh` doesn't read `~/.zshrc`, so `python3` was Apple's 3.9. The launcher now searches `LOREHAVEN_PYTHON`, the active conda env, PATH, conda's base and environments, and the usual install folders, and gives a clear fix if nothing fits. Claude reproduced the reviewer's failure, then tested 8 scenarios and a real start. The README has a troubleshooting section |
+
 ---
 
 ## Where the AI got it wrong, and what caught it
@@ -273,6 +285,8 @@ All the existing numbers were reproduced exactly when the scenarios were re-run 
 | Headline gain quoted for a full rollout, not the recommended holdout design | External review (Astra) | Rollout simulated: +113% vs +133% |
 | Pull-forward presented as causal; standard error from an equal-variance shortcut | External review (Astra) | Pull-forward reframed as descriptive; SE given as a 0.45–0.72 range |
 | NaN or infinity in the tool caused a server error | External review (Astra) | Validation and 13 tests added |
+| Mac launcher trusted the first `python3` on PATH (Apple's 3.9), so Anaconda users were blocked | Reviewer (Mac + Anaconda) | Python search across conda, Homebrew, python.org and pyenv; `LOREHAVEN_PYTHON` override; troubleshooting in README |
+| Holdout split typed into the app instead of read from `metrics.json` | Claude, while building the new dashboard | Recorded as an assumption key in the pipeline |
 
 ## What is not in this log
 

@@ -3,7 +3,8 @@
 How AI was used on this take-home, where it fell short, and how its output was checked. The raw audit
 trail lives in:
 - `prompts/`: versioned prompts and a one-line changelog
-- `.claude/agents/`: agent definitions
+- `CLAUDE.md`: repository-level instructions every agent reads first (rules, where context lives, handoffs)
+- `.claude/agents/`: agent definitions (v2: inputs, steps, outputs and report formats, do/don't, handoffs)
 - `logs/decision_log.csv`: every accept, edit or reject of AI output
 - `logs/critic_phase2.md`, `logs/critic_phase4.md`: the two critic reviews and their triage
 - Git history: one commit per phase
@@ -42,7 +43,7 @@ because it already held the context. The critic was always a separate fresh-cont
 
 ## Decision-log summary
 
-61 logged decisions: 41 accepted, 9 edited, 11 rejected.
+78 logged decisions: 55 accepted, 12 edited, 11 rejected.
 
 | Phase | Accept | Edit | Reject |
 |---|---|---|---|
@@ -51,6 +52,7 @@ because it already held the context. The critic was always a separate fresh-cont
 | 2 Critic review and fixes | 11 | 2 | 2 |
 | 3 Tool | 5 | 2 | 2 |
 | 4 Write-up, notebook, final review | 9 | 1 | 1 |
+| 5 AI note and follow-ups (sharing, UI, branding, reviews) | 14 | 3 | 0 |
 
 Critic reviews:
 - **Phase 2** (analysis): 20 issues. 17 accepted, 2 accepted in modified form, 1 rejected with evidence (a test showed the propensity score is not affected by the offer).
@@ -78,7 +80,7 @@ Critic reviews:
 - **Independent re-derivation:** 42 of 46 FINDINGS.md claims reproduced by new code. The 4 that weren't are flagged in `outputs/results/findings_verification.csv`.
 - **Randomization checks** before any causal claim: balance, joint tests, AUC ≈ 0.50.
 - **Fit check and backcast:** in-sample fit check; backcast out of sample (fit on 2017–18, predict 2019), reported including where it fails (Panem).
-- **Tests:** 72 fast plus 1 opt-in, covering validation, edge cases, accounting identities, monotonicity, warnings, the tool API and the backcast.
+- **Tests:** 74 fast plus 1 opt-in, covering validation, edge cases, accounting identities, monotonicity, warnings, the tool API and the backcast.
 - **Numbers by construction:** every number in the write-up and the tool's text is filled in from `metrics.json`; the build fails on an unknown key.
 - **Two independent critic reviews.**
 - **Manual run** of the tool on the target Windows machine.

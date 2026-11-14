@@ -122,7 +122,7 @@ function renderWarnings(warnings) {
   box.classList.toggle("ok", warnings.length === 0);
   box.innerHTML = warnings.length
     ? `${WARN_ICON}<div><h2>Outside what the data saw</h2><ul>${warnings.map((w) => `<li>${w}</li>`).join("")}</ul>
-       <p style="margin-top:8px"><a href="#assumptions">See all assumptions</a></p></div>`
+       <p style="margin-top:8px"><a href="#limits">See the limitations</a></p></div>`
     : `${OK_ICON}<div><h2>Inside the tested range</h2><ul><li>Every price and offer in this policy is within what the data tested.</li></ul></div>`;
 }
 
@@ -240,7 +240,20 @@ horizonButtons.forEach((button) => button.addEventListener("click", () => {
   scheduleRun(0);
 }));
 
-document.getElementById("load-recommended").addEventListener("click", () => loadPreset("recommended"));
+document.querySelectorAll(".js-load-recommended").forEach((button) => button.addEventListener("click", () => {
+  loadPreset("recommended");
+  document.getElementById("simulator").scrollIntoView({ behavior: "smooth", block: "start" });
+}));
+
+// Sidebar: highlight the section currently on screen (The answer / Evidence / Test a policy / Limitations).
+const navLinks = [...document.querySelectorAll(".nav-links a")];
+const sections = navLinks.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+window.addEventListener("scroll", () => {
+  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+  const current = atBottom ? sections[sections.length - 1]
+    : sections.filter((el) => el.getBoundingClientRect().top <= 140).pop() || sections[0];
+  navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${current.id}`));
+}, { passive: true });
 document.getElementById("reset-today").addEventListener("click", () => loadPreset("status_quo"));
 window.addEventListener("resize", () => scheduleRun(150));
 

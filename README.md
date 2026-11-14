@@ -9,8 +9,36 @@ Needs Python 3.10-3.13. The tool itself needs only Flask (`requirements-tool.txt
 
 - **Windows:** double-click `run_tool.bat`. It finds Python (Anaconda, Miniconda or python.org), installs
   Flask if it is missing, starts the tool and opens it in your browser. Close the window to stop it.
-- **macOS/Linux:** run `bash run_tool.sh`. The first run creates a local `.venv` with Flask (about 20 s);
-  later runs start immediately. Ctrl+C stops it.
+- **macOS/Linux:** in Terminal, from this folder, run `bash run_tool.sh`. The first run creates a local `.venv`
+  with Flask (about 20 s); later runs start immediately. Ctrl+C stops it. Open the address it prints if no
+  browser window appears.
+
+**How `run_tool.sh` finds Python (macOS/Linux).** It uses the first Python 3.10-3.13 it finds, in this order:
+1. `LOREHAVEN_PYTHON`, if you set it;
+2. the active conda environment (`CONDA_PREFIX`, i.e. after `conda activate ...`);
+3. `python3.13` ... `python3.10`, `python3`, `python` on your PATH;
+4. conda's base and environments, via `conda info --base` or `CONDA_EXE`;
+5. the usual install folders: `~/anaconda3`, `~/opt/anaconda3`, `~/miniconda3`, `~/opt/miniconda3`,
+   `~/miniforge3`, `~/mambaforge`, `/opt/anaconda3`, `/opt/miniconda3`, `/opt/miniforge3`,
+   `/usr/local/anaconda3`, `/usr/local/miniconda3`, `/opt/homebrew/anaconda3`, Homebrew Caskroom
+   Miniconda/Miniforge, Homebrew and python.org Pythons, and pyenv.
+
+`bash run_tool.sh --which-python` prints the Python it would use, without starting anything.
+
+**If it says "Could not find Python 3.10-3.13" (common with Anaconda on a Mac).** `bash run_tool.sh` does not
+read `~/.zshrc`, where Anaconda adds itself to PATH, so it can land on Apple's built-in Python 3.9. Either:
+```
+conda activate base                                  # or your own environment, then:
+bash run_tool.sh
+```
+or point the script at your Python directly:
+```
+conda activate base && which python                  # prints e.g. /Users/you/opt/anaconda3/bin/python
+LOREHAVEN_PYTHON=/Users/you/opt/anaconda3/bin/python bash run_tool.sh
+```
+If your Anaconda base is older than Python 3.10, create an environment first:
+`conda create -n lorehaven python=3.12`, then `conda activate lorehaven` and `bash run_tool.sh`.
+Without the script: `python -m pip install flask==3.1.0` then `python app/app.py`, using any Python 3.10-3.13.
 
 **Full environment (analysis, tests, notebook):**
 Requires Python 3.10-3.13 (tested on 3.10 and 3.13).
@@ -25,22 +53,31 @@ the tool, Flask is the one package it needs (`pip install flask==3.1.0`). The to
 (8050 first; Windows often reserves 5000). To force one: `set LOREHAVEN_PORT=8765` (Windows) or
 `LOREHAVEN_PORT=8765 python app/app.py` (macOS/Linux).
 
-## Using the simulator
-1. **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $3 discount for all members*, or *No discounts*.
-2. Change any setting. Results update automatically.
+## Using the tool
+The page reads top to bottom in the order of the brief:
+1. **The answer.** Were the 2017-2019 price changes effective (discounts, the 2019 base cut, today's member
+   discounts), next to the recommendation and its simulated value. *Load it in the simulator* applies it.
+2. **The evidence.** Who a $5 offer wins (would-join-anyway vs persuadable), why member discounts belong at
+   the first renewals, and what each policy earns over the chosen horizon.
+3. **Test a policy.** The simulator. Set a policy in the **Simulator settings** panel on the right:
+   - **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $3 discount for all members*, or *No discounts*.
    - **Base price per quarter**: the list price. The model is calibrated at $12; any other base price is flagged.
-   - **Offers to new customers**: the share of prospects offered a discount, and the size of that discount, set
-     separately for *engaged listeners* (podcast-engagement score of 0.5 or more) and other prospects.
-     *Former members also get the offer* switches win-back offers on or off.
-   - **Current members**: the discount at the first two renewals, and the discount from the third renewal on.
+   - **Introductory offer**: the share of prospects offered a discount and its size, set separately for
+     *engaged listeners* (podcast-engagement score of 0.5 or more) and other prospects. *Former members get
+     it too* switches win-back offers on or off.
+   - **Member discounts**: the discount at the first two renewals, and from the third renewal on.
    - **More settings**: horizon (quarters), a discount rate on future revenue, and *random $1-$5 discounts*
      (today's promotions engine).
-3. Read the results.
-   - **Top tiles**: revenue per 1,000 prospects over the horizon (lifetime value), members at the end,
-     first-quarter revenue, and members leaving per quarter. Each shows its change against today's policy.
-   - **Chart**: members per quarter for your policy against today's. Hover to see each quarter.
-   - **Guardrails**: average revenue per member, discounts given away, share of member-quarters paying a
-     discounted price, and churn. An amber note appears whenever a setting goes outside what the data tested.
+
+   Results update automatically: tiles (lifetime revenue, members at the end, first-quarter revenue, members
+   leaving per quarter, each against today's policy), a members-per-quarter chart (hover for each quarter),
+   guardrails, and an amber note whenever a setting goes outside what the data tested.
+4. **Limitations.** What the numbers cannot tell you.
+
+Every number on the page is read from `outputs/results/metrics.json` or computed by `simulate()`; none is typed
+into the page. The *Recommended* preset is the full $5 rollout; the recommended rollout with its randomized
+holdout (85% / 10% / 5%) is valued separately in `metrics.json` (`headline.holdout_design_*`), because the
+simulator sets one offer per segment.
 
 Invalid settings (for example a discount above the base price, or an offer share over 100%) are refused with
 a message saying what to change, and the box concerned is highlighted.
@@ -77,7 +114,7 @@ data/raw/customer_propensities.csv
 default tests need very little.
 ```
 python -m lorehaven.pipeline        # about 1 minute: models, scenarios, backcast, metrics.json, FINDINGS.md verification
-pytest                              # 72 fast tests: validation (incl. NaN/inf), edge cases, monotonicity, warnings, tool API, backcast errors
+pytest                              # 74 fast tests: validation (incl. NaN/inf), edge cases, monotonicity, warnings, tool API, backcast errors
 LOREHAVEN_RUN_SLOW=1 pytest         # adds a full backcast re-run from the raw CSVs (~4-5 GB RAM)
 ```
 Outputs are written to `outputs/results/`:
@@ -109,6 +146,7 @@ Outputs are written to `outputs/results/`:
 | `notebooks/eda/`, `outputs/eda/` | Earlier exploratory analysis (reference; verified in Phase 1) |
 | `writeup/` | Write-up source and PDF |
 | `PLAN.md`, `FINDINGS.md` | Plan and assumptions; earlier EDA findings |
+| `CLAUDE.md` (and `AGENTS.md`) | Instructions for AI agents: project overview, shared rules, where context lives, handoffs |
 | `logs/SESSION_LOG.md` | Condensed session log: my prompts, what the AI did, what was corrected |
 | `prompts/`, `.claude/agents/`, `logs/`, `AI_WORKFLOW.md` | AI-workflow audit trail |
 

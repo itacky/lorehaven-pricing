@@ -27,6 +27,27 @@
   "unit": "log-odds",
   "value": 0.0011739458292541563
  },
+ "assumption.holdout_arm_share.3_off": {
+  "label": "assumption",
+  "note": "Recommended rollout: persistent arms, each prospect assigned once",
+  "source": "pipeline.record_headlines",
+  "unit": "share of new prospects",
+  "value": 0.05
+ },
+ "assumption.holdout_arm_share.5_off": {
+  "label": "assumption",
+  "note": "Recommended rollout: persistent arms, each prospect assigned once",
+  "source": "pipeline.record_headlines",
+  "unit": "share of new prospects",
+  "value": 0.85
+ },
+ "assumption.holdout_arm_share.list": {
+  "label": "assumption",
+  "note": "Recommended rollout: persistent arms, each prospect assigned once",
+  "source": "pipeline.record_headlines",
+  "unit": "share of new prospects",
+  "value": 0.1
+ },
  "assumption.launch_quarter": {
   "label": "assumption",
   "note": "",

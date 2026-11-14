@@ -73,7 +73,7 @@ def policy_from_form(form: dict) -> PricingPolicy:
 
 
 def model_facts(metrics_path: Path) -> dict:
-    """Numbers shown in the page's assumptions panel, read from metrics.json (never typed into the HTML)."""
+    """Numbers shown on the page, read from metrics.json (never typed into the HTML)."""
     metrics = json.loads(Path(metrics_path).read_text())
     value = lambda key: metrics[key]["value"]
     pull_forward = [abs(value(f"pull_forward.{s}.next_quarter_effect_per_dollar_now") /
@@ -85,6 +85,51 @@ def model_facts(metrics_path: Path) -> dict:
         "pull_forward_low_pct": round(100 * min(pull_forward)), "pull_forward_high_pct": round(100 * max(pull_forward)),
         "backcast_treated_pct": round(100 * value("backcast.out_of_sample_avg_2018.mape_treated")),
         "backcast_control_pct": round(100 * value("backcast.out_of_sample_avg_2018.mape_panem")),
+        "backcast_same_season_pct": round(100 * value("backcast.out_of_sample_same_season.mape_treated")),
+        **answer_facts(value),
+    }
+
+
+def answer_facts(value) -> dict:
+    """Numbers for the answer, evidence and limitations sections, formatted for display (all from metrics.json)."""
+    pct = lambda key: round(100 * value(key))
+    signed = lambda key: f"{100 * value(key):+.0f}%"
+    money_k = lambda key: f"${value(key) / 1000:.1f}k"
+    uplift = lambda segment: pct(f"uplift.base12.{segment}.incremental_share_at_5")
+    stay = lambda segment, tenure: pct(f"fit_check_in_sample.{segment}.member_{tenure}.price11.observed")
+    holdout = {arm: pct(f"assumption.holdout_arm_share.{arm}") for arm in ("5_off", "list", "3_off")}
+    return {
+        "signup_odds_pct": pct("headline.signup_odds_change_per_dollar_off"),
+        "retention_odds_pct": pct("headline.retention_odds_change_per_dollar_off"),
+        "full_rollout_vs_today": signed("headline.ltv_recommended_vs_today_pct"),
+        "full_rollout_vs_today_h40": signed("headline.ltv_recommended_vs_today_pct_h40"),
+        "holdout_vs_today": signed("headline.holdout_design_ltv_vs_today_pct"),
+        "holdout_vs_today_h40": signed("headline.holdout_design_ltv_vs_today_pct_h40"),
+        "holdout_ltv": money_k("headline.holdout_design_ltv_per_1000"),
+        "today_ltv": money_k("scenario.status_quo_2019.ltv_per_1000_prospects"),
+        "vs_best_uniform": signed("headline.ltv_recommended_vs_best_uniform_pct"),
+        "holdout_arms": holdout,
+        "first_quarter_today": f"${value('ope.status_quo_random_25pct.first_quarter_revenue'):.2f}",
+        "first_quarter_offer_all": f"${value('ope.offer_all_5_off.first_quarter_revenue'):.2f}",
+        # who a $5 offer wins: share of $5-offer joiners who would NOT have joined at list price ($12 era)
+        "uplift_rows": [
+            {"label": "Cold prospects", "detail": "never members, less engaged", "share": uplift("cold"),
+             "prospects": pct("uplift.base12.cold.share_of_prospects")},
+            {"label": "Former members, less engaged", "detail": "", "share": uplift("lapsed_low_podcast"),
+             "prospects": pct("uplift.base12.lapsed_low_podcast.share_of_prospects")},
+            {"label": "Warm listeners", "detail": "never members, engaged", "share": uplift("warm_listener"),
+             "prospects": pct("uplift.base12.warm_listener.share_of_prospects")},
+            {"label": "Win-backs", "detail": "former members, engaged", "share": uplift("win_back"),
+             "prospects": pct("uplift.base12.win_back.share_of_prospects")},
+        ],
+        # who stays at $11: first renewal vs established, observed in the $12 era
+        "stay_rows": [
+            {"label": "Engaged listeners", "first": stay("high_podcast", "first_renewal"), "established": stay("high_podcast", "established")},
+            {"label": "Less engaged", "first": stay("low_podcast", "first_renewal"), "established": stay("low_podcast", "established")},
+        ],
+        "did_jump": f"{value('event_study.treated_x_q9'):.2f}",
+        "did_predicted": f"{value('did.randomized_prediction_delta'):.2f}",
+        "tested_offer_share_pct": pct("simulator.tested_offer_share"),
     }
 
 
