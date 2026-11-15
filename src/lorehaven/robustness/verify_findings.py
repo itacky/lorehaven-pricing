@@ -10,8 +10,9 @@ import json
 import numpy as np
 import pandas as pd
 
-from lorehaven import data_prep, models
-from lorehaven.pipeline import RESULTS_DIR
+from lorehaven import data_prep
+from lorehaven.robustness import models
+from lorehaven.robustness.advanced_pipeline import RESULTS_DIR
 
 COUNT, RATE, COEF = 0, 0.0005, 0.005   # tolerances: exact counts, 0.05pp for rates, 0.005 for coefficients
 

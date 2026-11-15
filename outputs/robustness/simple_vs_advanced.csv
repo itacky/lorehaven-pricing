@@ -1,0 +1,13 @@
+question,simple_method,simple,advanced_method,advanced,same_direction,relative_gap
+Sign-up odds change per $1 off ($12 era),"two observed rates, $12 vs $7",0.3961915662103952,"logit, region x quarter fixed effects, all eras",0.4614617991550294,True,0.1414423318769805
+"First-quarter revenue per prospect, today",observed average,0.8852117550971623,"on-policy mean, clustered SE",0.8852117550971623,True,0.0
+"First-quarter revenue per prospect, $5 to everyone",weighted average of the $5 groups,1.7630498451931058,inverse-propensity weighting,1.7653861524627832,True,0.0013233973011616369
+Sign-up uplift at $5 off: warm_listener,difference of two group averages,0.30974824171670456,"linear model, region x quarter fixed effects",0.31023655007330153,True,0.0015739871929390376
+Sign-up uplift at $5 off: cold,difference of two group averages,0.12423308391694673,"linear model, region x quarter fixed effects",0.1242297389227362,True,2.692587330169055e-05
+Sign-up uplift at $5 off: win_back,difference of two group averages,0.34463246022510663,"linear model, region x quarter fixed effects",0.3453299064272149,True,0.0020196519013486185
+Sign-up uplift at $5 off: lapsed_low_podcast,difference of two group averages,0.1778369350252486,"linear model, region x quarter fixed effects",0.17931075570195226,True,0.008219365709179294
+2019 base cut raised list-price sign-ups (sign),"cut regions minus Panem, 2018 vs 2019, points",0.030739665547284585,logit difference-in-differences,0.839907608177731,True,
+"Recommended vs today, 3 years",lookup-table projection,1.2218463195198308,fitted-curve simulator,1.3253869992167138,True,0.07812109199658224
+"Recommended vs today, 10 years",lookup-table projection,0.6537306481958529,fitted-curve simulator,0.6929127141744185,True,0.05654690003090739
+"85/10/5 rollout vs today, 3 years",lookup-table projection,1.0464870137026607,fitted-curve simulator,1.1307202864758374,True,0.07449523439232707
+Tenure discounts vs best single member discount,lookup-table projection,0.10284455602445042,fitted-curve simulator,0.11744193644695922,True,0.12429444595458858

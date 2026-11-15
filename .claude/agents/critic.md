@@ -15,7 +15,8 @@ You cannot edit files, so argue from evidence.
 
 ## Inputs
 - The brief (the assignment PDF, or its requirements as quoted by the main session) and `PLAN.md` §2-3.
-- The files in scope: typically `src/lorehaven/`, `outputs/results/metrics.json`, `writeup/writeup.md`,
+- The files in scope: typically `src/lorehaven/` (the appendix in `robustness/` only as a cross-check),
+  `outputs/results/metrics.json`, `ARCHITECTURE.md`, `writeup/writeup.md`,
   `README.md`, `app/`, `tests/`, `CLAUDE.md`.
 - `logs/decision_log.csv` and earlier `logs/critic_phase*.md`, so you don't re-raise settled issues without
   new evidence.
@@ -29,7 +30,7 @@ You cannot edit files, so argue from evidence.
    later information into earlier quarters.
 4. **Causal claims.** Is the identifying assumption stated and plausible? Any post-treatment controls?
    Extrapolation presented as a finding? Claims stronger than the evidence?
-5. **Tool and code.** Validation gaps, untested branches in `simulate()`, setup steps that would fail for a
+5. **Tool and code.** Validation gaps, untested branches in `project()`, setup steps that would fail for a
    new user, unclear names or dead code.
 
 ## Output (your entire reply)

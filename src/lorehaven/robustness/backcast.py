@@ -14,8 +14,9 @@ Error = predicted vs actual member_count by region x quarter (aggregate.csv).
 import numpy as np
 import pandas as pd
 
-from lorehaven import data_prep, models
-from lorehaven.simulate import TENURE_GROUPS, PricingPolicy, SegmentModel, _advance_segment
+from lorehaven import data_prep
+from lorehaven.robustness import models
+from lorehaven.robustness.curve_simulator import TENURE_GROUPS, PricingPolicy, SegmentModel, _advance_segment
 
 POOLED = "high_podcast"   # one pooled segment; key name only matters to the price-mix helpers
 STATUS_GROUPS = {"join_never": ("prospect", 0), "join_lapsed": ("prospect", 1)}

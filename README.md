@@ -4,6 +4,11 @@ Take-home for Audible Economics, Research & Optimization (AERO): were Lorehaven'
 membership pricing and discounts be? This repo holds the analysis (`src/lorehaven/`), every reported number
 (`outputs/results/metrics.json`), and a small pricing simulator a non-technical pricing lead can run (`app/`).
 
+**The method in one line:** Lorehaven randomized its discounts, so the analysis compares group averages (sign-up and
+stay rates at each price) and projects policies by looking those rates up quarter by quarter. No fitted models are
+needed; a model-based version is kept in `src/lorehaven/robustness/` as a cross-check. Design decisions and the
+reasons for them are in [`ARCHITECTURE.md`](ARCHITECTURE.md).
+
 ## Quick start
 Needs Python 3.10-3.13. The tool itself needs only Flask (`requirements-tool.txt`).
 
@@ -48,7 +53,7 @@ python -m venv .venv                # macOS/Linux: python3 -m venv .venv
 pip install -r requirements.txt
 python app/app.py                   # prints the address (e.g. http://127.0.0.1:8050) and opens your browser
 ```
-The tool needs no raw data: it reads the fitted parameters in `outputs/results/metrics.json`. To run *only*
+The tool needs no raw data: it reads the observed rate tables in `outputs/results/metrics.json`. To run *only*
 the tool, Flask is the one package it needs (`pip install flask==3.1.0`). The tool picks a free local port
 (8050 first; Windows often reserves 5000). To force one: `set LOREHAVEN_PORT=8765` (Windows) or
 `LOREHAVEN_PORT=8765 python app/app.py` (macOS/Linux).
@@ -57,52 +62,52 @@ the tool, Flask is the one package it needs (`pip install flask==3.1.0`). The to
 The page reads top to bottom in the order of the brief:
 1. **The answer.** A scorecard for the 2017-2019 changes: a verdict on each (discounts, the 2019 base cut,
    today's member discounts), how strong the evidence is, and the key number. Below it, the four-step
-   recommendation and its simulated value. *Load it in the simulator* applies it.
+   recommendation and its projected value. *Load it in the simulator* applies it.
 2. **The evidence, in three numbers.** Click a number to see its detail: who a $5 offer wins (would-join-anyway
    vs persuadable, by segment), renewal for new vs established members, and what each policy earns over the
    chosen horizon.
-3. **Test a policy.** The simulator. Set a policy in the **Simulator settings** panel on the right:
-   - **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $3 discount for all members*, or *No discounts*.
-   - **Base price per quarter**: the list price. The model is calibrated at $12; any other base price is flagged.
-   - **Introductory offer**: the share of prospects offered a discount and its size, set separately for
+3. **Test a policy.** Set a policy in the **Policy settings** panel on the right:
+   - **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $2 discount for all members*, or
+     *No intro offer, $1 off for members*.
+   - **Introductory offer**: the share of prospects offered a discount and its size ($0-$5), set separately for
      *engaged listeners* (podcast-engagement score of 0.5 or more) and other prospects. *Former members get
      it too* switches win-back offers on or off.
-   - **Member discounts**: the discount at the first two renewals, and from the third renewal on.
+   - **Member discounts**: $1-$5 off at the first two renewals, and from the third renewal on.
    - **More settings**: horizon (quarters), a discount rate on future revenue, and *random $1-$5 discounts*
      (today's promotions engine).
 
-   Results update automatically: tiles (lifetime revenue, members at the end, first-quarter revenue, members
-   leaving per quarter, each against today's policy), a members-per-quarter chart (hover for each quarter),
-   guardrails, and an amber note whenever a setting goes outside what the data tested.
+   The base price is fixed at $12 and only tested discounts can be chosen, because the projection reads observed
+   rates and has nothing to say about prices that were never tried. Results update automatically: tiles (revenue,
+   members at the end, first-quarter revenue, members leaving per quarter, each against today's policy), a
+   members-per-quarter chart (hover for each quarter), guardrails, and an amber note when offers reach more
+   prospects than the 25% the data saw.
 4. **Limitations.** What the numbers cannot tell you.
 
-Every number on the page is read from `outputs/results/metrics.json` or computed by `simulate()`; none is typed
+Every number on the page is read from `outputs/results/metrics.json` or computed by `project()`; none is typed
 into the page. The *Recommended* preset is the full $5 rollout; the recommended rollout with its randomized
-holdout (85% / 10% / 5%) is valued separately in `metrics.json` (`headline.holdout_design_*`), because the
-simulator sets one offer per segment.
+holdout (85% / 10% / 5%) is valued separately in `metrics.json` (`headline.rollout_*`), because the tool sets one
+offer per segment.
 
-Invalid settings (for example a discount above the base price, or an offer share over 100%) are refused with
-a message saying what to change, and the box concerned is highlighted.
+Invalid settings (a discount that was never tested, an offer share over 100%, a fractional horizon) are refused
+with a message saying what to change, and the box concerned is highlighted.
 
 ## Key assumptions
 Each assumption is listed in `PLAN.md` §3 and labelled in `metrics.json` (`label`: observed / estimate / assumption).
 - **Causal price effects come from Lorehaven's own randomization.** Discount depth ($1-$5) is randomized by
   design. Whether a prospect is offered a discount looks random on everything observable; we treat it as
-  random (assumption A2).
-- **Simulator calibration.** Curves are fit on the discounting regions in 2019 spring-fall (the $12 regime),
-  separately for engaged and other prospects, for never-members and former members, and for members at
-  their first renewal, second renewal and later. Every quarter is treated as an average 2019 quarter: no
-  seasonality and no marketing changes.
-- **Tested range.** New-customer prices are tested from `simulator.tested_prospect_price_min` to `_max`, and
-  member prices from `simulator.tested_member_price_min` to `_max`. Members paying full price were never
-  observed. Anything outside these ranges is flagged as an extrapolation.
+  random (assumption A2). That is why a difference of group averages is the effect of price.
+- **The projection uses 2019 rates.** Sign-up and stay rates come from the discounting regions in 2019
+  spring-fall (the $12 base), by engagement segment, by never vs former member, and for members at their first
+  renewal, second renewal and later. Every quarter is treated as an average 2019 quarter: no seasonality and no
+  marketing changes. Use it to rank policies, not to forecast member counts.
+- **Tested prices only.** The $12 base, $0-$5 off for prospects and $1-$5 off for members. Members paying full
+  price were never observed, so the tool does not allow it.
 - **Revenue** is what members actually pay, so it is already net of discounts. The only cost counted is the
   discount itself. Content costs are out of scope.
-- **Behaviour.** Customers do not time cancellations or sign-ups around expected offers. The pull-forward check
-  (`pull_forward.*` in metrics.json) is descriptive only: it conditions on prospects who did not join, so it
-  cannot separate real timing shifts from who is left. A persistent holdout would measure it cleanly.
-- **Accuracy.** The backcast fits on 2017-2018 and predicts 2019 (`backcast.*`). It is close in the
-  discounting regions and poor in Panem. Use the tool to compare policies, not to forecast member counts.
+- **Behaviour.** Customers do not time cancellations or sign-ups around expected offers. This cannot be checked
+  in the data; the persistent holdout would measure it.
+- **Errors.** Standard errors treat customer-quarters as independent. Customers repeat across quarters, so
+  true errors are somewhat larger; the appendix reports customer-clustered errors.
 
 ## Reproduce the analysis
 Place the three CSVs from the assignment in `data/raw/`, or set `LOREHAVEN_DATA_DIR` to their folder:
@@ -113,49 +118,52 @@ data/raw/customer_propensities.csv
 ```
 `data/raw/` is gitignored. For the analysis commands, first run `pip install -e .` (it makes
 `python -m lorehaven...` work from any folder). Re-running the analysis needs about 6 GB of free memory. The tool and the
-default tests need very little.
+tests need very little.
 ```
-python -m lorehaven.pipeline        # about 1 minute: models, scenarios, backcast, metrics.json, FINDINGS.md verification
-pytest                              # 74 fast tests: validation (incl. NaN/inf), edge cases, monotonicity, warnings, tool API, backcast errors
-LOREHAVEN_RUN_SLOW=1 pytest         # adds a full backcast re-run from the raw CSVs (~4-5 GB RAM)
+python -m lorehaven.pipeline        # about 30 s: rate tables, projections, metrics.json
+python -m lorehaven.figures         # the three write-up figures
+python writeup/build.py             # write-up HTML and PDF (needs Chrome or Edge)
+pytest                              # fast tests: rate tables on synthetic data, projection accounting, tool API
+python -m lorehaven.robustness      # OPTIONAL appendix, about 1-2 min: model-based cross-check (needs statsmodels)
 ```
-Outputs are written to `outputs/results/`:
+Main outputs, in `outputs/results/`:
 
 | File | Contents |
 |---|---|
-| `metrics.json` | Every reported number, each with unit, label and source |
-| `findings_verification.csv` | Every FINDINGS.md claim re-derived: match or MISMATCH |
-| `rates_by_price.csv` | Observed sign-up and retention rates by price |
-| `prospect_discount_efficiency.csv` | Prospect response by segment and depth |
-| `member_discount_efficiency.csv` | Member response by segment and price |
-| `uplift_by_segment_*.csv` | Uplift by segment, all eras and $12 era |
-| `off_policy_evaluation.csv` | Off-policy policy values |
-| `event_study.csv`, `base_cut_observed.csv` | 2019 base cut |
-| `model_fit_check_in_sample.csv` | In-sample fit |
-| `backcast.csv` | Backcast by region and quarter |
+| `metrics.json` | Every reported number, each with unit, label (observed / estimate / assumption) and a note |
+| `signup_by_price.csv`, `stay_by_price.csv` | Sign-up and stay rates at every price, both base-price eras |
+| `signup_by_segment_and_discount.csv` | $12 era: sign-up by segment and discount, uplift and share the offer won |
+| `stay_by_tenure_and_price.csv` | $12 era: stay rate by engagement, tenure and price (the projection's member table) |
+| `base_cut_two_by_two.csv`, `base_cut_gap_by_quarter.csv` | 2019 base cut vs Panem |
+
+Appendix outputs, in `outputs/robustness/`: the model-based `metrics.json`, `simple_vs_advanced.csv` (the same
+questions answered both ways) and `crosscheck.json` (the summary quoted in the write-up).
 
 ## Repository layout
 | Path | Contents |
 |---|---|
 | `src/lorehaven/data_prep.py` | Loads CSVs with explicit dtypes; derives status, sign-up, churn, base price, discount depth and tenure; known data gaps are stored as missing values |
-| `src/lorehaven/models.py` | Fixed-effect logits with clustered SEs, per-segment fits, DiD and event study, uplift, discount efficiency, off-policy evaluation, simulator fits |
-| `src/lorehaven/simulate.py` | `simulate(policy, model)`, input validation, extrapolation warnings |
-| `src/lorehaven/backcast.py` | Replays 2017-2019 with the simulator's quarter step |
-| `src/lorehaven/pipeline.py`, `verify_findings.py` | Writes metrics.json; re-derives FINDINGS.md claims |
+| `src/lorehaven/rates.py` | The evidence: sign-up and stay rates as group averages with counts, by price, segment and tenure; the base-cut comparison |
+| `src/lorehaven/projection.py` | `project(policy, rates)`: follows 1,000 prospects quarter by quarter by looking up the observed rates; input validation |
+| `src/lorehaven/recommendation.py` | Named policies, first-quarter value, holdout sizes (minimum detectable difference) |
+| `src/lorehaven/pipeline.py` | Runs the steps above and writes metrics.json |
+| `src/lorehaven/figures.py`, `formatting.py` | Write-up figures; display rounding |
+| `src/lorehaven/robustness/` | APPENDIX: fixed-effect logits, inverse-propensity weighting, logit DiD, fitted-curve simulator, backtest, and `compare.py` |
 | `app/` | Flask tool. `app.py` (routes), `presets.py`, `templates/`, `static/` (layout and styling only) |
-| `tests/` | pytest suite |
-| `notebooks/lorehaven_walkthrough.ipynb` | Presentation walkthrough of the EDA, calculations, models and checks (executed; readable on GitHub) |
-| `notebooks/eda/`, `outputs/eda/` | Earlier exploratory analysis (reference; verified in Phase 1) |
+| `tests/` | pytest suite (`tests/robustness/` for the appendix) |
+| `notebooks/lorehaven_walkthrough.ipynb` | Short walkthrough of the simple analysis (executed; readable on GitHub) |
+| `notebooks/appendix/`, `notebooks/eda/`, `outputs/eda/` | Earlier model-based walkthrough and exploratory analysis (reference) |
 | `writeup/` | Write-up source and PDF |
+| `ARCHITECTURE.md` | How the code fits together and why each design decision was made |
 | `PLAN.md`, `FINDINGS.md` | Plan and assumptions; earlier EDA findings |
 | `CLAUDE.md` (and `AGENTS.md`) | Instructions for AI agents: project overview, shared rules, where context lives, handoffs |
 | `logs/SESSION_LOG.md` | Condensed session log: my prompts, what the AI did, what was corrected |
 | `prompts/`, `.claude/agents/`, `logs/`, `AI_WORKFLOW.md` | AI-workflow audit trail |
 
 ## Extending
-- **New preset**: add a dict to `app/presets.py` (form units: %, $, quarters).
-- **New output**: add a KPI to `simulate()`'s `kpis` dict, then a tile or guardrail row in `app/static/app.js`.
-- **New data or model**: change `models.simulator_fits`, re-run the pipeline, and the tool picks up the new
-  parameters from metrics.json. Every value is labelled observed, estimate or assumption.
-- **Styling**: `app/static/style.css` and `app/templates/index.html` hold layout and styling only. They can be
-  changed without touching the model.
+- **New preset**: add a dict to `app/presets.py` (form units: %, whole $, quarters).
+- **New output**: add it to the `summary` dict in `projection.project()`, then a tile or guardrail row in `app/static/app.js`.
+- **New data**: re-run the pipeline; the tool reads the new rate tables from metrics.json.
+- **A price that was never tested** (another base price, members at full price): run a randomized test first, add
+  its rates to the tables, then widen the allowed range in `projection.validate()`.
+- **Styling**: `app/static/style.css` and `app/templates/index.html` hold layout and styling only.

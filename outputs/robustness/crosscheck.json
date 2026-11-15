@@ -1,0 +1,20 @@
+{
+ "crosscheck.questions": {
+  "value": 12,
+  "unit": "",
+  "label": "estimate",
+  "note": "simple vs advanced, see simple_vs_advanced.csv"
+ },
+ "crosscheck.same_direction": {
+  "value": 12,
+  "unit": "",
+  "label": "estimate",
+  "note": "simple vs advanced, see simple_vs_advanced.csv"
+ },
+ "crosscheck.largest_relative_gap": {
+  "value": 0.1414423318769805,
+  "unit": "",
+  "label": "estimate",
+  "note": "simple vs advanced, see simple_vs_advanced.csv"
+ }
+}

@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.patches import Rectangle
 
-from lorehaven.pipeline import RESULTS_DIR
+from lorehaven.pipeline import RESULTS_DIR   # noqa: I001
 from lorehaven.data_prep import REPO_ROOT
 from lorehaven.formatting import percents_summing_to_100
 
@@ -41,7 +41,8 @@ def _metrics():
 def figure_who_needs_the_offer():
     """Two panels per prospect segment ($12 era): join rate with $5 off, and sign-ups per 1,000 prospects.
     Both split into would join anyway (list-price rate) and join because of the offer (uplift at $5 off)."""
-    uplift = pd.read_csv(RESULTS_DIR / "uplift_by_segment_base12.csv").set_index("segment")
+    signup = pd.read_csv(RESULTS_DIR / "signup_by_segment_and_discount.csv")
+    uplift = signup[signup.discount_depth == 5].set_index("segment").rename(columns={"list_rate": "p0_list", "uplift": "uplift_5"})
     uplift["anyway_per_1000"] = 1000 * uplift.share_of_prospects * uplift.p0_list
     uplift["new_per_1000"] = 1000 * uplift.share_of_prospects * uplift.uplift_5
     uplift["total_per_1000"] = uplift.anyway_per_1000 + uplift.new_per_1000
@@ -76,16 +77,16 @@ def figure_who_needs_the_offer():
 
 
 def figure_retention_by_tenure():
-    """Observed retention by member price and tenure (dots) with the simulator curve (line), q9-q11."""
-    fit = pd.read_csv(RESULTS_DIR / "model_fit_check_in_sample.csv")
-    groups = [("member_first_renewal", "First renewal", ORANGE), ("member_second_renewal", "Second renewal", BLUE),
-              ("member_established", "Third renewal on", AQUA)]
+    """Observed share of members who stay, by price and tenure, $12 era (2019 spring-fall). No model."""
+    stay = pd.read_csv(RESULTS_DIR / "stay_by_tenure_and_price.csv")
+    groups = [("first_renewal", "First renewal", ORANGE), ("second_renewal", "Second renewal", BLUE),
+              ("established", "Third renewal on", AQUA)]
     fig, axes = plt.subplots(1, 2, figsize=FIGURE_SIZE, sharey=True, layout="constrained")
     for ax, segment, title in ((axes[0], "high_podcast", "Engaged listeners"), (axes[1], "low_podcast", "Less engaged")):
         for status, label, color in groups:
-            rows = fit[(fit.segment == segment) & (fit.status == status)].sort_values("price")
-            ax.plot(rows.price, 100 * rows.predicted, color=color, linewidth=1.6)
-            ax.scatter(rows.price, 100 * rows.observed, color=color, s=14, edgecolor="white", linewidth=0.8, zorder=3, label=label)
+            rows = stay[(stay.segment == segment) & (stay.tenure_group == status)].sort_values("membership_price")
+            ax.plot(rows.membership_price, 100 * rows.rate, color=color, linewidth=1.6, marker="o", markersize=3.5,
+                    markeredgecolor="white", markeredgewidth=0.8, label=label)
         ax.set_title(title, loc="left", fontsize=7.5)
         ax.set_xticks(range(7, 12))
         ax.set_xlabel("Member price ($)")
@@ -95,20 +96,21 @@ def figure_retention_by_tenure():
     fig.suptitle("New members are the price-sensitive ones", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="outside lower center", ncol=3, fontsize=6.5, frameon=False,
-               title="Member tenure (dots = observed; lines = model fit to the same data)", title_fontsize=6.5)
+               title="Member tenure (observed shares, $12 era)", title_fontsize=6.5)
     fig.savefig(FIGURES_DIR / "fig2_retention_by_tenure.png")
     plt.close(fig)
 
 
 def figure_policy_value():
-    """12-quarter revenue per 1,000 new prospects for the main policies (no win-back offers)."""
+    """3-year revenue per 1,000 new prospects for the main policies (projection from observed rates, no win-back offers)."""
     metrics = _metrics()
-    ltv = lambda name: metrics[f"scenario.{name}.ltv_per_1000_prospects"]["value"] / 1000
-    rows = [("Today: random 25% offers,\nrandom $1-$5 member discounts", ltv("status_quo_2019"), NEUTRAL),
-            ("$5 offer to all; every member $5 off", ltv("prospects_5_off_no_winback_members_5_off"), NEUTRAL),
-            ("$5 offer to all; every member $1 off", ltv("prospects_5_off_no_winback_members_1_off"), NEUTRAL),
-            ("$5 offer to all; every member $3 off\n(best single member discount)", ltv("prospects_5_off_no_winback_members_3_off"), NEUTRAL),
-            ("Recommended: $5 offer to all; $5 off first\ntwo renewals, $1 off after", ltv("prospects_5_off_no_winback_new_5_off_established_1_off"), ORANGE)]
+    revenue = lambda name: metrics[f"policy.{name}.revenue_per_1000_prospects"]["value"] / 1000
+    best = metrics["headline.best_single_member_discount"]["value"]
+    rows = [("Today: random 25% offers,\nrandom $1-$5 member discounts", revenue("today"), NEUTRAL),
+            ("$5 offer to all; every member $5 off", revenue("offer_5_members_5_off"), NEUTRAL),
+            ("$5 offer to all; every member $1 off", revenue("offer_5_members_1_off"), NEUTRAL),
+            (f"$5 offer to all; every member ${best} off\n(best single member discount)", revenue(f"offer_5_members_{best}_off"), NEUTRAL),
+            ("Recommended: $5 offer to all; $5 off first\ntwo renewals, $1 off after", revenue("recommended"), ORANGE)]
     fig, ax = plt.subplots(figsize=FIGURE_SIZE, layout="constrained")
     y = range(len(rows))[::-1]
     ax.barh(list(y), [r[1] for r in rows], color=[r[2] for r in rows], height=0.6)
@@ -119,7 +121,7 @@ def figure_policy_value():
     ax.set_xlim(0, max(r[1] for r in rows) * 1.18)
     ax.xaxis.grid(True, color=GRID, linewidth=0.8)
     ax.set_axisbelow(True)
-    fig.suptitle("Value of each policy (12 quarters, base $12)", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
+    fig.suptitle("Value of each policy (3 years, base $12)", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
     fig.savefig(FIGURES_DIR / "fig3_policy_value.png")
     plt.close(fig)
 

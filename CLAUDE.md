@@ -18,10 +18,14 @@ Deliverables:
 
 Audience: the Audible Economics team. Status: complete. Later commits are refinements from Iman's own review and an external AI review.
 
+**Method (since the 14 Nov simplification):** the main analysis is group averages (randomized prices make them
+causal) and a lookup-table projection. Regression models live only in `src/lorehaven/robustness/` as a
+cross-check. Keep the main path explainable by hand; see `ARCHITECTURE.md` for each design decision.
+
 **Current answer**, as quoted in the write-up and the tool. These are values from `metrics.json`; don't
 restate them anywhere else:
 - Discounts raise sign-up and retention, causally, because depth was randomized.
-- The base cut is consistent with higher sign-ups, but not identified.
+- The base cut likely raised sign-ups (direction clear), but its size is not identified.
 - Recommendation:
   - keep the $12 base;
   - make a $5 introductory offer the default, with a persistent randomized holdout (85% $5, 10% list, 5% $3);
@@ -33,11 +37,13 @@ restate them anywhere else:
 | File | What it is for | How to treat it |
 |---|---|---|
 | `PLAN.md` | The Phase 0 plan agreed with Iman: problem, success criteria, assumptions A1-A10, resolved open questions, phases | The baseline. Later decisions override it; check the decision log before relying on a detail (e.g. tested price ranges) |
-| `FINDINGS.md` | Early exploration: data structure, data-quality issues, first estimates and strategy | **Claims to verify, not facts.** Re-derived in `outputs/results/findings_verification.csv` (42 of 46 match; 4 flagged) |
+| `FINDINGS.md` | Early exploration: data structure, data-quality issues, first estimates and strategy | **Claims to verify, not facts.** Re-derived in `outputs/robustness/findings_verification.csv` (42 of 46 match; 4 flagged) |
+| `ARCHITECTURE.md` | The data flow, each module's job, and every design decision with its alternative and cost | Update it when you change a decision |
 | `logs/decision_log.csv` | Every meaningful AI suggestion and what was done with it: `ts, phase, agent, suggestion, action (accept/edit/reject), reason` | Append-only. Read the recent rows for an area before changing it; add a row for each decision you make. Never rewrite history; append a correction |
 | `logs/critic_phase2.md`, `logs/critic_phase4.md` | The two independent reviews and their triage | Settled issues; re-raise only with new evidence |
 | `logs/SESSION_LOG.md` | Condensed history of the working session, with prompts marked verbatim or paraphrased | Narrative context: why things are the way they are |
-| `outputs/results/metrics.json` | **Single source of truth** for every number (`value, unit, label, source, note`) | Read numbers from here; produce them only through `src/lorehaven/pipeline.py` |
+| `outputs/results/metrics.json` | **Single source of truth** for every number (`value, unit, label, note`) | Read numbers from here; produce them only through `src/lorehaven/pipeline.py` |
+| `outputs/robustness/` | Appendix: the model-based metrics, `simple_vs_advanced.csv`, `crosscheck.json` | Cross-check only; the main flow must not depend on it |
 | `prompts/` | The master prompt (verbatim) and the changelog of prompt and agent-definition versions | Add a changelog line when you change any agent definition or this file |
 | `AI_WORKFLOW.md` | How AI was used, why three agents, what went wrong, how results were verified | Keep in step with the decision log |
 | `README.md` | How to run the tool, the tests and the pipeline; key assumptions | Keep in step with what the scripts actually do |
@@ -47,14 +53,15 @@ restate them anywhere else:
    is not in `metrics.json`, it is not reported.
 2. **No hand-typed numbers downstream.**
    - The write-up uses `{{metrics.key|format}}` tokens (built by `writeup/build.py`).
-   - The tool reads `metrics.json` (through `app/app.py`) or calls `simulate()`.
+   - The tool reads `metrics.json` (through `app/app.py`) or calls `project()`.
    - The notebook reads `metrics.json`.
    - To add a number, add it to the pipeline.
 3. **Say what identifies every causal claim.** Randomized depth (A3) and as-good-as-random eligibility (A2)
-   support causal claims. The base cut and pull-forward are descriptive. Write "consistent with", never "caused".
+   support causal claims. The base cut is descriptive. Write "consistent with", never "caused".
+   Prefer the simplest method the design supports: a difference of randomized group averages before any model.
 4. **Equations define every variable.** Use plain language for the pricing lead, and state units.
-5. **Respect the tested ranges.** Results hold at the $12 base, for prospects at $7-$12 and members at
-   $7-$11 (`simulator.tested_*`). Flag anything outside them as an extrapolation.
+5. **Respect the tested ranges.** Results hold at the $12 base, for prospects at $0-$5 off and members at
+   $1-$5 off. The projection only looks up observed rates, so it refuses anything else; keep it that way.
 6. **Data hygiene.**
    - Raw data stays out of git (`data/raw/` is ignored).
    - No credentials or personal information in the repo.
@@ -62,8 +69,9 @@ restate them anywhere else:
      display scores of exactly 0 are set to NaN.
 7. **Verify before handing back.**
    - Run `python -m pytest -q` (all pass; one slow backcast test is opt-in).
-   - Rebuild what you changed: `python -m lorehaven.pipeline --derived-only` for scenarios and headline
-     numbers, or the full pipeline (needs the raw data and about 4 GB of RAM).
+   - Rebuild what you changed: `python -m lorehaven.pipeline --derived-only` for projections and headline
+     numbers, or the full pipeline (needs the raw data and about 4 GB of RAM). If the rate tables changed,
+     re-run `python -m lorehaven.robustness` so the cross-check stays current.
    - Run `python writeup/build.py` and check the PDF is still at most 2 pages.
    - For tool changes, open the tool in a browser.
 8. **Small, readable code.** Self-explanatory names, a one-line docstring per function, an Inputs/Outputs
@@ -90,12 +98,13 @@ write-up wording and anything that changes the recommendation.
 
 ## Repo map
 ```
-src/lorehaven/   data_prep -> models -> pipeline (writes metrics.json) ; simulate (the simulator) ; backcast ;
-                 figures ; verify_findings
+src/lorehaven/   data_prep -> rates -> pipeline (writes metrics.json) ; projection (lookup engine) ;
+                 recommendation (policies, holdout power) ; figures ; formatting
+src/lorehaven/robustness/   APPENDIX: models, curve_simulator, backcast, verify_findings, advanced_pipeline, compare
 app/             Flask tool (Flask only at runtime): app.py, presets.py, templates/, static/
-tests/           test_simulate.py, test_app.py, test_backcast.py
+tests/           test_rates.py, test_projection.py, test_recommendation.py, test_app.py ; robustness/
 writeup/         writeup.md (tokens) -> build.py -> writeup.html / writeup.pdf
-notebooks/       lorehaven_walkthrough.ipynb (presentation walkthrough); eda/ (early exploration scripts)
-outputs/         results/ (metrics.json + CSVs), figures/ (3 PNGs)
+notebooks/       lorehaven_walkthrough.ipynb (simple walkthrough); appendix/ (model-based); eda/ (early exploration)
+outputs/         results/ (metrics.json + CSVs), robustness/ (appendix), figures/ (3 PNGs)
 run_tool.bat / run_tool.sh   one-step launchers (Windows / macOS-Linux)
 ```

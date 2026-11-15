@@ -1,11 +1,11 @@
-"""Unit tests for lorehaven.simulate: invalid inputs, edge cases, accounting, monotonicity, warnings.
-Uses the committed outputs/results/metrics.json (no raw data needed)."""
+"""APPENDIX: unit tests for the fitted-curve simulator in lorehaven.robustness.curve_simulator.
+Uses the committed outputs/robustness/metrics.json (no raw data needed)."""
 import dataclasses
 import math
 
 import pytest
 
-from lorehaven.simulate import (SEGMENTS, TENURE_GROUPS, InvalidPolicy, PricingPolicy, load_model,
+from lorehaven.robustness.curve_simulator import (SEGMENTS, TENURE_GROUPS, InvalidPolicy, PricingPolicy, load_model,
                                 member_value, simulate)
 
 EVERYONE = lambda value: {s: value for s in SEGMENTS}
@@ -178,8 +178,3 @@ def test_all_outputs_are_finite(model):
 
 
 # ---------------------------------------------------------------- display rounding
-def test_percents_summing_to_100_uses_largest_remainders():
-    from lorehaven.formatting import percents_summing_to_100
-    shares = {"warm": 0.2077, "cold": 0.6467, "win_back": 0.1284, "former": 0.0172}   # naive rounding gives 101
-    assert percents_summing_to_100(shares) == {"warm": 21, "cold": 64, "win_back": 13, "former": 2}
-    assert sum(percents_summing_to_100({"a": 1, "b": 1, "c": 1}).values()) == 100

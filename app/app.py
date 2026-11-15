@@ -1,10 +1,9 @@
-"""Lorehaven pricing simulator — a thin Flask wrapper around lorehaven.simulate.simulate().
+"""Lorehaven pricing tool: a thin Flask wrapper around lorehaven.projection.project().
 
 Run:  python app/app.py   (from any folder). It picks a free local port, prints the address and opens it
       in your browser. Choose a port with LOREHAVEN_PORT=8050; skip the browser with LOREHAVEN_NO_BROWSER=1.
-Needs only Flask: simulate() uses the standard library and reads outputs/results/metrics.json.
-The model is never reimplemented here: inputs are converted to a PricingPolicy, simulate() does the work,
-and parameters come from outputs/results/metrics.json via load_model().
+Needs only Flask: project() uses the standard library and reads the observed rate tables in
+outputs/results/metrics.json. Nothing is calculated here: form inputs become a Policy, project() does the work.
 """
 import json
 import math
@@ -23,18 +22,21 @@ sys.path.insert(0, str(APP_DIR.parent / "src"))               # lorehaven packag
 from presets import PRESETS, STATUS_QUO                       # noqa: E402
 
 from lorehaven.formatting import percents_summing_to_100  # noqa: E402
-from lorehaven.simulate import METRICS_PATH, InvalidPolicy, PricingPolicy, load_model, simulate  # noqa: E402
+from lorehaven.projection import BASE_PRICE, METRICS_PATH, InvalidPolicy, Policy, load_rates, project  # noqa: E402
 
-# PricingPolicy field -> form input name (so errors can point at the right box)
+# Inputs:  browser form values (JSON) and outputs/results/metrics.json
+# Outputs: the page, and projection results as JSON
+
+# Policy field -> form input name (so errors can point at the right box)
 FORM_FIELD_FOR_POLICY_FIELD = {
-    "base_price": "base_price", "offer_share.high_podcast": "offer_share_high", "offer_share.low_podcast": "offer_share_low",
+    "offer_share.high_podcast": "offer_share_high", "offer_share.low_podcast": "offer_share_low",
     "prospect_discount.high_podcast": "discount_high", "prospect_discount.low_podcast": "discount_low",
     "new_member_discount": "new_member_discount", "established_member_discount": "established_member_discount",
     "horizon_quarters": "horizon_quarters", "discount_rate_per_quarter": "discount_rate_pct",
-    "lapsed_get_offers": "lapsed_get_offers", "random_depths": "random_depths",
+    "win_back_offers": "lapsed_get_offers", "todays_random_depths": "random_depths",
 }
 FORM_LABELS = {
-    "base_price": "Base price", "offer_share_high": "Engaged listeners offered", "discount_high": "Engaged listeners' discount",
+    "offer_share_high": "Engaged listeners offered", "discount_high": "Engaged listeners' discount",
     "offer_share_low": "Other prospects offered", "discount_low": "Other prospects' discount",
     "new_member_discount": "New-member discount", "established_member_discount": "Established-member discount",
     "horizon_quarters": "Horizon", "discount_rate_pct": "Discount rate",
@@ -42,6 +44,7 @@ FORM_LABELS = {
 
 
 def _number(form: dict, name: str, whole=False):
+    """Read one form value as a number, with a message that names the box when it is empty or not a number."""
     raw = form.get(name)
     if raw is None or str(raw).strip() == "":
         raise InvalidPolicy(f"{FORM_LABELS[name]} is empty. Enter a number.", name)
@@ -53,99 +56,80 @@ def _number(form: dict, name: str, whole=False):
         raise InvalidPolicy(f"{FORM_LABELS[name]} must be an ordinary number (got '{raw}').", name)
     if whole:
         if value != int(value):
-            raise InvalidPolicy(f"{FORM_LABELS[name]} must be a whole number of quarters (got {raw}).", name)
+            raise InvalidPolicy(f"{FORM_LABELS[name]} must be a whole number (got {raw}).", name)
         return int(value)
     return value
 
 
-def policy_from_form(form: dict) -> PricingPolicy:
-    """Convert tool inputs (%, $, quarters) into a PricingPolicy (shares 0-1, rates 0-1)."""
-    return PricingPolicy(
-        base_price=_number(form, "base_price"),
+def policy_from_form(form: dict) -> Policy:
+    """Convert tool inputs (%, whole $, quarters) into a Policy (shares 0-1)."""
+    return Policy(
         offer_share={"high_podcast": _number(form, "offer_share_high") / 100, "low_podcast": _number(form, "offer_share_low") / 100},
-        prospect_discount={"high_podcast": _number(form, "discount_high"), "low_podcast": _number(form, "discount_low")},
-        new_member_discount=_number(form, "new_member_discount"),
-        established_member_discount=_number(form, "established_member_discount"),
-        lapsed_get_offers=bool(form.get("lapsed_get_offers", False)),
-        random_depths=bool(form.get("random_depths", False)),
+        prospect_discount={"high_podcast": _number(form, "discount_high", whole=True),
+                           "low_podcast": _number(form, "discount_low", whole=True)},
+        new_member_discount=_number(form, "new_member_discount", whole=True),
+        established_member_discount=_number(form, "established_member_discount", whole=True),
+        win_back_offers=bool(form.get("lapsed_get_offers", False)),
+        todays_random_depths=bool(form.get("random_depths", False)),
         horizon_quarters=_number(form, "horizon_quarters", whole=True),
         discount_rate_per_quarter=_number(form, "discount_rate_pct") / 100,
     )
 
 
-def model_facts(metrics_path: Path) -> dict:
-    """Numbers shown on the page, read from metrics.json (never typed into the HTML)."""
+def page_facts(metrics_path: Path) -> dict:
+    """Every number shown on the page, read from metrics.json and formatted for display (never typed into the HTML)."""
     metrics = json.loads(Path(metrics_path).read_text())
     value = lambda key: metrics[key]["value"]
-    pull_forward = [abs(value(f"pull_forward.{s}.next_quarter_effect_per_dollar_now") /
-                        value(f"pull_forward.{s}.same_quarter_effect_per_dollar")) for s in ("high_podcast", "low_podcast")]
-    return {
-        "prospect_low": value("simulator.tested_prospect_price_min"), "prospect_high": value("simulator.tested_prospect_price_max"),
-        "member_low": value("simulator.tested_member_price_min"), "member_high": value("simulator.tested_member_price_max"),
-        "base": value("simulator.calibrated_base_price"),
-        "pull_forward_low_pct": round(100 * min(pull_forward)), "pull_forward_high_pct": round(100 * max(pull_forward)),
-        "backcast_treated_pct": round(100 * value("backcast.out_of_sample_avg_2018.mape_treated")),
-        "backcast_control_pct": round(100 * value("backcast.out_of_sample_avg_2018.mape_panem")),
-        "backcast_same_season_pct": round(100 * value("backcast.out_of_sample_same_season.mape_treated")),
-        **answer_facts(value),
-    }
-
-
-def answer_facts(value) -> dict:
-    """Numbers for the answer, evidence and limitations sections, formatted for display (all from metrics.json)."""
     pct = lambda key: round(100 * value(key))
     signed = lambda key: f"{100 * value(key):+.0f}%"
     money_k = lambda key: f"${value(key) / 1000:.1f}k"
-    uplift = lambda segment: pct(f"uplift.base12.{segment}.incremental_share_at_5")
-    list_rate = lambda segment: f"{100 * value(f'uplift.base12.{segment}.p0_list'):.1f}%"
-    stay = lambda segment, tenure: pct(f"fit_check_in_sample.{segment}.member_{tenure}.price11.observed")
-    holdout = {arm: pct(f"assumption.holdout_arm_share.{arm}") for arm in ("5_off", "list", "3_off")}
+    incremental = lambda segment: pct(f"segment.{segment}.incremental_share_at_5")
+    stay = lambda segment, tenure: pct(f"rates.stay.{segment}.{tenure}.price11")
     segments = ("cold", "lapsed_low_podcast", "warm_listener", "win_back")
-    share_pct = percents_summing_to_100({s: value(f"uplift.base12.{s}.share_of_prospects") for s in segments})   # adds to 100
+    share_pct = percents_summing_to_100({s: value(f"segment.{s}.share_of_prospects") for s in segments})   # adds to 100
+    row = lambda segment, label, detail: {
+        "label": label, "detail": detail, "share": incremental(segment), "prospects": share_pct[segment],
+        "list_rate": f"{100 * value(f'rates.signup.{segment}.off0'):.1f}%"}
     return {
-        "signup_odds_pct": pct("headline.signup_odds_change_per_dollar_off"),
-        "retention_odds_pct": pct("headline.retention_odds_change_per_dollar_off"),
-        "full_rollout_vs_today": signed("headline.ltv_recommended_vs_today_pct"),
-        "full_rollout_vs_today_h40": signed("headline.ltv_recommended_vs_today_pct_h40"),
-        "holdout_vs_today": signed("headline.holdout_design_ltv_vs_today_pct"),
-        "holdout_vs_today_h40": signed("headline.holdout_design_ltv_vs_today_pct_h40"),
-        "holdout_ltv": money_k("headline.holdout_design_ltv_per_1000"),
-        "today_ltv": money_k("scenario.status_quo_2019.ltv_per_1000_prospects"),
-        "vs_best_uniform": signed("headline.ltv_recommended_vs_best_uniform_pct"),
-        "holdout_arms": holdout,
-        "first_quarter_today": f"${value('ope.status_quo_random_25pct.first_quarter_revenue'):.2f}",
-        "first_quarter_offer_all": f"${value('ope.offer_all_5_off.first_quarter_revenue'):.2f}",
+        "base": BASE_PRICE,
+        "signup_at_list": f"{100 * value('rates.by_price.signup.base12.price12'):.0f}%",
+        "signup_at_5_off": f"{100 * value('rates.by_price.signup.base12.price7'):.0f}%",
+        "cut_after": f"{value('base_cut.quarters_after_above_panem')} of {value('base_cut.quarters_after')}",
+        "cut_before": f"{value('base_cut.quarters_before_above_panem')} of {value('base_cut.quarters_before')}",
+        "full_rollout_vs_today": signed("headline.recommended_vs_today"),
+        "holdout_vs_today": signed("headline.rollout_vs_today"),
+        "holdout_vs_today_h40": signed("headline.rollout_vs_today_h40"),
+        "holdout_ltv": money_k("headline.rollout_revenue_per_1000"),
+        "today_ltv": money_k("policy.today.revenue_per_1000_prospects"),
+        "holdout_ltv_ratio": f"{value('headline.rollout_revenue_per_1000') / value('policy.today.revenue_per_1000_prospects'):.1f}",
+        "vs_best_uniform": signed("headline.recommended_vs_best_single"),
+        "holdout_arms": {arm: pct(f"assumption.holdout_arm_share.{arm}") for arm in ("5_off", "list", "3_off")},
+        "mde_renewal_pts": f"{100 * value('holdout.mde_renewal_list10_q3'):.0f}",
+        "first_quarter_today": f"${value('first_quarter.today'):.2f}",
+        "first_quarter_offer_all": f"${value('first_quarter.everyone_5_off'):.2f}",
+        "tested_offer_share_pct": pct("projection.tested_offer_share"),
         # who a $5 offer wins: share of $5-offer joiners who would NOT have joined at list price ($12 era)
-        "uplift_rows": [
-            {"label": "Cold prospects", "detail": "never members, less engaged", "share": uplift("cold"),
-             "prospects": share_pct["cold"], "list_rate": list_rate("cold")},
-            {"label": "Former members, less engaged", "detail": "", "share": uplift("lapsed_low_podcast"),
-             "prospects": share_pct["lapsed_low_podcast"], "list_rate": list_rate("lapsed_low_podcast")},
-            {"label": "Warm listeners", "detail": "never members, engaged", "share": uplift("warm_listener"),
-             "prospects": share_pct["warm_listener"], "list_rate": list_rate("warm_listener")},
-            {"label": "Win-backs", "detail": "former members, engaged", "share": uplift("win_back"),
-             "prospects": share_pct["win_back"], "list_rate": list_rate("win_back")},
-        ],
+        "uplift_rows": [row("cold", "Cold prospects", "never members, less engaged"),
+                        row("lapsed_low_podcast", "Former members, less engaged", ""),
+                        row("warm_listener", "Warm listeners", "never members, engaged"),
+                        row("win_back", "Win-backs", "former members, engaged")],
+        "uplift_others_low": min(incremental(s) for s in ("lapsed_low_podcast", "warm_listener", "win_back")),
+        "uplift_others_high": max(incremental(s) for s in ("lapsed_low_podcast", "warm_listener", "win_back")),
         # who stays at $11: first renewal vs established, observed in the $12 era
         "stay_rows": [
             {"label": "Engaged listeners", "first": stay("high_podcast", "first_renewal"), "established": stay("high_podcast", "established")},
             {"label": "Less engaged", "first": stay("low_podcast", "first_renewal"), "established": stay("low_podcast", "established")},
         ],
-        "did_jump": f"{value('event_study.treated_x_q9'):.2f}",
-        "did_predicted": f"{value('did.randomized_prediction_delta'):.2f}",
-        "tested_offer_share_pct": pct("simulator.tested_offer_share"),
-        "holdout_ltv_ratio": f"{value('headline.holdout_design_ltv_per_1000') / value('scenario.status_quo_2019.ltv_per_1000_prospects'):.1f}",
-        "uplift_others_low": min(uplift(s) for s in ("lapsed_low_podcast", "warm_listener", "win_back")),
-        "uplift_others_high": max(uplift(s) for s in ("lapsed_low_podcast", "warm_listener", "win_back")),
     }
 
 
 def create_app(metrics_path=None) -> Flask:
+    """Build the Flask app: the page, the presets and the projection endpoint."""
     app = Flask(__name__)
     app.json.sort_keys = False                    # keep preset order (Recommended first)
     metrics_path = Path(metrics_path or METRICS_PATH)
-    model = load_model(metrics_path)
-    facts = model_facts(metrics_path)
+    rates = load_rates(metrics_path)
+    facts = page_facts(metrics_path)
 
     @app.get("/")
     def index():
@@ -162,10 +146,10 @@ def create_app(metrics_path=None) -> Flask:
             return jsonify(error="Send the settings as JSON.", field=None), 400
         try:
             policy = policy_from_form(form)
-            scenario = simulate(policy, model)
+            scenario = project(policy, rates)
             baseline_policy = policy_from_form({**STATUS_QUO["values"], "horizon_quarters": policy.horizon_quarters,
                                                 "discount_rate_pct": form.get("discount_rate_pct", 0)})
-            baseline = simulate(baseline_policy, model)
+            baseline = project(baseline_policy, rates)
         except InvalidPolicy as error:
             field = FORM_FIELD_FOR_POLICY_FIELD.get(error.field, error.field)
             message = str(error).replace("high_podcast", "engaged listeners").replace("low podcast", "other prospects")
@@ -201,7 +185,7 @@ def main():
     app = create_app()
     port = find_open_port()
     url = f"http://127.0.0.1:{port}"
-    print(f"\nLorehaven pricing simulator is running at {url}  (press Ctrl+C to stop)\n", flush=True)
+    print(f"\nLorehaven pricing tool is running at {url}  (press Ctrl+C to stop)\n", flush=True)
     if not os.environ.get("LOREHAVEN_NO_BROWSER"):
         threading.Timer(1.0, webbrowser.open, args=(url,)).start()
     app.run(host="127.0.0.1", port=port, debug=False)

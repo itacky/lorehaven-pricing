@@ -1,4 +1,5 @@
-// Lorehaven pricing simulator — UI only. All numbers come from the Python simulate() via /api/simulate.
+const BASE_PRICE = Number(document.body.dataset.basePrice);   // from lorehaven.projection.BASE_PRICE via the page
+// Lorehaven pricing tool — UI only. All numbers come from the Python project() via /api/simulate.
 const form = document.getElementById("controls");
 const presetSelect = document.getElementById("preset");
 const errorBox = document.getElementById("form-error");
@@ -13,7 +14,7 @@ const pct = (x) => (100 * x).toFixed(1) + "%";
 const count = (x) => Math.round(x).toLocaleString("en-US");
 
 const KPIS = [
-  { key: "ltv_per_1000_prospects", label: "Lifetime revenue", format: money, tile: "revenue" },
+  { key: "revenue_per_1000_prospects", label: "Revenue", format: money, tile: "revenue" },
   { key: "members_at_end_per_1000", label: "Members at the end", format: count, tile: "members" },
   { key: "first_quarter_revenue_per_1000", label: "First-quarter revenue", format: money, tile: "first" },
   { key: "average_quarterly_churn", label: "Leaving per quarter", format: pct, tile: "churn", points: true },
@@ -23,7 +24,6 @@ const KPIS = [
 function formToPolicy() {
   const f = new FormData(form);
   return {
-    base_price: f.get("base_price"),
     offer_share_high: f.get("offer_share_high"), discount_high: f.get("discount_high"),
     offer_share_low: f.get("offer_share_low"), discount_low: f.get("discount_low"),
     lapsed_get_offers: form.lapsed_get_offers.checked,
@@ -74,11 +74,11 @@ async function runSimulation() {
     return;
   }
   errorBox.hidden = true;
-  renderKpis(body.scenario.kpis, body.baseline.kpis);
+  renderKpis(body.scenario.summary, body.baseline.summary);
   renderChart(body.scenario.quarters, body.baseline.quarters);
-  renderGuardrails(body.scenario.kpis);
+  renderGuardrails(body.scenario.summary);
   renderWarnings(body.scenario.warnings);
-  renderCompare(policy, body.scenario.kpis.ltv_per_1000_prospects);
+  renderCompare(policy, body.scenario.summary.revenue_per_1000_prospects);
 }
 
 // ---------- results ----------
@@ -102,7 +102,7 @@ function renderKpis(scenario, baseline) {
 }
 
 function renderGuardrails(kpis) {
-  const base = Number(form.elements.base_price.value) || 1;
+  const base = BASE_PRICE;
   const paidShare = Math.max(0, Math.min(1, kpis.average_revenue_per_member_quarter / base));
   const discounted = kpis.share_of_member_quarters_discounted;
   document.getElementById("guardrails").innerHTML = `
@@ -126,13 +126,13 @@ function renderWarnings(warnings) {
     : `${OK_ICON}<div><h2>Inside the tested range</h2><ul><li>Every price and offer in this policy is within what the data tested.</li></ul></div>`;
 }
 
-// Lifetime revenue of each preset at the current horizon, next to the policy on screen.
+// Revenue of each preset at the current horizon, next to the policy on screen.
 async function renderCompare(policy, currentValue) {
   const request = ++compareRequest;
   const shared = { horizon_quarters: policy.horizon_quarters, discount_rate_pct: policy.discount_rate_pct };
   const rows = await Promise.all(Object.entries(presets).map(async ([id, p]) => {
     const { ok, body } = await simulate({ ...p.values, ...shared });
-    return { id, label: p.label, value: ok ? body.scenario.kpis.ltv_per_1000_prospects : null };
+    return { id, label: p.label, value: ok ? body.scenario.summary.revenue_per_1000_prospects : null };
   }));
   if (request !== compareRequest) return;            // a newer run has started
   const matching = rows.find((r) => r.value !== null && Math.abs(r.value - currentValue) < 0.5);
@@ -142,7 +142,7 @@ async function renderCompare(policy, currentValue) {
   const top = Math.max(...valid.map((r) => r.value), 1);
   const years = Number(policy.horizon_quarters) / 4;
   document.getElementById("compare-caption").textContent =
-    `Lifetime revenue per 1,000 prospects over ${Number.isInteger(years) ? years : years.toFixed(1)} years`;
+    `Revenue per 1,000 prospects over ${Number.isInteger(years) ? years : years.toFixed(1)} years`;
   document.getElementById("compare-bars").innerHTML = valid.map((r) => `
     <div class="bar-row${r.id === current ? " current" : ""}">
       <span class="name">${r.label}${r.id === current && matching ? " (on screen)" : ""}</span>
@@ -227,13 +227,6 @@ form.addEventListener("input", (event) => {
   syncControls();
   scheduleRun();
 });
-
-document.querySelectorAll(".stepper button").forEach((button) => button.addEventListener("click", () => {
-  const input = form.elements[button.dataset.target];
-  const next = Math.max(Number(input.min) || 0, (Number(input.value) || 0) + Number(button.dataset.step));
-  input.value = String(Math.round(next * 2) / 2);
-  scheduleRun();
-}));
 
 horizonButtons.forEach((button) => button.addEventListener("click", () => {
   form.elements.horizon_quarters.value = button.dataset.quarters;

@@ -11,7 +11,7 @@ Each quarter:
   (new_member_discount for first and second renewals, established_member_discount afterwards).
 LTV = sum over quarters of revenue / (1 + discount_rate) ** (quarter - 1), reported per 1,000 starting prospects.
 
-Model parameters come from outputs/results/metrics.json (see load_model). Nothing here is fitted.
+Model parameters come from outputs/robustness/metrics.json (see load_model). Nothing here is fitted.
 """
 import json
 import math
@@ -21,10 +21,10 @@ from pathlib import Path
 SEGMENTS = ("high_podcast", "low_podcast")
 TENURE_GROUPS = ("first_renewal", "second_renewal", "established")
 RANDOM_DEPTHS = (1, 2, 3, 4, 5)         # today's engine: depth drawn uniformly from $1-$5
-METRICS_PATH = Path(__file__).resolve().parents[2] / "outputs" / "results" / "metrics.json"
+METRICS_PATH = Path(__file__).resolve().parents[3] / "outputs" / "robustness" / "metrics.json"
 
 
-# Inputs:  a PricingPolicy, and the simulator parameters read from outputs/results/metrics.json
+# Inputs:  a PricingPolicy, and the simulator parameters read from outputs/robustness/metrics.json
 # Outputs: per-quarter members and revenue, summary KPIs and warnings (returned; no files written)
 
 

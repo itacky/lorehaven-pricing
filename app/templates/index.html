@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body data-base-price="{{ facts.base }}">
 <div class="shell">
 
   <nav class="sidebar" aria-label="Main">
@@ -56,16 +56,16 @@
             <span class="meter5" aria-label="Evidence strength 5 of 5"><i class="on good"></i><i class="on good"></i><i class="on good"></i><i class="on good"></i><i class="on good"></i></span>
             <span class="strength-text">Strong: discount size was randomized, so price is the only difference</span>
           </span>
-          <span role="cell" class="num"><strong>+{{ facts.signup_odds_pct }}%</strong><small>sign-up odds per $1 off (+{{ facts.retention_odds_pct }}% for renewal)</small></span>
+          <span role="cell" class="num"><strong>{{ facts.signup_at_list }} → {{ facts.signup_at_5_off }}</strong><small>sign-up rate at list price vs $5 off (randomized groups)</small></span>
         </div>
         <div class="score-row" role="row">
           <span role="cell" class="score-change">Base price cut, $15 → ${{ facts.base }} (2019)</span>
           <span role="cell"><span class="badge maybe">Likely helped</span></span>
           <span role="cell" class="strength">
             <span class="meter5" aria-label="Evidence strength 2 of 5"><i class="on warn"></i><i class="on warn"></i><i></i><i></i><i></i></span>
-            <span class="strength-text">Weak: one comparison region (Panem), and its trend differed before the cut</span>
+            <span class="strength-text">Weak: one comparison region (Panem), and the gap to it moved even without a price change</span>
           </span>
-          <span role="cell" class="num"><strong>{{ facts.did_jump }}</strong><small>log-odds jump vs {{ facts.did_predicted }} expected from price alone</small></span>
+          <span role="cell" class="num"><strong>{{ facts.cut_after }}</strong><small>quarters above Panem after the cut ({{ facts.cut_before }} before)</small></span>
         </div>
         <div class="score-row" role="row">
           <span role="cell" class="score-change">Random discounts for every member</span>
@@ -82,7 +82,7 @@
     <section class="card recommend-card" aria-labelledby="recommend-title">
       <div class="recommend-head">
         <h2 id="recommend-title">What we recommend</h2>
-        <p class="payoff-inline"><strong>{{ facts.holdout_vs_today }}</strong> revenue per new prospect vs today over 3 years, in the simulator ({{ facts.holdout_ltv }} vs {{ facts.today_ltv }}; {{ facts.holdout_vs_today_h40 }} over 10 years)</p>
+        <p class="payoff-inline"><strong>{{ facts.holdout_vs_today }}</strong> revenue per new prospect vs today over 3 years, projected ({{ facts.holdout_ltv }} vs {{ facts.today_ltv }}; {{ facts.holdout_vs_today_h40 }} over 10 years)</p>
       </div>
       <ol class="steps">
         <li><span class="step-tag">1 · Price</span><strong>Keep the ${{ facts.base }} base</strong><span>Test any change in a controlled experiment</span></li>
@@ -94,7 +94,7 @@
         <button type="button" class="primary js-load-recommended">Load it in the simulator</button>
         <a href="#evidence">See the evidence</a>
       </div>
-      <p class="small fine-print">The simulator sets one offer per segment, so "Load it" shows the full $5 rollout ({{ facts.full_rollout_vs_today }}). The holdout's value ({{ facts.holdout_vs_today }}) is computed from its three arms.</p>
+      <p class="small fine-print">The tool sets one offer per segment, so "Load it" shows the full $5 rollout ({{ facts.full_rollout_vs_today }}). The holdout's value ({{ facts.holdout_vs_today }}) is computed from its three arms.</p>
     </section>
 
     <h2 class="section-title" id="evidence">The evidence in three numbers</h2>
@@ -114,7 +114,7 @@
       <button type="button" role="tab" id="tab-value" aria-controls="panel-value" aria-selected="false" class="evidence-tile dark">
         <span class="tile-number brand">{{ facts.holdout_ltv_ratio }}×</span>
         <span class="tile-claim">today's revenue per new prospect with the recommended rollout</span>
-        <span class="tile-note">{{ facts.holdout_ltv }} vs {{ facts.today_ltv }} per 1,000 prospects over 3 years, simulated.</span>
+        <span class="tile-note">{{ facts.holdout_ltv }} vs {{ facts.today_ltv }} per 1,000 prospects over 3 years, projected.</span>
         <span class="tile-more">Detail</span>
       </button>
     </div>
@@ -153,16 +153,16 @@
         </div>
         {% endfor %}
       </div>
-      <p class="small muted">New members cancel far more often, so that is where a discount can still change behaviour. Tenure-based discounts beat the best single flat discount by {{ facts.vs_best_uniform }} in the simulator.</p>
+      <p class="small muted">New members cancel far more often, so that is where a discount can still change behaviour. Tenure-based discounts beat the best single flat discount by {{ facts.vs_best_uniform }} in the projection.</p>
     </section>
 
     <section class="card evidence-detail" role="tabpanel" id="panel-value" aria-labelledby="tab-value" hidden>
       <div class="card-head">
         <h3 class="card-title" id="compare">What each policy earns</h3>
-        <span class="muted small" id="compare-caption">Lifetime revenue per 1,000 prospects</span>
+        <span class="muted small" id="compare-caption">Revenue per 1,000 prospects</span>
       </div>
       <div id="compare-bars" class="compare"></div>
-      <p class="small muted">Simulated, and follows the horizon chosen in the simulator below. The recommended rollout with its holdout earns {{ facts.holdout_ltv }} over 3 years ({{ facts.holdout_vs_today }} vs today); the "Recommended" preset is the full $5 rollout.</p>
+      <p class="small muted">Projected from observed rates, and follows the horizon chosen in the settings. The recommended rollout with its holdout earns {{ facts.holdout_ltv }} over 3 years ({{ facts.holdout_vs_today }} vs today); the "Recommended" preset is the full $5 rollout.</p>
     </section>
 
     <header class="section-head" id="simulator">
@@ -202,11 +202,11 @@
     <h2 class="section-title" id="limits">Limitations: what these numbers cannot tell you</h2>
     <section class="card" aria-label="Limitations">
       <ul class="assumptions">
-        <li><strong>A comparison, not a forecast.</strong> Fit on 2017–2018 only, the model predicted 2019 member counts in the discounting regions within about {{ facts.backcast_treated_pct }}% (the first baseline we planned missed by {{ facts.backcast_same_season_pct }}%) and missed Panem by about {{ facts.backcast_control_pct }}%. Use it to rank policies.</li>
-        <li><strong>Offering everyone a discount is untested.</strong> Offers reached about {{ facts.tested_offer_share_pct }}% of prospects in the data. The simulator assumes people respond the same at full coverage, which is why the recommendation keeps a randomized holdout.</li>
-        <li><strong>The base-price cut is not cleanly identified.</strong> One comparison region and non-parallel trends, so its size is not claimed.</li>
-        <li><strong>Tested prices only.</strong> ${{ facts.prospect_low }}–${{ facts.prospect_high }} for new customers and ${{ facts.member_low }}–${{ facts.member_high }} for members, at a ${{ facts.base }} base. Anything outside is flagged as an extrapolation.</li>
-        <li><strong>Pull-forward is described, not measured.</strong> Among prospects who did not join, a deeper offer is followed by slightly lower sign-up next quarter (about {{ facts.pull_forward_low_pct }}–{{ facts.pull_forward_high_pct }}% of the gain), but that comparison is not causal. Customers gaming win-back offers cannot be seen at all.</li>
+        <li><strong>A comparison, not a forecast.</strong> The projection reuses the average 2019 rate for every quarter, so use it to rank policies, not to predict revenue.</li>
+        <li><strong>Offering everyone a discount is untested.</strong> Offers reached about {{ facts.tested_offer_share_pct }}% of prospects in the data. The projection assumes people respond the same at full coverage, which is why the recommendation keeps a randomized holdout. A 10% list-price arm can detect a {{ facts.mde_renewal_pts }}-point renewal gap within three quarters.</li>
+        <li><strong>The base-price cut is not cleanly identified.</strong> One comparison region, and the gap to it moves by a few points even in quarters with no price change, so its size is not claimed.</li>
+        <li><strong>Tested prices only.</strong> The ${{ facts.base }} base with $0–$5 off for new customers and $1–$5 off for members (every member had an offer, so full price for members was never seen). The tool only allows those.</li>
+        <li><strong>Gaming is invisible.</strong> The data cannot show customers who cancel in order to collect a win-back offer, or who wait for a deeper one.</li>
         <li><strong>Every quarter looks like an average 2019 quarter:</strong> no seasonality or marketing changes. Revenue is net of discounts; content costs are out of scope.</li>
       </ul>
     </section>
@@ -215,7 +215,7 @@
   <aside class="rail" aria-label="Simulator settings">
     <form id="controls" novalidate>
       <div class="rail-head">
-        <h2>Simulator settings</h2>
+        <h2>Policy settings</h2>
         <button type="button" class="ghost" id="reset-today">Reset to today</button>
       </div>
 
@@ -225,15 +225,7 @@
       </label>
       <p id="form-error" class="form-error" role="alert" hidden></p>
 
-      <div class="group">
-        <label class="group-title" for="base_price">Base price per quarter ($)</label>
-        <div class="stepper">
-          <button type="button" data-step="-0.5" data-target="base_price" aria-label="Lower base price">−</button>
-          <input type="number" id="base_price" name="base_price" step="0.5" min="1" max="50" inputmode="decimal">
-          <button type="button" data-step="0.5" data-target="base_price" aria-label="Raise base price">+</button>
-        </div>
-        <p class="hint">Calibrated at ${{ facts.base }}. Other prices are flagged.</p>
-      </div>
+      <p class="hint">Base price: ${{ facts.base }} per quarter, the only base the data has discounts for.</p>
 
       <div class="group">
         <h3 class="group-title">Introductory offer</h3>
@@ -263,10 +255,10 @@
         <h3 class="group-title">Member discounts</h3>
         <div class="two-col">
           <label class="field">First two renewals
-            <input type="number" name="new_member_discount" step="0.5" min="0" inputmode="decimal">
+            <select name="new_member_discount">{% for amount in range(1, 6) %}<option value="{{ amount }}">${{ amount }} off</option>{% endfor %}</select>
           </label>
           <label class="field">After that
-            <input type="number" name="established_member_discount" step="0.5" min="0" inputmode="decimal">
+            <select name="established_member_discount">{% for amount in range(1, 6) %}<option value="{{ amount }}">${{ amount }} off</option>{% endfor %}</select>
           </label>
         </div>
         <p class="hint">Dollars off the base price at each renewal. New members cancel far more often, so early discounts buy the most loyalty.</p>

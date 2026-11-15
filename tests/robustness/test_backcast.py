@@ -1,7 +1,7 @@
-"""Backcast of 2017-2019 against actual member_count.
+"""APPENDIX: backtest of the fitted-curve simulator against 2017-2019 member counts.
 
-The reported errors live in metrics.json (written by `python -m lorehaven.pipeline`). These tests check that
-they are present and within the bounds stated in the README. The full re-run is opt-in
+The reported errors live in outputs/robustness/metrics.json (written by `python -m lorehaven.robustness`). These tests check
+that they are present and within stated bounds. The full re-run is opt-in
 (set LOREHAVEN_RUN_SLOW=1): it needs the raw CSVs and about 4-5 GB of RAM."""
 import json
 import math
@@ -10,7 +10,7 @@ import os
 import pytest
 
 from lorehaven import data_prep
-from lorehaven.simulate import METRICS_PATH
+from lorehaven.robustness.curve_simulator import METRICS_PATH
 
 METRICS = json.loads(METRICS_PATH.read_text())
 RUNS = ("in_sample", "out_of_sample_same_season", "out_of_sample_avg_2018")

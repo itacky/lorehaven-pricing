@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 from app import create_app, find_open_port          # noqa: E402
 from presets import PRESETS         # noqa: E402
 
-from lorehaven.simulate import METRICS_PATH         # noqa: E402
+from lorehaven.projection import METRICS_PATH         # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -34,12 +34,12 @@ def test_answer_numbers_come_from_metrics(client):
     metrics = json.loads(METRICS_PATH.read_text())
     value = lambda key: metrics[key]["value"]
     page = client.get("/").get_data(as_text=True)
-    assert f"+{round(100 * value('headline.signup_odds_change_per_dollar_off'))}%" in page
-    assert f"{100 * value('headline.holdout_design_ltv_vs_today_pct'):+.0f}%" in page
+    assert f"{100 * value('rates.by_price.signup.base12.price12'):.0f}% → {100 * value('rates.by_price.signup.base12.price7'):.0f}%" in page
+    assert f"{100 * value('headline.rollout_vs_today'):+.0f}%" in page
     assert f"Randomized holdout: {round(100 * value('assumption.holdout_arm_share.5_off'))}% $5" in page
-    ratio = value("headline.holdout_design_ltv_per_1000") / value("scenario.status_quo_2019.ltv_per_1000_prospects")
+    ratio = value("headline.rollout_revenue_per_1000") / value("policy.today.revenue_per_1000_prospects")
     assert f"{ratio:.1f}×" in page
-    assert f"{round(100 * value('uplift.base12.cold.incremental_share_at_5'))}%" in page
+    assert f"{round(100 * value('segment.cold.incremental_share_at_5'))}%" in page
 
 
 @pytest.mark.parametrize("preset_id", list(PRESETS))
@@ -48,7 +48,7 @@ def test_every_preset_runs(client, preset_id):
     assert response.status_code == 200
     body = response.get_json()
     assert set(body) == {"scenario", "baseline"}
-    assert body["scenario"]["kpis"]["ltv_per_1000_prospects"] > 0
+    assert body["scenario"]["summary"]["revenue_per_1000_prospects"] > 0
 
 
 def test_presets_keep_their_order_with_recommended_first(client):
@@ -58,15 +58,16 @@ def test_presets_keep_their_order_with_recommended_first(client):
 
 def test_status_quo_matches_its_own_baseline(client):
     body = client.post("/api/simulate", json=PRESETS["status_quo"]["values"]).get_json()
-    assert body["scenario"]["kpis"] == body["baseline"]["kpis"]
+    assert body["scenario"]["summary"] == body["baseline"]["summary"]
 
 
 @pytest.mark.parametrize("change, field", [
-    ({"base_price": "abc"}, "base_price"),
-    ({"base_price": ""}, "base_price"),
+    ({"discount_high": "abc"}, "discount_high"),
+    ({"discount_high": ""}, "discount_high"),
     ({"offer_share_high": 150}, "offer_share_high"),
     ({"discount_low": 20}, "discount_low"),
-    ({"new_member_discount": -1}, "new_member_discount"),
+    ({"new_member_discount": 0}, "new_member_discount"),
+    ({"discount_high": 2.5}, "discount_high"),
     ({"horizon_quarters": 2.5}, "horizon_quarters"),
     ({"discount_rate_pct": 100}, "discount_rate_pct"),
     # non-finite values parse as floats; they must give a validation error, not a server error
@@ -74,8 +75,6 @@ def test_status_quo_matches_its_own_baseline(client):
     ({"horizon_quarters": "inf"}, "horizon_quarters"),
     ({"horizon_quarters": "-Infinity"}, "horizon_quarters"),
     ({"horizon_quarters": 1e999}, "horizon_quarters"),
-    ({"base_price": "nan"}, "base_price"),
-    ({"base_price": "inf"}, "base_price"),
     ({"offer_share_low": "nan"}, "offer_share_low"),
     ({"discount_high": "inf"}, "discount_high"),
     ({"new_member_discount": "nan"}, "new_member_discount"),

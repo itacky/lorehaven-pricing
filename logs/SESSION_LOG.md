@@ -8,7 +8,7 @@
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 82 rows: every AI suggestion and what I did with it (57 accepted, 14 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 87 rows: every AI suggestion and what I did with it (62 accepted, 14 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -26,7 +26,8 @@
   - pushing for difference-in-differences, which was kept as the check on the base cut;
   - the would-join-anyway vs persuadable split;
   - keeping randomization in the recommendation;
-  - the tool's run instructions, tested on my own Windows machine.
+  - the tool's run instructions, tested on my own Windows machine;
+  - on 14 Nov, checking the holdout's power and simplifying the main analysis to group averages so every step can be explained by hand (models kept as a cross-check appendix).
 
 ---
 
@@ -283,6 +284,20 @@ Captions ("Fig. 1/2/3." plus a one-line takeaway) went under each figure. Claude
 
 Three more (E, F, H) showed join rate, volume and who is new together. **I chose F**: join rate and sign-ups per 1,000 prospects side by side, with rows ordered by volume. **I also asked (verbatim):** "the 21% 65%, 13% and 2% needs to eqal 100". Segment shares are now rounded with largest remainders (21/64/13/2) in the figure and in the tool. The write-up is still 2 pages.
 
+
+### 14. Power check and simplification (14 Nov)
+
+**Prompt (verbatim, abridged):**
+> The rollout arms initially seem reasonable, but did we take power into consideration? […] do you think we could have made it simpler? There is possibly too many details to explain within a 60-45 minute timeframe.
+
+Claude confirmed power had not been checked (only a relative-precision ratio) and computed minimum detectable differences: the 10% list arm is ample for sign-ups and right-sized for renewal. On simplicity, it suggested cutting the presentation, not the analysis. **I pushed further (verbatim, abridged):**
+
+> I was going through all the code and the logic, and approaches and found concepts such as Inverse-propensity weighting, Logistic DiD, and a few other things I don't have time to learn in this time constraint. […] I'm opting for simplification just so I don't have to learn too many new concepts in such a short time window.
+
+> also keep in mind I must defend my architecture and code level decisions too. It's not just the write up.
+
+**I chose** to rebuild the main analysis simply and keep the models as an appendix. Claude rebuilt it as group averages (`rates.py`), a lookup-table projection (`projection.py`) and a decision layer (`recommendation.py`), moved the regressions, IPW, fitted-curve simulator and backtest to `src/lorehaven/robustness/`, and added `ARCHITECTURE.md` with each design decision, its alternative and its cost. Before rewriting anything, it checked the recommendation still held: the two versions agree in direction on all 12 shared questions; the headline moves from +133% to +122%. The tool now allows only tested prices. Also fixed: the write-up byline still said "Economics & Data Science" (I caught it).
+
 ---
 
 ## Where the AI got it wrong, and what caught it
@@ -300,6 +315,8 @@ Three more (E, F, H) showed join rate, volume and who is new together. **I chose
 | Commit message miscounted critic outcomes | Claude, later | Correction logged, history kept |
 | Team acronym guessed (EDS) | Claude flagged it, I corrected it | AERO |
 | Fig. 1 suggested win-backs bring the most sign-ups (rates shown, segment sizes not) | Me | Redesigned as rate + volume (F); shares rounded to sum to 100 |
+| Holdout never checked for power | Me | Minimum detectable differences added |
+| Methods heavier than the design needs, hard to defend end to end | Me | Rebuilt on group averages; models kept as a cross-check appendix |
 | Headline gain quoted for a full rollout, not the recommended holdout design | External review (Astra) | Rollout simulated: +113% vs +133% |
 | Pull-forward presented as causal; standard error from an equal-variance shortcut | External review (Astra) | Pull-forward reframed as descriptive; SE given as a 0.45–0.72 range |
 | NaN or infinity in the tool caused a server error | External review (Astra) | Validation and 13 tests added |

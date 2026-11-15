@@ -1,4 +1,5 @@
 """Build writeup.pdf from writeup.md. Every number in the text is a {{metrics.json key|format}} token.
+Keys starting with crosscheck. come from outputs/robustness/crosscheck.json (the simple-vs-model comparison).
 
 Usage:  python writeup/build.py          -> writeup/writeup.html and writeup/writeup.pdf (needs Chrome or Edge)
 Formats: pct0 pct1 (share -> %), spct0 (signed %), pp1 (share -> percentage points), k1 ($ thousands),
@@ -14,7 +15,8 @@ from pathlib import Path
 import markdown
 
 ROOT = Path(__file__).resolve().parents[1]
-METRICS = json.loads((ROOT / "outputs" / "results" / "metrics.json").read_text())
+METRICS = {**json.loads((ROOT / "outputs" / "results" / "metrics.json").read_text()),
+           **json.loads((ROOT / "outputs" / "robustness" / "crosscheck.json").read_text())}
 FORMATS = {
     "pct0": lambda v: f"{100 * v:.0f}%", "pct1": lambda v: f"{100 * v:.1f}%", "spct0": lambda v: f"{100 * v:+.0f}%",
     "pp1": lambda v: f"{100 * v:.1f}pp", "k1": lambda v: f"${v / 1000:.1f}k", "usd2": lambda v: f"${v:.2f}",
