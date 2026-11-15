@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from lorehaven import data_prep, rates
 from lorehaven.projection import Policy, load_rates, project
@@ -72,12 +73,14 @@ def record_price_tables(rec, table):
 
 
 def record_signup_table(rec, table):
-    """$12 era: sign-up rate by prospect segment and discount, and what the offer adds in each segment."""
-    signup = rates.signup_by_segment_and_discount(table)
-    signup.to_csv(RESULTS_DIR / "signup_by_segment_and_discount.csv", index=False)
-    for r in signup.itertuples():
-        rec.add(f"rates.signup.{r.segment}.off{r.discount_depth}", r.rate, "share", "observed", f"n={r.n}; $12 era")
-        rec.add(f"rates.signup.{r.segment}.off{r.discount_depth}.n", r.n, "prospect-quarters", "observed")
+    """Sign-up rate by prospect segment and discount in each base-price era; segment results from the $12 era."""
+    both = pd.concat([rates.signup_by_segment_and_discount(table, base) for base in rates.ERAS])
+    both.to_csv(RESULTS_DIR / "signup_by_segment_and_discount.csv", index=False)
+    for r in both.itertuples():
+        era = f"${r.base_price} base, quarters {rates.ERAS[r.base_price][0]}-{rates.ERAS[r.base_price][-1]}"
+        rec.add(f"rates.signup.base{r.base_price}.{r.segment}.off{r.discount_depth}", r.rate, "share", "observed", f"n={r.n}; {era}")
+        rec.add(f"rates.signup.base{r.base_price}.{r.segment}.off{r.discount_depth}.n", r.n, "prospect-quarters", "observed")
+    signup = both[both.base_price == 12]
     for segment, rows in signup.groupby("segment"):
         at5 = rows.set_index("discount_depth").loc[5]
         rec.add(f"segment.{segment}.share_of_prospects", at5.share_of_prospects, "share", "observed", "$12 era")
@@ -92,12 +95,12 @@ def record_signup_table(rec, table):
 
 
 def record_stay_table(rec, table):
-    """$12 era: share of members who stay, by podcast segment, tenure and price."""
-    stay = rates.stay_by_tenure_and_price(table)
+    """Share of members who stay, by podcast segment, tenure and price, in each base-price era."""
+    stay = pd.concat([rates.stay_by_tenure_and_price(table, base) for base in rates.ERAS])
     stay.to_csv(RESULTS_DIR / "stay_by_tenure_and_price.csv", index=False)
     for r in stay.itertuples():
-        rec.add(f"rates.stay.{r.segment}.{r.tenure_group}.price{r.membership_price}", r.rate, "share", "observed",
-                f"n={r.n}; $12 era")
+        rec.add(f"rates.stay.base{r.base_price}.{r.segment}.{r.tenure_group}.price{r.membership_price}", r.rate, "share",
+                "observed", f"n={r.n}; ${r.base_price} base")
 
 
 def record_first_quarter_values(rec, table, signup):
@@ -175,6 +178,8 @@ def record_headlines(rec):
             "Tenure discounts vs the best single discount for every member, 3 years")
     rec.add("headline.recommended_with_win_back_vs_today", revenue("recommended_with_win_back") / revenue("today") - 1,
             "share", "estimate", "Recommended plus offers to former members, 3 years")
+    rec.add("headline.recommended_at_15_vs_12", revenue("recommended_at_15") / revenue("recommended") - 1, "share", "estimate",
+            "Same policy at a $15 base vs $12, 3 years. CAUTION: the $15 rates are from 2017-18, the $12 rates from 2019")
     rec.add("headline.first_quarter_everyone_5_vs_today", rec.value("first_quarter.everyone_5_off") / rec.value("first_quarter.today") - 1,
             "share", "estimate")
     gain = rec.value("first_quarter.everyone_5_off") - rec.value("first_quarter.everyone_0_off")

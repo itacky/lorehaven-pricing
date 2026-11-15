@@ -5,14 +5,18 @@ prospect got an offer (25%) and how deep it was ($1-$5, equal shares) were rando
 are alike in everything except price. The difference between two group averages IS the effect of the price
 difference. (A regression would only smooth these averages; lorehaven/robustness/ shows it gives the same answers.)
 
-Two samples, named once here:
-  ALL_ERAS     discounting regions, every quarter after launch (quarters 1-11): the price-response tables
-  CURRENT_ERA  discounting regions at the $12 base (2019 spring-fall, quarters 9-11): what the projection uses
+Samples, named once here (all in the discounting regions; Panem never had discounts):
+  quarters 1-11   every quarter after launch: the price-response tables
+  ERAS[15]        the $15 base, 2017 spring - 2018 fall (quarters 1-8)
+  ERAS[12]        the $12 base, 2019 spring-fall (quarters 9-11) = CURRENT_ERA
+Each era has its own randomized discounts, so each era's table is causal on its own. Comparing the two eras also
+compares different years, so a $12-vs-$15 difference is not purely the effect of price.
 """
 import numpy as np
 import pandas as pd
 
 CURRENT_ERA_QUARTERS = (9, 10, 11)
+ERAS = {12: CURRENT_ERA_QUARTERS, 15: tuple(range(1, 9))}     # base price -> quarters at that base
 TENURE_GROUPS = {"first_renewal": (1, 1), "second_renewal": (2, 2), "established": (3, 99)}   # quarters as a member
 PROSPECT_SEGMENTS = {  # (former member?, engaged podcast listener?) -> name
     (0, 1): "warm_listener", (0, 0): "cold", (1, 1): "win_back", (1, 0): "lapsed_low_podcast"}
@@ -70,25 +74,29 @@ def stay_by_price(table: pd.DataFrame) -> pd.DataFrame:
     return _rate_table(rows, ["base_price", "membership_price"], "stayed")
 
 
-def signup_by_segment_and_discount(table: pd.DataFrame) -> pd.DataFrame:
-    """$12 era: sign-up rate for each prospect segment at each discount ($0 = list price), plus segment shares.
+def signup_by_segment_and_discount(table: pd.DataFrame, base_price: int = 12) -> pd.DataFrame:
+    """One base-price era: sign-up rate for each prospect segment at each discount ($0 = list price), plus segment shares.
     Adds, per segment: list_rate (joins anyway), uplift = rate - list_rate (joins because of the offer),
     incremental_share = uplift / rate (share of offer joiners the offer actually won)."""
-    rows = prospects(discounting_regions(table, CURRENT_ERA_QUARTERS))
+    rows = prospects(discounting_regions(table, ERAS[base_price]))
     cells = _rate_table(rows, ["segment", "discount_depth"], "sign_up_flag")
     cells["share_of_prospects"] = cells.segment.map(rows.segment.value_counts(normalize=True))
     cells["list_rate"] = cells.segment.map(cells[cells.discount_depth == 0].set_index("segment").rate)
     cells["uplift"] = cells.rate - cells.list_rate
     cells["incremental_share"] = np.where(cells.discount_depth > 0, cells.uplift / cells.rate, np.nan)
-    cells["price"] = 12 - cells.discount_depth
+    cells["base_price"] = base_price
+    cells["price"] = base_price - cells.discount_depth
     cells["revenue_per_prospect"] = cells.rate * cells.price       # first quarter only
     return cells
 
 
-def stay_by_tenure_and_price(table: pd.DataFrame) -> pd.DataFrame:
-    """$12 era: share of members who stay, by podcast segment, tenure group and price ($7-$11; every member had an offer)."""
-    rows = members(discounting_regions(table, CURRENT_ERA_QUARTERS))
-    return _rate_table(rows, ["segment", "tenure_group", "membership_price"], "stayed")
+def stay_by_tenure_and_price(table: pd.DataFrame, base_price: int = 12) -> pd.DataFrame:
+    """One base-price era: share of members who stay, by podcast segment, tenure group and price
+    ($1-$5 below the base; every member had an offer)."""
+    rows = members(discounting_regions(table, ERAS[base_price]))
+    cells = _rate_table(rows, ["segment", "tenure_group", "membership_price"], "stayed")
+    cells["base_price"] = base_price
+    return cells
 
 
 def never_member_share_high_podcast(table: pd.DataFrame) -> float:

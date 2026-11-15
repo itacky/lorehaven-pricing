@@ -60,8 +60,9 @@ restate them anywhere else:
    support causal claims. The base cut is descriptive. Write "consistent with", never "caused".
    Prefer the simplest method the design supports: a difference of randomized group averages before any model.
 4. **Equations define every variable.** Use plain language for the pricing lead, and state units.
-5. **Respect the tested ranges.** Results hold at the $12 base, for prospects at $0-$5 off and members at
-   $1-$5 off. The projection only looks up observed rates, so it refuses anything else; keep it that way.
+5. **Respect the tested ranges.** The recommendation is at the $12 base. The projection accepts a $12-$15 base
+   ($13-$14 blended between the two observed eras), $0-$5 off for prospects and $1-$5 off for members, and refuses
+   anything else; keep it that way. A $12-vs-$15 comparison also compares years: say so.
 6. **Data hygiene.**
    - Raw data stays out of git (`data/raw/` is ignored).
    - No credentials or personal information in the repo.

@@ -1,4 +1,3 @@
-const BASE_PRICE = Number(document.body.dataset.basePrice);   // from lorehaven.projection.BASE_PRICE via the page
 // Lorehaven pricing tool — UI only. All numbers come from the Python project() via /api/simulate.
 const form = document.getElementById("controls");
 const presetSelect = document.getElementById("preset");
@@ -24,6 +23,7 @@ const KPIS = [
 function formToPolicy() {
   const f = new FormData(form);
   return {
+    base_price: f.get("base_price"),
     offer_share_high: f.get("offer_share_high"), discount_high: f.get("discount_high"),
     offer_share_low: f.get("offer_share_low"), discount_low: f.get("discount_low"),
     lapsed_get_offers: form.lapsed_get_offers.checked,
@@ -50,7 +50,7 @@ function syncControls() {
   }
   const quarters = Number(form.elements.horizon_quarters.value);
   horizonButtons.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.quarters) === quarters)));
-  document.querySelectorAll(".chips").forEach((c) => c.classList.toggle("disabled", form.random_depths.checked));
+  document.querySelectorAll(".chips:not(.base-chips)").forEach((c) => c.classList.toggle("disabled", form.random_depths.checked));
 }
 
 // ---------- simulation ----------
@@ -102,7 +102,7 @@ function renderKpis(scenario, baseline) {
 }
 
 function renderGuardrails(kpis) {
-  const base = BASE_PRICE;
+  const base = Number(form.elements.base_price.value) || 1;
   const paidShare = Math.max(0, Math.min(1, kpis.average_revenue_per_member_quarter / base));
   const discounted = kpis.share_of_member_quarters_discounted;
   document.getElementById("guardrails").innerHTML = `

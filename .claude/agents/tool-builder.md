@@ -50,7 +50,7 @@ pricing lead with no technical background can open, understand and use in a few 
 - Lead with the purpose: the answer to the brief and the recommendation come before the controls.
   Limitations stay visible.
 - Plain labels with units, a one-line explanation per output, and a warning whenever a setting is outside
-  the tested prices ($12 base, $0-$5 off prospects, $1-$5 off members).
+  the tested prices ($12-$15 base, $0-$5 off prospects, $1-$5 off members).
 - Reject invalid input (empty, non-numeric, NaN or infinity, negative, a discount at or above the base price,
   shares outside 0-100%) with a message naming the field and what to change.
 - Keep the tool's runtime dependency to Flask only (`requirements-tool.txt`), with one entry point, no build

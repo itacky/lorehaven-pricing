@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body data-base-price="{{ facts.base }}">
+<body>
 <div class="shell">
 
   <nav class="sidebar" aria-label="Main">
@@ -205,7 +205,8 @@
         <li><strong>A comparison, not a forecast.</strong> The projection reuses the average 2019 rate for every quarter, so use it to rank policies, not to predict revenue.</li>
         <li><strong>Offering everyone a discount is untested.</strong> Offers reached about {{ facts.tested_offer_share_pct }}% of prospects in the data. The projection assumes people respond the same at full coverage, which is why the recommendation keeps a randomized holdout. A 10% list-price arm can detect a {{ facts.mde_renewal_pts }}-point renewal gap within three quarters.</li>
         <li><strong>The base-price cut is not cleanly identified.</strong> One comparison region, and the gap to it moves by a few points even in quarters with no price change, so its size is not claimed.</li>
-        <li><strong>Tested prices only.</strong> The ${{ facts.base }} base with $0–$5 off for new customers and $1–$5 off for members (every member had an offer, so full price for members was never seen). The tool only allows those.</li>
+        <li><strong>Tested prices only.</strong> A $12–$15 base with $0–$5 off for new customers and $1–$5 off for members (every member had an offer, so full price for members was never seen). The tool only allows those.</li>
+        <li><strong>Base prices compare different years.</strong> The $15 rates come from 2017–18 and the $12 rates from 2019, so a gap between them is not only price. In the projection, the recommended discounts at a $15 base earn {{ facts.recommended_at_15_vs_12 }} vs $12; test any base change in a controlled experiment.</li>
         <li><strong>Gaming is invisible.</strong> The data cannot show customers who cancel in order to collect a win-back offer, or who wait for a deeper one.</li>
         <li><strong>Every quarter looks like an average 2019 quarter:</strong> no seasonality or marketing changes. Revenue is net of discounts; content costs are out of scope.</li>
       </ul>
@@ -225,7 +226,13 @@
       </label>
       <p id="form-error" class="form-error" role="alert" hidden></p>
 
-      <p class="hint">Base price: ${{ facts.base }} per quarter, the only base the data has discounts for.</p>
+      <div class="group">
+        <h3 class="group-title">Base price per quarter</h3>
+        <div class="chips base-chips" role="radiogroup" aria-label="Base price">
+          {% for amount in facts.base_choices %}<label class="chip"><input type="radio" name="base_price" value="{{ amount }}"><span>${{ amount }}</span></label>{% endfor %}
+        </div>
+        <p class="hint">Lorehaven charged $15 (2017–18) and ${{ facts.base }} (2019), both with random discounts underneath. $13 and $14 blend the two. Other bases were never tested.</p>
+      </div>
 
       <div class="group">
         <h3 class="group-title">Introductory offer</h3>

@@ -39,6 +39,9 @@ def named_policies() -> dict:
         policies[f"holdout_arm_{arm}"] = Policy(**{**vars(policies["recommended"]), "offer_share": everyone(share),
                                                    "prospect_discount": everyone(off)})
     policies["holdout_arm_5_off"] = policies["recommended"]
+    for base in (13, 14, 15):   # the recommended discounts at a higher base (rates blended or from the $15 era)
+        policies[f"recommended_at_{base}"] = Policy(**{**vars(policies["recommended"]), "base_price": base})
+    policies["today_at_15"] = Policy(todays_random_depths=True, base_price=15)
     return policies
 
 

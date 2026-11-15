@@ -43,7 +43,7 @@ because it already held the context. The critic was always a separate fresh-cont
 
 ## Decision-log summary
 
-87 logged decisions: 62 accepted, 14 edited, 11 rejected.
+89 logged decisions: 64 accepted, 14 edited, 11 rejected.
 
 | Phase | Accept | Edit | Reject |
 |---|---|---|---|
@@ -52,7 +52,7 @@ because it already held the context. The critic was always a separate fresh-cont
 | 2 Critic review and fixes | 11 | 2 | 2 |
 | 3 Tool | 5 | 2 | 2 |
 | 4 Write-up, notebook, final review | 9 | 1 | 1 |
-| 5 AI note and follow-ups (sharing, UI, branding, reviews) | 21 | 5 | 0 |
+| 5 AI note and follow-ups (sharing, UI, branding, reviews) | 23 | 5 | 0 |
 
 Critic reviews:
 - **Phase 2** (analysis): 20 issues. 17 accepted, 2 accepted in modified form, 1 rejected with evidence (a test showed the propensity score is not affected by the offer).
@@ -75,6 +75,7 @@ Critic reviews:
 | Write-up overstated results: "rising in every segment", base cut stated as fact, only the favourable backcast baseline quoted, 100% offer coverage assumed silently | Phase 4 critic | Corrected and labelled; tool warns on offer coverage beyond the tested share |
 | Recommendation dropped the randomization that made the analysis possible | Iman | Rewritten as a default offer with a persistent randomized holdout |
 | Holdout sized by relative precision only, never by power | Iman | Minimum detectable differences added (sign-up and renewal, 10% vs 5% list arm) |
+| Simplified tool dropped the base-price control the brief asks for | Iman | $12-$15 base restored from the two observed eras' tables ($13-$14 blended) |
 | Methods heavier than the randomized design needs (fixed-effect logits, IPW, logit DiD, fitted-curve simulator), hard to explain end to end | Iman | Main analysis rebuilt on group averages and a lookup-table projection; models kept as an appendix that agrees on 12 of 12 questions |
 
 ## How output was verified

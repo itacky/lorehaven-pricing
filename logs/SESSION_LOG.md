@@ -8,7 +8,7 @@
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 87 rows: every AI suggestion and what I did with it (62 accepted, 14 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 89 rows: every AI suggestion and what I did with it (64 accepted, 14 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -298,6 +298,14 @@ Claude confirmed power had not been checked (only a relative-precision ratio) an
 
 **I chose** to rebuild the main analysis simply and keep the models as an appendix. Claude rebuilt it as group averages (`rates.py`), a lookup-table projection (`projection.py`) and a decision layer (`recommendation.py`), moved the regressions, IPW, fitted-curve simulator and backtest to `src/lorehaven/robustness/`, and added `ARCHITECTURE.md` with each design decision, its alternative and its cost. Before rewriting anything, it checked the recommendation still held: the two versions agree in direction on all 12 shared questions; the headline moves from +133% to +122%. The tool now allows only tested prices. Also fixed: the write-up byline still said "Economics & Data Science" (I caught it).
 
+
+### 15. Base price back in the tool (14 Nov)
+
+**Prompt (verbatim, abridged):**
+> For the similator it says "Build a simple tool that lets someone without a technical background […] explore how different pricing/discount choices would affect outcomes" […] Right now the similator only has discount choices with no adjustable pricing anymore. There is some risk in leaving this out it looks like
+
+Claude agreed and checked the data: the $15 era (2017–18) also had randomized discounts, so it has a full rate table of its own. **I chose** a $12–$15 base, with $13 and $14 blended in a straight line between the two tables, over a $12/$15 switch or a fitted price curve. The tool warns that $12 vs $15 also compares 2019 with 2017–18. At $15 the recommended discounts earn 43% less, which supports keeping $12 (direction only).
+
 ---
 
 ## Where the AI got it wrong, and what caught it
@@ -316,6 +324,7 @@ Claude confirmed power had not been checked (only a relative-precision ratio) an
 | Team acronym guessed (EDS) | Claude flagged it, I corrected it | AERO |
 | Fig. 1 suggested win-backs bring the most sign-ups (rates shown, segment sizes not) | Me | Redesigned as rate + volume (F); shares rounded to sum to 100 |
 | Holdout never checked for power | Me | Minimum detectable differences added |
+| Simplified tool lost the base-price control the brief asks for | Me | $12-$15 base restored from observed tables |
 | Methods heavier than the design needs, hard to defend end to end | Me | Rebuilt on group averages; models kept as a cross-check appendix |
 | Headline gain quoted for a full rollout, not the recommended holdout design | External review (Astra) | Rollout simulated: +113% vs +133% |
 | Pull-forward presented as causal; standard error from an equal-variance shortcut | External review (Astra) | Pull-forward reframed as descriptive; SE given as a 0.45–0.72 range |

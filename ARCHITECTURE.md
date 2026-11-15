@@ -56,16 +56,21 @@ price response, and former members behave differently from never-members. Tenure
 cancel far more often (Fig. 2). Three groups because renewals 3+ look alike. *Alternative:* more segments; each
 extra split halves the cell sizes.
 
-**3. The projection uses the 2019 ($12) data only.**
-*Why:* the recommendation is about pricing at $12, and the same $12 drew different behaviour as a discount on $15
-(10.1% sign-up) and as the list price (6.0%). Mixing eras would blend those. *Cost:* three quarters of data,
-not eleven.
+**3. One rate table per base-price era, never pooled.**
+Lorehaven charged $15 (2017-18) and then $12 (2019), each with randomized $1-$5 discounts underneath, so each era
+has its own causal table. *Why separate:* the same $12 drew different behaviour as a discount on $15 (10.1%
+sign-up) and as the list price (6.0%); pooling eras would blend those. The recommendation and headline numbers use
+the $12 table. *Cost:* comparing the $12 and $15 tables also compares 2019 with 2017-18, so a base-price comparison
+is a direction, not a measured effect; the tool says so whenever the base is not $12.
 
-**4. Look rates up; never fit a curve.**
-*Why:* a lookup cannot extrapolate. The tool therefore only allows prices that were tested: the $12 base, $0-$5
-off for prospects, $1-$5 off for members (every member had an offer, so full price for members was never seen).
-*Alternative:* fitted logistic curves allowed any price, with warnings. *Cost:* no "what if the base were $10"
-answer; the honest answer to that is "run a test", which the recommendation says.
+**4. Look rates up; never fit a curve. Blend only between the two tested bases.**
+*Why:* a lookup cannot extrapolate. The brief asks the tool to explore pricing as well as discount choices, so the
+base price can be set from $12 to $15: $12 and $15 read their own table, and $13 and $14 blend them in a straight
+line by discount (rate at $13 = two-thirds the $12 table + one-third the $15 table). Discounts: $0-$5 off for
+prospects, $1-$5 off for members (every member had an offer, so full price for members was never seen).
+*Alternatives:* (a) only $12 — no pricing choice at all, which the brief asks for; (b) a fitted price curve —
+any base, but a model the main path does not otherwise need, and it would extrapolate. *Cost:* no "what if the base
+were $10" answer; the honest answer to that is "run a test", which the recommendation says.
 
 **5. A cohort projection, not just first-quarter numbers.**
 *Why:* member discounts only pay off over several renewals, which a one-quarter view cannot show. The projection

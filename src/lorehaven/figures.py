@@ -42,7 +42,7 @@ def figure_who_needs_the_offer():
     """Two panels per prospect segment ($12 era): join rate with $5 off, and sign-ups per 1,000 prospects.
     Both split into would join anyway (list-price rate) and join because of the offer (uplift at $5 off)."""
     signup = pd.read_csv(RESULTS_DIR / "signup_by_segment_and_discount.csv")
-    uplift = signup[signup.discount_depth == 5].set_index("segment").rename(columns={"list_rate": "p0_list", "uplift": "uplift_5"})
+    uplift = signup[(signup.base_price == 12) & (signup.discount_depth == 5)].set_index("segment").rename(columns={"list_rate": "p0_list", "uplift": "uplift_5"})
     uplift["anyway_per_1000"] = 1000 * uplift.share_of_prospects * uplift.p0_list
     uplift["new_per_1000"] = 1000 * uplift.share_of_prospects * uplift.uplift_5
     uplift["total_per_1000"] = uplift.anyway_per_1000 + uplift.new_per_1000
@@ -78,7 +78,7 @@ def figure_who_needs_the_offer():
 
 def figure_retention_by_tenure():
     """Observed share of members who stay, by price and tenure, $12 era (2019 spring-fall). No model."""
-    stay = pd.read_csv(RESULTS_DIR / "stay_by_tenure_and_price.csv")
+    stay = pd.read_csv(RESULTS_DIR / "stay_by_tenure_and_price.csv").query("base_price == 12")
     groups = [("first_renewal", "First renewal", ORANGE), ("second_renewal", "Second renewal", BLUE),
               ("established", "Third renewal on", AQUA)]
     fig, axes = plt.subplots(1, 2, figsize=FIGURE_SIZE, sharey=True, layout="constrained")

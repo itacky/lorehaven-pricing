@@ -4,9 +4,15 @@ Each quarter, for each group of people:
   new members     = prospects x (sign-up rate at the price they are offered)
   members kept    = members   x (stay rate for their tenure at the price they pay)
   revenue         = everyone who pays x the price they pay
-Every rate is LOOKED UP in the observed $12-era tables (rates.py): there are no fitted curves. So the policy may only
-use prices that were actually tested: the $12 base, $0-$5 off for prospects and $1-$5 off for members (every member
-had an offer in the data, so members at full price were never observed).
+Every rate is LOOKED UP in the observed tables (rates.py): there are no fitted curves. Lorehaven charged two base
+prices, each with randomized $1-$5 discounts underneath: $12 (2019) and $15 (2017-18). So the policy may use:
+  base price $12-$15 in whole dollars. $12 and $15 use their own table. $13 and $14 blend the two in a straight
+    line by discount: rate(base B, $k off) = w x rate($12 base, $k off) + (1 - w) x rate($15 base, $k off),
+    w = (15 - B) / 3   (so $13 is two-thirds the $12 table, one-third the $15 table)
+  $0-$5 off for prospects and $1-$5 off for members (every member had an offer, so members at full price were never
+  observed).
+Caveat: the $15 table comes from 2017-18 and the $12 table from 2019, so a $12-vs-$15 difference also reflects
+whatever else changed between those years. The tool says so whenever the base is not $12.
 
 Groups tracked, separately for engaged podcast listeners (high_podcast) and everyone else (low_podcast):
   never members, former members, and members by tenure: first renewal, second renewal, established (third renewal on).
@@ -17,7 +23,8 @@ import math
 from dataclasses import dataclass, field
 from pathlib import Path
 
-BASE_PRICE = 12
+TESTED_BASES = (12, 15)              # base prices with an observed rate table
+BASE_PRICE = 12                      # the default and the base the recommendation is about
 PODCAST_SEGMENTS = ("high_podcast", "low_podcast")
 TENURE_GROUPS = ("first_renewal", "second_renewal", "established")
 TODAYS_DEPTHS = (1, 2, 3, 4, 5)      # today's engine: a random $1-$5 off
@@ -32,6 +39,7 @@ METRICS_PATH = Path(__file__).resolve().parents[2] / "outputs" / "results" / "me
 
 @dataclass
 class Policy:
+    base_price: int = BASE_PRICE            # list price per quarter, whole $ from 12 to 15
     offer_share: dict = field(default_factory=lambda: {"high_podcast": 0.25, "low_podcast": 0.25})   # 0-1
     prospect_discount: dict = field(default_factory=lambda: {"high_podcast": 3, "low_podcast": 3})  # whole $, 0-5
     new_member_discount: int = 3            # $ off at a member's first and second renewal (1-5)
@@ -45,10 +53,24 @@ class Policy:
 
 @dataclass
 class Rates:
-    signup: dict                 # (segment name, $ off) -> sign-up rate
-    stay: dict                   # (podcast segment, tenure group, price) -> stay rate
-    share_high_podcast: float    # engaged listeners' share of never-member prospects
+    signup: dict                 # (base, segment name, $ off) -> sign-up rate, for each tested base
+    stay: dict                   # (base, podcast segment, tenure group, $ off) -> stay rate, for each tested base
+    share_high_podcast: float    # engaged listeners' share of never-member prospects ($12 era)
     tested_offer_share: float    # share of prospects who got an offer in the data (25%)
+
+    def _blend(self, table: dict, base: int, key: tuple) -> float:
+        """Rate at any base from $12 to $15: the observed table at $12 or $15, a straight-line blend in between."""
+        low, high = TESTED_BASES
+        weight_low = (high - base) / (high - low)
+        return weight_low * table[(low, *key)] + (1 - weight_low) * table[(high, *key)]
+
+    def signup_rate(self, base: int, segment: str, off: int) -> float:
+        """Sign-up rate for a prospect segment offered $off below the base."""
+        return self._blend(self.signup, base, (segment, off))
+
+    def stay_rate(self, base: int, segment: str, tenure_group: str, off: int) -> float:
+        """Share of members in this segment and tenure group who stay when charged $off below the base."""
+        return self._blend(self.stay, base, (segment, tenure_group, off))
 
 
 class InvalidPolicy(ValueError):
@@ -63,9 +85,10 @@ def load_rates(metrics_path: Path = METRICS_PATH) -> Rates:
     """Read the rate tables from metrics.json (single source of truth)."""
     metrics = json.loads(Path(metrics_path).read_text())
     value = lambda key: metrics[key]["value"]
-    signup = {(segment, off): value(f"rates.signup.{segment}.off{off}") for segment in SEGMENT_NAME.values() for off in range(6)}
-    stay = {(segment, group, price): value(f"rates.stay.{segment}.{group}.price{price}")
-            for segment in PODCAST_SEGMENTS for group in TENURE_GROUPS for price in range(BASE_PRICE - 5, BASE_PRICE)}
+    signup = {(base, segment, off): value(f"rates.signup.base{base}.{segment}.off{off}")
+              for base in TESTED_BASES for segment in SEGMENT_NAME.values() for off in range(6)}
+    stay = {(base, segment, group, off): value(f"rates.stay.base{base}.{segment}.{group}.price{base - off}")
+            for base in TESTED_BASES for segment in PODCAST_SEGMENTS for group in TENURE_GROUPS for off in range(1, 6)}
     return Rates(signup, stay, value("projection.share_high_podcast"), value("projection.tested_offer_share"))
 
 
@@ -73,7 +96,7 @@ def _whole_dollars(name, label, x, low, high):
     """Raise InvalidPolicy unless x is a whole number of dollars from low to high (only tested prices allowed)."""
     if isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x != int(x) or not low <= x <= high:
         raise InvalidPolicy(f"{label} must be a whole number of dollars from ${low} to ${high} (got {x!r}): "
-                            f"those are the discounts tested in the data.", name)
+                            f"that is the range the data covers.", name)
 
 
 def validate(policy: Policy) -> None:
@@ -81,6 +104,8 @@ def validate(policy: Policy) -> None:
     for name in ("win_back_offers", "todays_random_depths"):
         if not isinstance(getattr(policy, name), bool):
             raise InvalidPolicy("Win-back offers and today's random discounts must be on or off.", name)
+    low, high = TESTED_BASES
+    _whole_dollars("base_price", "Base price", policy.base_price, low, high)
     for segment in PODCAST_SEGMENTS:
         share = policy.offer_share.get(segment)
         if isinstance(share, bool) or not isinstance(share, (int, float)) or not math.isfinite(share) or not 0 <= share <= 1:
@@ -117,10 +142,17 @@ def member_offers(policy: Policy, tenure_group: str) -> list:
 
 def warnings_for(policy: Policy, rates: Rates) -> list:
     """Plain-language caution when a setting reaches beyond what the data can vouch for."""
+    warnings = []
+    if policy.base_price != BASE_PRICE:
+        blended = "" if policy.base_price in TESTED_BASES else (
+            f" ${policy.base_price} was never charged: its rates are a straight-line blend of the $12 and $15 tables.")
+        warnings.append(f"The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them "
+                        f"also reflects whatever else changed between those years, not only price.{blended} "
+                        f"Test a base-price change in a controlled experiment before relying on it.")
     if any(policy.offer_share[s] > rates.tested_offer_share + 0.005 for s in PODCAST_SEGMENTS):
-        return [f"In the data about {rates.tested_offer_share:.0%} of prospects got an offer. Offering more people assumes each "
-                f"person responds the same when everyone gets one: confirm it with a randomized holdout."]
-    return []
+        warnings.append(f"In the data about {rates.tested_offer_share:.0%} of prospects got an offer. Offering more people assumes each "
+                        f"person responds the same when everyone gets one: confirm it with a randomized holdout.")
+    return warnings
 
 
 def _one_quarter(policy, rates, people, segment) -> dict:
@@ -131,18 +163,18 @@ def _one_quarter(policy, rates, people, segment) -> dict:
     for status in ("never", "lapsed"):
         joined[status] = 0.0
         for share, off in prospect_offers(policy, segment, status):
-            joiners = people[status] * share * rates.signup[SEGMENT_NAME[segment, status], off]
+            joiners = people[status] * share * rates.signup_rate(policy.base_price, SEGMENT_NAME[segment, status], off)
             joined[status] += joiners
-            flow["revenue"] += joiners * (BASE_PRICE - off)
+            flow["revenue"] += joiners * (policy.base_price - off)
             flow["discount_cost"] += joiners * off
             flow["discounted_payers"] += joiners if off else 0.0
     kept = {}
     for group in TENURE_GROUPS:
         kept[group] = 0.0
         for share, off in member_offers(policy, group):
-            stayers = people[group] * share * rates.stay[segment, group, BASE_PRICE - off]
+            stayers = people[group] * share * rates.stay_rate(policy.base_price, segment, group, off)
             kept[group] += stayers
-            flow["revenue"] += stayers * (BASE_PRICE - off)
+            flow["revenue"] += stayers * (policy.base_price - off)
             flow["discount_cost"] += stayers * off
             flow["discounted_payers"] += stayers if off else 0.0
     flow["churned"] = flow["members_start"] - sum(kept.values())

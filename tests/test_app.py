@@ -62,6 +62,9 @@ def test_status_quo_matches_its_own_baseline(client):
 
 
 @pytest.mark.parametrize("change, field", [
+    ({"base_price": 11}, "base_price"),
+    ({"base_price": "abc"}, "base_price"),
+    ({"base_price": "nan"}, "base_price"),
     ({"discount_high": "abc"}, "discount_high"),
     ({"discount_high": ""}, "discount_high"),
     ({"offer_share_high": 150}, "offer_share_high"),

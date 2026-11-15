@@ -68,7 +68,9 @@ The page reads top to bottom in the order of the brief:
    chosen horizon.
 3. **Test a policy.** Set a policy in the **Policy settings** panel on the right:
    - **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $2 discount for all members*, or
-     *No intro offer, $1 off for members*.
+     *No intro offer, $1 off for members*, *Recommended discounts at the old $15 base*.
+   - **Base price per quarter**: $12-$15. Lorehaven charged $15 (2017-18) and $12 (2019); $13 and $14 blend the
+     two eras' rates. A note appears whenever the base is not $12, because the eras differ in more than price.
    - **Introductory offer**: the share of prospects offered a discount and its size ($0-$5), set separately for
      *engaged listeners* (podcast-engagement score of 0.5 or more) and other prospects. *Former members get
      it too* switches win-back offers on or off.
@@ -76,11 +78,11 @@ The page reads top to bottom in the order of the brief:
    - **More settings**: horizon (quarters), a discount rate on future revenue, and *random $1-$5 discounts*
      (today's promotions engine).
 
-   The base price is fixed at $12 and only tested discounts can be chosen, because the projection reads observed
-   rates and has nothing to say about prices that were never tried. Results update automatically: tiles (revenue,
+   Only tested prices can be chosen, because the projection reads observed rates and has nothing to say about
+   prices that were never tried. Results update automatically: tiles (revenue,
    members at the end, first-quarter revenue, members leaving per quarter, each against today's policy), a
    members-per-quarter chart (hover for each quarter), guardrails, and an amber note when offers reach more
-   prospects than the 25% the data saw.
+   prospects than the 25% the data saw or the base is not $12.
 4. **Limitations.** What the numbers cannot tell you.
 
 Every number on the page is read from `outputs/results/metrics.json` or computed by `project()`; none is typed
@@ -96,11 +98,12 @@ Each assumption is listed in `PLAN.md` §3 and labelled in `metrics.json` (`labe
 - **Causal price effects come from Lorehaven's own randomization.** Discount depth ($1-$5) is randomized by
   design. Whether a prospect is offered a discount looks random on everything observable; we treat it as
   random (assumption A2). That is why a difference of group averages is the effect of price.
-- **The projection uses 2019 rates.** Sign-up and stay rates come from the discounting regions in 2019
-  spring-fall (the $12 base), by engagement segment, by never vs former member, and for members at their first
-  renewal, second renewal and later. Every quarter is treated as an average 2019 quarter: no seasonality and no
+- **The projection uses observed rates from each base-price era.** Sign-up and stay rates come from the
+  discounting regions, by engagement segment, by never vs former member, and for members at their first
+  renewal, second renewal and later: 2019 spring-fall for the $12 base (the recommendation) and 2017-18 for the
+  $15 base. $13 and $14 are a straight-line blend. Comparing bases also compares years, so it is a direction only. Every quarter is treated as an average 2019 quarter: no seasonality and no
   marketing changes. Use it to rank policies, not to forecast member counts.
-- **Tested prices only.** The $12 base, $0-$5 off for prospects and $1-$5 off for members. Members paying full
+- **Tested prices only.** A $12-$15 base, $0-$5 off for prospects and $1-$5 off for members. Members paying full
   price were never observed, so the tool does not allow it.
 - **Revenue** is what members actually pay, so it is already net of discounts. The only cost counted is the
   discount itself. Content costs are out of scope.
@@ -132,8 +135,8 @@ Main outputs, in `outputs/results/`:
 |---|---|
 | `metrics.json` | Every reported number, each with unit, label (observed / estimate / assumption) and a note |
 | `signup_by_price.csv`, `stay_by_price.csv` | Sign-up and stay rates at every price, both base-price eras |
-| `signup_by_segment_and_discount.csv` | $12 era: sign-up by segment and discount, uplift and share the offer won |
-| `stay_by_tenure_and_price.csv` | $12 era: stay rate by engagement, tenure and price (the projection's member table) |
+| `signup_by_segment_and_discount.csv` | Sign-up by segment and discount, uplift and share the offer won, for each base-price era ($12, $15) |
+| `stay_by_tenure_and_price.csv` | Stay rate by engagement, tenure and price, for each base-price era (the projection's member tables) |
 | `base_cut_two_by_two.csv`, `base_cut_gap_by_quarter.csv` | 2019 base cut vs Panem |
 
 Appendix outputs, in `outputs/robustness/`: the model-based `metrics.json`, `simple_vs_advanced.csv` (the same

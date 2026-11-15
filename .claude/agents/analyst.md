@@ -63,7 +63,7 @@ other people quote. Nothing you report may exist only in a chat message: if it m
 - Don't type numbers into the write-up, README, tool or notebook. They read `metrics.json`.
 - Don't tune a specification until it "looks right", or drop a result because it is inconvenient.
 - Don't claim a causal effect where assignment was not randomized: say "consistent with" and give the reason.
-- Don't extrapolate outside the tested prices: the projection only looks up observed rates ($12 base, $0-$5 off
+- Don't extrapolate outside the tested prices: the projection only looks up observed rates ($12-$15 base, $0-$5 off
   for prospects, $1-$5 off for members).
 - Don't build the tool UI or edit the write-up's wording. That belongs to the tool-builder and the main session.
 - Don't commit raw data, credentials or personal information.

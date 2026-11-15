@@ -22,21 +22,21 @@ sys.path.insert(0, str(APP_DIR.parent / "src"))               # lorehaven packag
 from presets import PRESETS, STATUS_QUO                       # noqa: E402
 
 from lorehaven.formatting import percents_summing_to_100  # noqa: E402
-from lorehaven.projection import BASE_PRICE, METRICS_PATH, InvalidPolicy, Policy, load_rates, project  # noqa: E402
+from lorehaven.projection import BASE_PRICE, METRICS_PATH, TESTED_BASES, InvalidPolicy, Policy, load_rates, project  # noqa: E402
 
 # Inputs:  browser form values (JSON) and outputs/results/metrics.json
 # Outputs: the page, and projection results as JSON
 
 # Policy field -> form input name (so errors can point at the right box)
 FORM_FIELD_FOR_POLICY_FIELD = {
-    "offer_share.high_podcast": "offer_share_high", "offer_share.low_podcast": "offer_share_low",
+    "base_price": "base_price", "offer_share.high_podcast": "offer_share_high", "offer_share.low_podcast": "offer_share_low",
     "prospect_discount.high_podcast": "discount_high", "prospect_discount.low_podcast": "discount_low",
     "new_member_discount": "new_member_discount", "established_member_discount": "established_member_discount",
     "horizon_quarters": "horizon_quarters", "discount_rate_per_quarter": "discount_rate_pct",
     "win_back_offers": "lapsed_get_offers", "todays_random_depths": "random_depths",
 }
 FORM_LABELS = {
-    "offer_share_high": "Engaged listeners offered", "discount_high": "Engaged listeners' discount",
+    "base_price": "Base price", "offer_share_high": "Engaged listeners offered", "discount_high": "Engaged listeners' discount",
     "offer_share_low": "Other prospects offered", "discount_low": "Other prospects' discount",
     "new_member_discount": "New-member discount", "established_member_discount": "Established-member discount",
     "horizon_quarters": "Horizon", "discount_rate_pct": "Discount rate",
@@ -64,6 +64,7 @@ def _number(form: dict, name: str, whole=False):
 def policy_from_form(form: dict) -> Policy:
     """Convert tool inputs (%, whole $, quarters) into a Policy (shares 0-1)."""
     return Policy(
+        base_price=_number(form, "base_price", whole=True),
         offer_share={"high_podcast": _number(form, "offer_share_high") / 100, "low_podcast": _number(form, "offer_share_low") / 100},
         prospect_discount={"high_podcast": _number(form, "discount_high", whole=True),
                            "low_podcast": _number(form, "discount_low", whole=True)},
@@ -84,14 +85,16 @@ def page_facts(metrics_path: Path) -> dict:
     signed = lambda key: f"{100 * value(key):+.0f}%"
     money_k = lambda key: f"${value(key) / 1000:.1f}k"
     incremental = lambda segment: pct(f"segment.{segment}.incremental_share_at_5")
-    stay = lambda segment, tenure: pct(f"rates.stay.{segment}.{tenure}.price11")
+    stay = lambda segment, tenure: pct(f"rates.stay.base12.{segment}.{tenure}.price11")
     segments = ("cold", "lapsed_low_podcast", "warm_listener", "win_back")
     share_pct = percents_summing_to_100({s: value(f"segment.{s}.share_of_prospects") for s in segments})   # adds to 100
     row = lambda segment, label, detail: {
         "label": label, "detail": detail, "share": incremental(segment), "prospects": share_pct[segment],
-        "list_rate": f"{100 * value(f'rates.signup.{segment}.off0'):.1f}%"}
+        "list_rate": f"{100 * value(f'rates.signup.base12.{segment}.off0'):.1f}%"}
     return {
         "base": BASE_PRICE,
+        "base_choices": list(range(TESTED_BASES[0], TESTED_BASES[1] + 1)),
+        "recommended_at_15_vs_12": signed("headline.recommended_at_15_vs_12"),
         "signup_at_list": f"{100 * value('rates.by_price.signup.base12.price12'):.0f}%",
         "signup_at_5_off": f"{100 * value('rates.by_price.signup.base12.price7'):.0f}%",
         "cut_after": f"{value('base_cut.quarters_after_above_panem')} of {value('base_cut.quarters_after')}",

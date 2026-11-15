@@ -161,6 +161,12 @@
   "unit": "share",
   "value": 0.9916701682295108
  },
+ "headline.recommended_at_15_vs_12": {
+  "label": "estimate",
+  "note": "Same policy at a $15 base vs $12, 3 years. CAUTION: the $15 rates are from 2017-18, the $12 rates from 2019",
+  "unit": "share",
+  "value": -0.4300176097062359
+ },
  "headline.recommended_vs_best_single": {
   "label": "estimate",
   "note": "Tenure discounts vs the best single discount for every member, 3 years",
@@ -707,6 +713,150 @@
   "unit": "see note",
   "value": 0.9579399829771233
  },
+ "policy.recommended_at_13.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 0.1729220176761037
+ },
+ "policy.recommended_at_13.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 10.003061069150835
+ },
+ "policy.recommended_at_13.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 11937.71207137247
+ },
+ "policy.recommended_at_13.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 1382.3910372842847
+ },
+ "policy.recommended_at_13.h40.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 142845.18850544936
+ },
+ "policy.recommended_at_13.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 355.5137201524815
+ },
+ "policy.recommended_at_13.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 39845.21060695848
+ },
+ "policy.recommended_at_13.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 0.948382701125045
+ },
+ "policy.recommended_at_14.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 0.20194595313533023
+ },
+ "policy.recommended_at_14.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 10.798480955320612
+ },
+ "policy.recommended_at_14.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 9970.85525028242
+ },
+ "policy.recommended_at_14.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 1252.6868718294438
+ },
+ "policy.recommended_at_14.h40.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 118833.02380293599
+ },
+ "policy.recommended_at_14.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 268.28686877927794
+ },
+ "policy.recommended_at_14.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 33630.93863438681
+ },
+ "policy.recommended_at_14.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 0.941377609652274
+ },
+ "policy.recommended_at_15.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 0.22423230189551246
+ },
+ "policy.recommended_at_15.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 11.631475424590079
+ },
+ "policy.recommended_at_15.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 7418.579483444404
+ },
+ "policy.recommended_at_15.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 1055.7598074600744
+ },
+ "policy.recommended_at_15.h40.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 90194.5780046938
+ },
+ "policy.recommended_at_15.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 179.2098375528742
+ },
+ "policy.recommended_at_15.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 25616.267008101335
+ },
+ "policy.recommended_at_15.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "unit": "see note",
+  "value": 0.9350226023112042
+ },
  "policy.recommended_with_win_back.average_quarterly_churn": {
   "label": "estimate",
   "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
@@ -802,6 +952,54 @@
   "note": "12 quarters, $12-era rates. ",
   "unit": "see note",
   "value": 0.9032677263756849
+ },
+ "policy.today_at_15.average_quarterly_churn": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 0.19970164999697781
+ },
+ "policy.today_at_15.average_revenue_per_member_quarter": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 12.24230632654762
+ },
+ "policy.today_at_15.discount_cost_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 2793.934221694357
+ },
+ "policy.today_at_15.first_quarter_revenue_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 373.5669735621013
+ },
+ "policy.today_at_15.h40.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 57962.91485506916
+ },
+ "policy.today_at_15.members_at_end_per_1000": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 113.16952099397093
+ },
+ "policy.today_at_15.revenue_per_1000_prospects": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 12403.190001660421
+ },
+ "policy.today_at_15.share_of_member_quarters_discounted": {
+  "label": "estimate",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it.",
+  "unit": "see note",
+  "value": 0.8615734484629792
  },
  "projection.share_high_podcast": {
   "label": "observed",
@@ -947,473 +1145,941 @@
   "unit": "share",
   "value": 0.7097934500903165
  },
- "rates.signup.cold.off0": {
+ "rates.signup.base12.cold.off0": {
   "label": "observed",
-  "note": "n=389963; $12 era",
+  "note": "n=389963; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.005031246554160267
  },
- "rates.signup.cold.off0.n": {
+ "rates.signup.base12.cold.off0.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 389963
  },
- "rates.signup.cold.off1": {
+ "rates.signup.base12.cold.off1": {
   "label": "observed",
-  "note": "n=25676; $12 era",
+  "note": "n=25676; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.012501947343823025
  },
- "rates.signup.cold.off1.n": {
+ "rates.signup.base12.cold.off1.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 25676
  },
- "rates.signup.cold.off2": {
+ "rates.signup.base12.cold.off2": {
   "label": "observed",
-  "note": "n=25791; $12 era",
+  "note": "n=25791; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.029583963398084605
  },
- "rates.signup.cold.off2.n": {
+ "rates.signup.base12.cold.off2.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 25791
  },
- "rates.signup.cold.off3": {
+ "rates.signup.base12.cold.off3": {
   "label": "observed",
-  "note": "n=26097; $12 era",
+  "note": "n=26097; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.05165344675633215
  },
- "rates.signup.cold.off3.n": {
+ "rates.signup.base12.cold.off3.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 26097
  },
- "rates.signup.cold.off4": {
+ "rates.signup.base12.cold.off4": {
   "label": "observed",
-  "note": "n=26033; $12 era",
+  "note": "n=26033; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.08819575154611455
  },
- "rates.signup.cold.off4.n": {
+ "rates.signup.base12.cold.off4.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 26033
  },
- "rates.signup.cold.off5": {
+ "rates.signup.base12.cold.off5": {
   "label": "observed",
-  "note": "n=25854; $12 era",
+  "note": "n=25854; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.129264330471107
  },
- "rates.signup.cold.off5.n": {
+ "rates.signup.base12.cold.off5.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 25854
  },
- "rates.signup.lapsed_low_podcast.off0": {
+ "rates.signup.base12.lapsed_low_podcast.off0": {
   "label": "observed",
-  "note": "n=10371; $12 era",
+  "note": "n=10371; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.06412110693279337
  },
- "rates.signup.lapsed_low_podcast.off0.n": {
+ "rates.signup.base12.lapsed_low_podcast.off0.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 10371
  },
- "rates.signup.lapsed_low_podcast.off1": {
+ "rates.signup.base12.lapsed_low_podcast.off1": {
   "label": "observed",
-  "note": "n=681; $12 era",
+  "note": "n=681; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.08370044052863436
  },
- "rates.signup.lapsed_low_podcast.off1.n": {
+ "rates.signup.base12.lapsed_low_podcast.off1.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 681
  },
- "rates.signup.lapsed_low_podcast.off2": {
+ "rates.signup.base12.lapsed_low_podcast.off2": {
   "label": "observed",
-  "note": "n=687; $12 era",
+  "note": "n=687; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.1339155749636099
  },
- "rates.signup.lapsed_low_podcast.off2.n": {
+ "rates.signup.base12.lapsed_low_podcast.off2.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 687
  },
- "rates.signup.lapsed_low_podcast.off3": {
+ "rates.signup.base12.lapsed_low_podcast.off3": {
   "label": "observed",
-  "note": "n=701; $12 era",
+  "note": "n=701; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.16119828815977175
  },
- "rates.signup.lapsed_low_podcast.off3.n": {
+ "rates.signup.base12.lapsed_low_podcast.off3.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 701
  },
- "rates.signup.lapsed_low_podcast.off4": {
+ "rates.signup.base12.lapsed_low_podcast.off4": {
   "label": "observed",
-  "note": "n=699; $12 era",
+  "note": "n=699; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.21745350500715308
  },
- "rates.signup.lapsed_low_podcast.off4.n": {
+ "rates.signup.base12.lapsed_low_podcast.off4.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 699
  },
- "rates.signup.lapsed_low_podcast.off5": {
+ "rates.signup.base12.lapsed_low_podcast.off5": {
   "label": "observed",
-  "note": "n=715; $12 era",
+  "note": "n=715; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.24195804195804196
  },
- "rates.signup.lapsed_low_podcast.off5.n": {
+ "rates.signup.base12.lapsed_low_podcast.off5.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 715
  },
- "rates.signup.warm_listener.off0": {
+ "rates.signup.base12.warm_listener.off0": {
   "label": "observed",
-  "note": "n=124972; $12 era",
+  "note": "n=124972; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.1368466536504177
  },
- "rates.signup.warm_listener.off0.n": {
+ "rates.signup.base12.warm_listener.off0.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 124972
  },
- "rates.signup.warm_listener.off1": {
+ "rates.signup.base12.warm_listener.off1": {
   "label": "observed",
-  "note": "n=8251; $12 era",
+  "note": "n=8251; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.1794933947400315
  },
- "rates.signup.warm_listener.off1.n": {
+ "rates.signup.base12.warm_listener.off1.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 8251
  },
- "rates.signup.warm_listener.off2": {
+ "rates.signup.base12.warm_listener.off2": {
   "label": "observed",
-  "note": "n=8496; $12 era",
+  "note": "n=8496; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.2502354048964218
  },
- "rates.signup.warm_listener.off2.n": {
+ "rates.signup.base12.warm_listener.off2.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 8496
  },
- "rates.signup.warm_listener.off3": {
+ "rates.signup.base12.warm_listener.off3": {
   "label": "observed",
-  "note": "n=8355; $12 era",
+  "note": "n=8355; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.31597845601436264
  },
- "rates.signup.warm_listener.off3.n": {
+ "rates.signup.base12.warm_listener.off3.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 8355
  },
- "rates.signup.warm_listener.off4": {
+ "rates.signup.base12.warm_listener.off4": {
   "label": "observed",
-  "note": "n=8492; $12 era",
+  "note": "n=8492; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.3796514366462553
  },
- "rates.signup.warm_listener.off4.n": {
+ "rates.signup.base12.warm_listener.off4.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 8492
  },
- "rates.signup.warm_listener.off5": {
+ "rates.signup.base12.warm_listener.off5": {
   "label": "observed",
-  "note": "n=8267; $12 era",
+  "note": "n=8267; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.44659489536712227
  },
- "rates.signup.warm_listener.off5.n": {
+ "rates.signup.base12.warm_listener.off5.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 8267
  },
- "rates.signup.win_back.off0": {
+ "rates.signup.base12.win_back.off0": {
   "label": "observed",
-  "note": "n=77078; $12 era",
+  "note": "n=77078; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.21113677054412414
  },
- "rates.signup.win_back.off0.n": {
+ "rates.signup.base12.win_back.off0.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 77078
  },
- "rates.signup.win_back.off1": {
+ "rates.signup.base12.win_back.off1": {
   "label": "observed",
-  "note": "n=5303; $12 era",
+  "note": "n=5303; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.2805958891193664
  },
- "rates.signup.win_back.off1.n": {
+ "rates.signup.base12.win_back.off1.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 5303
  },
- "rates.signup.win_back.off2": {
+ "rates.signup.base12.win_back.off2": {
   "label": "observed",
-  "note": "n=5203; $12 era",
+  "note": "n=5203; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.3588314433980396
  },
- "rates.signup.win_back.off2.n": {
+ "rates.signup.base12.win_back.off2.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 5203
  },
- "rates.signup.win_back.off3": {
+ "rates.signup.base12.win_back.off3": {
   "label": "observed",
-  "note": "n=5155; $12 era",
+  "note": "n=5155; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.4333656644034918
  },
- "rates.signup.win_back.off3.n": {
+ "rates.signup.base12.win_back.off3.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 5155
  },
- "rates.signup.win_back.off4": {
+ "rates.signup.base12.win_back.off4": {
   "label": "observed",
-  "note": "n=5152; $12 era",
+  "note": "n=5152; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.49961180124223603
  },
- "rates.signup.win_back.off4.n": {
+ "rates.signup.base12.win_back.off4.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 5152
  },
- "rates.signup.win_back.off5": {
+ "rates.signup.base12.win_back.off5": {
   "label": "observed",
-  "note": "n=5200; $12 era",
+  "note": "n=5200; $12 base, quarters 9-11",
   "unit": "share",
   "value": 0.5557692307692308
  },
- "rates.signup.win_back.off5.n": {
+ "rates.signup.base12.win_back.off5.n": {
   "label": "observed",
   "note": "",
   "unit": "prospect-quarters",
   "value": 5200
  },
- "rates.stay.high_podcast.established.price10": {
+ "rates.signup.base15.cold.off0": {
   "label": "observed",
-  "note": "n=33422; $12 era",
+  "note": "n=1039694; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.001764942377276391
+ },
+ "rates.signup.base15.cold.off0.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 1039694
+ },
+ "rates.signup.base15.cold.off1": {
+  "label": "observed",
+  "note": "n=68896; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.0028884115188109617
+ },
+ "rates.signup.base15.cold.off1.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 68896
+ },
+ "rates.signup.base15.cold.off2": {
+  "label": "observed",
+  "note": "n=69557; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.004686803628678638
+ },
+ "rates.signup.base15.cold.off2.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 69557
+ },
+ "rates.signup.base15.cold.off3": {
+  "label": "observed",
+  "note": "n=69739; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.008345402142273334
+ },
+ "rates.signup.base15.cold.off3.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 69739
+ },
+ "rates.signup.base15.cold.off4": {
+  "label": "observed",
+  "note": "n=68863; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.016743389047819583
+ },
+ "rates.signup.base15.cold.off4.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 68863
+ },
+ "rates.signup.base15.cold.off5": {
+  "label": "observed",
+  "note": "n=69544; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.03262682618198551
+ },
+ "rates.signup.base15.cold.off5.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 69544
+ },
+ "rates.signup.base15.lapsed_low_podcast.off0": {
+  "label": "observed",
+  "note": "n=10120; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.04426877470355731
+ },
+ "rates.signup.base15.lapsed_low_podcast.off0.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 10120
+ },
+ "rates.signup.base15.lapsed_low_podcast.off1": {
+  "label": "observed",
+  "note": "n=652; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.0598159509202454
+ },
+ "rates.signup.base15.lapsed_low_podcast.off1.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 652
+ },
+ "rates.signup.base15.lapsed_low_podcast.off2": {
+  "label": "observed",
+  "note": "n=659; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.08952959028831563
+ },
+ "rates.signup.base15.lapsed_low_podcast.off2.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 659
+ },
+ "rates.signup.base15.lapsed_low_podcast.off3": {
+  "label": "observed",
+  "note": "n=678; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.10324483775811209
+ },
+ "rates.signup.base15.lapsed_low_podcast.off3.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 678
+ },
+ "rates.signup.base15.lapsed_low_podcast.off4": {
+  "label": "observed",
+  "note": "n=657; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.1308980213089802
+ },
+ "rates.signup.base15.lapsed_low_podcast.off4.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 657
+ },
+ "rates.signup.base15.lapsed_low_podcast.off5": {
+  "label": "observed",
+  "note": "n=664; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.1897590361445783
+ },
+ "rates.signup.base15.lapsed_low_podcast.off5.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 664
+ },
+ "rates.signup.base15.warm_listener.off0": {
+  "label": "observed",
+  "note": "n=750494; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.06759947447947619
+ },
+ "rates.signup.base15.warm_listener.off0.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 750494
+ },
+ "rates.signup.base15.warm_listener.off1": {
+  "label": "observed",
+  "note": "n=50291; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.10479012149291125
+ },
+ "rates.signup.base15.warm_listener.off1.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 50291
+ },
+ "rates.signup.base15.warm_listener.off2": {
+  "label": "observed",
+  "note": "n=50057; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.14962942245839742
+ },
+ "rates.signup.base15.warm_listener.off2.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 50057
+ },
+ "rates.signup.base15.warm_listener.off3": {
+  "label": "observed",
+  "note": "n=50245; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.20127375858294358
+ },
+ "rates.signup.base15.warm_listener.off3.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 50245
+ },
+ "rates.signup.base15.warm_listener.off4": {
+  "label": "observed",
+  "note": "n=50326; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.26501212097126736
+ },
+ "rates.signup.base15.warm_listener.off4.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 50326
+ },
+ "rates.signup.base15.warm_listener.off5": {
+  "label": "observed",
+  "note": "n=50067; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.33269418978568716
+ },
+ "rates.signup.base15.warm_listener.off5.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 50067
+ },
+ "rates.signup.base15.win_back.off0": {
+  "label": "observed",
+  "note": "n=106700; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.12232427366447984
+ },
+ "rates.signup.base15.win_back.off0.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 106700
+ },
+ "rates.signup.base15.win_back.off1": {
+  "label": "observed",
+  "note": "n=7095; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.1664552501761804
+ },
+ "rates.signup.base15.win_back.off1.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 7095
+ },
+ "rates.signup.base15.win_back.off2": {
+  "label": "observed",
+  "note": "n=7106; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.2262876442443006
+ },
+ "rates.signup.base15.win_back.off2.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 7106
+ },
+ "rates.signup.base15.win_back.off3": {
+  "label": "observed",
+  "note": "n=7268; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.28811227297743536
+ },
+ "rates.signup.base15.win_back.off3.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 7268
+ },
+ "rates.signup.base15.win_back.off4": {
+  "label": "observed",
+  "note": "n=7156; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.3569032979318055
+ },
+ "rates.signup.base15.win_back.off4.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 7156
+ },
+ "rates.signup.base15.win_back.off5": {
+  "label": "observed",
+  "note": "n=7125; $15 base, quarters 1-8",
+  "unit": "share",
+  "value": 0.4244210526315789
+ },
+ "rates.signup.base15.win_back.off5.n": {
+  "label": "observed",
+  "note": "",
+  "unit": "prospect-quarters",
+  "value": 7125
+ },
+ "rates.stay.base12.high_podcast.established.price10": {
+  "label": "observed",
+  "note": "n=33422; $12 base",
   "unit": "share",
   "value": 0.9393214050625337
  },
- "rates.stay.high_podcast.established.price11": {
+ "rates.stay.base12.high_podcast.established.price11": {
   "label": "observed",
-  "note": "n=33540; $12 era",
+  "note": "n=33540; $12 base",
   "unit": "share",
   "value": 0.9208109719737627
  },
- "rates.stay.high_podcast.established.price7": {
+ "rates.stay.base12.high_podcast.established.price7": {
   "label": "observed",
-  "note": "n=33639; $12 era",
+  "note": "n=33639; $12 base",
   "unit": "share",
   "value": 0.9700347810577009
  },
- "rates.stay.high_podcast.established.price8": {
+ "rates.stay.base12.high_podcast.established.price8": {
   "label": "observed",
-  "note": "n=33359; $12 era",
+  "note": "n=33359; $12 base",
   "unit": "share",
   "value": 0.9629785065499565
  },
- "rates.stay.high_podcast.established.price9": {
+ "rates.stay.base12.high_podcast.established.price9": {
   "label": "observed",
-  "note": "n=33552; $12 era",
+  "note": "n=33552; $12 base",
   "unit": "share",
   "value": 0.9533857892226991
  },
- "rates.stay.high_podcast.first_renewal.price10": {
+ "rates.stay.base12.high_podcast.first_renewal.price10": {
   "label": "observed",
-  "note": "n=10217; $12 era",
+  "note": "n=10217; $12 base",
   "unit": "share",
   "value": 0.8642458647352452
  },
- "rates.stay.high_podcast.first_renewal.price11": {
+ "rates.stay.base12.high_podcast.first_renewal.price11": {
   "label": "observed",
-  "note": "n=10128; $12 era",
+  "note": "n=10128; $12 base",
   "unit": "share",
   "value": 0.8317535545023697
  },
- "rates.stay.high_podcast.first_renewal.price7": {
+ "rates.stay.base12.high_podcast.first_renewal.price7": {
   "label": "observed",
-  "note": "n=10225; $12 era",
+  "note": "n=10225; $12 base",
   "unit": "share",
   "value": 0.934278728606357
  },
- "rates.stay.high_podcast.first_renewal.price8": {
+ "rates.stay.base12.high_podcast.first_renewal.price8": {
   "label": "observed",
-  "note": "n=10228; $12 era",
+  "note": "n=10228; $12 base",
   "unit": "share",
   "value": 0.9130817364098553
  },
- "rates.stay.high_podcast.first_renewal.price9": {
+ "rates.stay.base12.high_podcast.first_renewal.price9": {
   "label": "observed",
-  "note": "n=10074; $12 era",
+  "note": "n=10074; $12 base",
   "unit": "share",
   "value": 0.8921977367480644
  },
- "rates.stay.high_podcast.second_renewal.price10": {
+ "rates.stay.base12.high_podcast.second_renewal.price10": {
   "label": "observed",
-  "note": "n=6779; $12 era",
+  "note": "n=6779; $12 base",
   "unit": "share",
   "value": 0.9060333382504794
  },
- "rates.stay.high_podcast.second_renewal.price11": {
+ "rates.stay.base12.high_podcast.second_renewal.price11": {
   "label": "observed",
-  "note": "n=6710; $12 era",
+  "note": "n=6710; $12 base",
   "unit": "share",
   "value": 0.8706408345752608
  },
- "rates.stay.high_podcast.second_renewal.price7": {
+ "rates.stay.base12.high_podcast.second_renewal.price7": {
   "label": "observed",
-  "note": "n=6847; $12 era",
+  "note": "n=6847; $12 base",
   "unit": "share",
   "value": 0.9548707463122535
  },
- "rates.stay.high_podcast.second_renewal.price8": {
+ "rates.stay.base12.high_podcast.second_renewal.price8": {
   "label": "observed",
-  "note": "n=6709; $12 era",
+  "note": "n=6709; $12 base",
   "unit": "share",
   "value": 0.9403785959159339
  },
- "rates.stay.high_podcast.second_renewal.price9": {
+ "rates.stay.base12.high_podcast.second_renewal.price9": {
   "label": "observed",
-  "note": "n=6758; $12 era",
+  "note": "n=6758; $12 base",
   "unit": "share",
   "value": 0.9218703758508434
  },
- "rates.stay.low_podcast.established.price10": {
+ "rates.stay.base12.low_podcast.established.price10": {
   "label": "observed",
-  "note": "n=1322; $12 era",
+  "note": "n=1322; $12 base",
   "unit": "share",
   "value": 0.9304084720121029
  },
- "rates.stay.low_podcast.established.price11": {
+ "rates.stay.base12.low_podcast.established.price11": {
   "label": "observed",
-  "note": "n=1279; $12 era",
+  "note": "n=1279; $12 base",
   "unit": "share",
   "value": 0.9069585613760751
  },
- "rates.stay.low_podcast.established.price7": {
+ "rates.stay.base12.low_podcast.established.price7": {
   "label": "observed",
-  "note": "n=1352; $12 era",
+  "note": "n=1352; $12 base",
   "unit": "share",
   "value": 0.9637573964497042
  },
- "rates.stay.low_podcast.established.price8": {
+ "rates.stay.base12.low_podcast.established.price8": {
   "label": "observed",
-  "note": "n=1246; $12 era",
+  "note": "n=1246; $12 base",
   "unit": "share",
   "value": 0.963884430176565
  },
- "rates.stay.low_podcast.established.price9": {
+ "rates.stay.base12.low_podcast.established.price9": {
   "label": "observed",
-  "note": "n=1320; $12 era",
+  "note": "n=1320; $12 base",
   "unit": "share",
   "value": 0.9363636363636364
  },
- "rates.stay.low_podcast.first_renewal.price10": {
+ "rates.stay.base12.low_podcast.first_renewal.price10": {
   "label": "observed",
-  "note": "n=1636; $12 era",
+  "note": "n=1636; $12 base",
   "unit": "share",
   "value": 0.5140586797066015
  },
- "rates.stay.low_podcast.first_renewal.price11": {
+ "rates.stay.base12.low_podcast.first_renewal.price11": {
   "label": "observed",
-  "note": "n=1649; $12 era",
+  "note": "n=1649; $12 base",
   "unit": "share",
   "value": 0.43056397816858705
  },
- "rates.stay.low_podcast.first_renewal.price7": {
+ "rates.stay.base12.low_podcast.first_renewal.price7": {
   "label": "observed",
-  "note": "n=1704; $12 era",
+  "note": "n=1704; $12 base",
   "unit": "share",
   "value": 0.670774647887324
  },
- "rates.stay.low_podcast.first_renewal.price8": {
+ "rates.stay.base12.low_podcast.first_renewal.price8": {
   "label": "observed",
-  "note": "n=1635; $12 era",
+  "note": "n=1635; $12 base",
   "unit": "share",
   "value": 0.6091743119266055
  },
- "rates.stay.low_podcast.first_renewal.price9": {
+ "rates.stay.base12.low_podcast.first_renewal.price9": {
   "label": "observed",
-  "note": "n=1673; $12 era",
+  "note": "n=1673; $12 base",
   "unit": "share",
   "value": 0.5469216975493126
  },
- "rates.stay.low_podcast.second_renewal.price10": {
+ "rates.stay.base12.low_podcast.second_renewal.price10": {
   "label": "observed",
-  "note": "n=598; $12 era",
+  "note": "n=598; $12 base",
   "unit": "share",
   "value": 0.6036789297658863
  },
- "rates.stay.low_podcast.second_renewal.price11": {
+ "rates.stay.base12.low_podcast.second_renewal.price11": {
   "label": "observed",
-  "note": "n=575; $12 era",
+  "note": "n=575; $12 base",
   "unit": "share",
   "value": 0.5530434782608695
  },
- "rates.stay.low_podcast.second_renewal.price7": {
+ "rates.stay.base12.low_podcast.second_renewal.price7": {
   "label": "observed",
-  "note": "n=574; $12 era",
+  "note": "n=574; $12 base",
   "unit": "share",
   "value": 0.7421602787456446
  },
- "rates.stay.low_podcast.second_renewal.price8": {
+ "rates.stay.base12.low_podcast.second_renewal.price8": {
   "label": "observed",
-  "note": "n=556; $12 era",
+  "note": "n=556; $12 base",
   "unit": "share",
   "value": 0.7248201438848921
  },
- "rates.stay.low_podcast.second_renewal.price9": {
+ "rates.stay.base12.low_podcast.second_renewal.price9": {
   "label": "observed",
-  "note": "n=560; $12 era",
+  "note": "n=560; $12 base",
   "unit": "share",
   "value": 0.6767857142857143
+ },
+ "rates.stay.base15.high_podcast.established.price10": {
+  "label": "observed",
+  "note": "n=21855; $15 base",
+  "unit": "share",
+  "value": 0.8957675589110043
+ },
+ "rates.stay.base15.high_podcast.established.price11": {
+  "label": "observed",
+  "note": "n=21929; $15 base",
+  "unit": "share",
+  "value": 0.8698071047471385
+ },
+ "rates.stay.base15.high_podcast.established.price12": {
+  "label": "observed",
+  "note": "n=21830; $15 base",
+  "unit": "share",
+  "value": 0.8306000916170407
+ },
+ "rates.stay.base15.high_podcast.established.price13": {
+  "label": "observed",
+  "note": "n=21883; $15 base",
+  "unit": "share",
+  "value": 0.7758990997578029
+ },
+ "rates.stay.base15.high_podcast.established.price14": {
+  "label": "observed",
+  "note": "n=21832; $15 base",
+  "unit": "share",
+  "value": 0.7194485159399048
+ },
+ "rates.stay.base15.high_podcast.first_renewal.price10": {
+  "label": "observed",
+  "note": "n=22305; $15 base",
+  "unit": "share",
+  "value": 0.8732122842412016
+ },
+ "rates.stay.base15.high_podcast.first_renewal.price11": {
+  "label": "observed",
+  "note": "n=22358; $15 base",
+  "unit": "share",
+  "value": 0.8400572502012702
+ },
+ "rates.stay.base15.high_podcast.first_renewal.price12": {
+  "label": "observed",
+  "note": "n=22112; $15 base",
+  "unit": "share",
+  "value": 0.8014652677279306
+ },
+ "rates.stay.base15.high_podcast.first_renewal.price13": {
+  "label": "observed",
+  "note": "n=22112; $15 base",
+  "unit": "share",
+  "value": 0.7476483357452967
+ },
+ "rates.stay.base15.high_podcast.first_renewal.price14": {
+  "label": "observed",
+  "note": "n=22353; $15 base",
+  "unit": "share",
+  "value": 0.6904218673108755
+ },
+ "rates.stay.base15.high_podcast.second_renewal.price10": {
+  "label": "observed",
+  "note": "n=16738; $15 base",
+  "unit": "share",
+  "value": 0.9020791014458119
+ },
+ "rates.stay.base15.high_podcast.second_renewal.price11": {
+  "label": "observed",
+  "note": "n=16613; $15 base",
+  "unit": "share",
+  "value": 0.878950219707458
+ },
+ "rates.stay.base15.high_podcast.second_renewal.price12": {
+  "label": "observed",
+  "note": "n=16490; $15 base",
+  "unit": "share",
+  "value": 0.8446331109763493
+ },
+ "rates.stay.base15.high_podcast.second_renewal.price13": {
+  "label": "observed",
+  "note": "n=16338; $15 base",
+  "unit": "share",
+  "value": 0.803709144326111
+ },
+ "rates.stay.base15.high_podcast.second_renewal.price14": {
+  "label": "observed",
+  "note": "n=16657; $15 base",
+  "unit": "share",
+  "value": 0.7446118748874347
+ },
+ "rates.stay.base15.low_podcast.established.price10": {
+  "label": "observed",
+  "note": "n=771; $15 base",
+  "unit": "share",
+  "value": 0.8754863813229572
+ },
+ "rates.stay.base15.low_podcast.established.price11": {
+  "label": "observed",
+  "note": "n=821; $15 base",
+  "unit": "share",
+  "value": 0.853836784409257
+ },
+ "rates.stay.base15.low_podcast.established.price12": {
+  "label": "observed",
+  "note": "n=836; $15 base",
+  "unit": "share",
+  "value": 0.833732057416268
+ },
+ "rates.stay.base15.low_podcast.established.price13": {
+  "label": "observed",
+  "note": "n=835; $15 base",
+  "unit": "share",
+  "value": 0.7640718562874251
+ },
+ "rates.stay.base15.low_podcast.established.price14": {
+  "label": "observed",
+  "note": "n=811; $15 base",
+  "unit": "share",
+  "value": 0.7250308261405672
+ },
+ "rates.stay.base15.low_podcast.first_renewal.price10": {
+  "label": "observed",
+  "note": "n=1348; $15 base",
+  "unit": "share",
+  "value": 0.6862017804154302
+ },
+ "rates.stay.base15.low_podcast.first_renewal.price11": {
+  "label": "observed",
+  "note": "n=1378; $15 base",
+  "unit": "share",
+  "value": 0.6211901306240929
+ },
+ "rates.stay.base15.low_podcast.first_renewal.price12": {
+  "label": "observed",
+  "note": "n=1324; $15 base",
+  "unit": "share",
+  "value": 0.56797583081571
+ },
+ "rates.stay.base15.low_podcast.first_renewal.price13": {
+  "label": "observed",
+  "note": "n=1368; $15 base",
+  "unit": "share",
+  "value": 0.5036549707602339
+ },
+ "rates.stay.base15.low_podcast.first_renewal.price14": {
+  "label": "observed",
+  "note": "n=1328; $15 base",
+  "unit": "share",
+  "value": 0.463855421686747
+ },
+ "rates.stay.base15.low_podcast.second_renewal.price10": {
+  "label": "observed",
+  "note": "n=729; $15 base",
+  "unit": "share",
+  "value": 0.8395061728395061
+ },
+ "rates.stay.base15.low_podcast.second_renewal.price11": {
+  "label": "observed",
+  "note": "n=716; $15 base",
+  "unit": "share",
+  "value": 0.7807262569832403
+ },
+ "rates.stay.base15.low_podcast.second_renewal.price12": {
+  "label": "observed",
+  "note": "n=696; $15 base",
+  "unit": "share",
+  "value": 0.7514367816091954
+ },
+ "rates.stay.base15.low_podcast.second_renewal.price13": {
+  "label": "observed",
+  "note": "n=785; $15 base",
+  "unit": "share",
+  "value": 0.7273885350318471
+ },
+ "rates.stay.base15.low_podcast.second_renewal.price14": {
+  "label": "observed",
+  "note": "n=684; $15 base",
+  "unit": "share",
+  "value": 0.6461988304093568
  },
  "segment.cold.best_first_quarter_discount": {
   "label": "observed",

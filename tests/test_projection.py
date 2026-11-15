@@ -5,8 +5,8 @@ import math
 
 import pytest
 
-from lorehaven.projection import (BASE_PRICE, PODCAST_SEGMENTS, SEGMENT_NAME, TENURE_GROUPS, InvalidPolicy, Policy,
-                                  load_rates, project)
+from lorehaven.projection import (BASE_PRICE, PODCAST_SEGMENTS, SEGMENT_NAME, TENURE_GROUPS, TESTED_BASES, InvalidPolicy,
+                                  Policy, load_rates, project)
 
 
 @pytest.fixture(scope="module")
@@ -32,6 +32,9 @@ def policy(**changes):
     ({"horizon_quarters": 41}, "horizon_quarters"),
     ({"discount_rate_per_quarter": 1.0}, "discount_rate_per_quarter"),
     ({"win_back_offers": "yes"}, "win_back_offers"),
+    ({"base_price": 11}, "base_price"),                                   # never charged
+    ({"base_price": 16}, "base_price"),
+    ({"base_price": 12.5}, "base_price"),
 ])
 def test_untested_or_invalid_inputs_raise_a_clear_error(rates, changes, field):
     with pytest.raises(InvalidPolicy) as error:
@@ -42,7 +45,7 @@ def test_untested_or_invalid_inputs_raise_a_clear_error(rates, changes, field):
 def test_first_quarter_uses_the_table_rates_exactly(rates):
     """Quarter 1 revenue = starting prospects x share x sign-up rate at $5 off x $7, summed over the two segments."""
     share = {"high_podcast": rates.share_high_podcast, "low_podcast": 1 - rates.share_high_podcast}
-    expected = sum(1000 * share[s] * rates.signup[SEGMENT_NAME[s, "never"], 5] * (BASE_PRICE - 5) for s in PODCAST_SEGMENTS)
+    expected = sum(1000 * share[s] * rates.signup[BASE_PRICE, SEGMENT_NAME[s, "never"], 5] * (BASE_PRICE - 5) for s in PODCAST_SEGMENTS)
     assert project(policy(horizon_quarters=1), rates)["summary"]["first_quarter_revenue_per_1000"] == pytest.approx(expected)
 
 
@@ -88,6 +91,28 @@ def test_offer_share_above_what_was_tested_is_flagged(rates):
 
 def test_all_rates_are_shares_and_all_outputs_finite(rates):
     assert all(0 < r < 1 for r in list(rates.signup.values()) + list(rates.stay.values()))
-    assert len(rates.stay) == len(PODCAST_SEGMENTS) * len(TENURE_GROUPS) * 5
+    assert len(rates.stay) == len(TESTED_BASES) * len(PODCAST_SEGMENTS) * len(TENURE_GROUPS) * 5
     summary = project(policy(horizon_quarters=40), rates)["summary"]
     assert all(math.isfinite(v) for v in summary.values())
+
+
+def test_tested_bases_use_their_own_table_and_in_between_bases_blend(rates):
+    assert rates.signup_rate(15, "cold", 3) == rates.signup[15, "cold", 3]
+    blended = rates.signup_rate(13, "cold", 3)
+    assert blended == pytest.approx(2 / 3 * rates.signup[12, "cold", 3] + 1 / 3 * rates.signup[15, "cold", 3])
+    assert rates.stay_rate(14, "high_podcast", "established", 1) == pytest.approx(
+        1 / 3 * rates.stay[12, "high_podcast", "established", 1] + 2 / 3 * rates.stay[15, "high_podcast", "established", 1])
+
+
+def test_revenue_uses_the_chosen_base_price(rates):
+    first = lambda base: project(policy(base_price=base, horizon_quarters=1), rates)
+    share = {"high_podcast": rates.share_high_podcast, "low_podcast": 1 - rates.share_high_podcast}
+    expected = sum(1000 * share[s] * rates.signup[15, SEGMENT_NAME[s, "never"], 5] * (15 - 5) for s in PODCAST_SEGMENTS)
+    assert first(15)["summary"]["first_quarter_revenue_per_1000"] == pytest.approx(expected)
+
+
+def test_a_base_other_than_12_warns_that_it_compares_different_years(rates):
+    assert not any("2017-18" in w for w in project(policy(offer_share={s: 0.25 for s in PODCAST_SEGMENTS}), rates)["warnings"])
+    for base in (13, 15):
+        assert any("2017-18" in w for w in project(policy(base_price=base), rates)["warnings"])
+    assert any("blend" in w for w in project(policy(base_price=14), rates)["warnings"])
