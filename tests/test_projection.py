@@ -32,6 +32,8 @@ def policy(**changes):
     ({"horizon_quarters": 41}, "horizon_quarters"),
     ({"discount_rate_per_quarter": 1.0}, "discount_rate_per_quarter"),
     ({"win_back_offers": "yes"}, "win_back_offers"),
+    ({"holdout_list_share": 0.6}, "holdout_list_share"),
+    ({"holdout_test_share": -0.1}, "holdout_test_share"),
     ({"base_price": 11}, "base_price"),                                   # never charged
     ({"base_price": 16}, "base_price"),
     ({"base_price": 12.5}, "base_price"),
@@ -116,3 +118,18 @@ def test_a_base_other_than_12_warns_that_it_compares_different_years(rates):
     for base in (13, 15):
         assert any("2017-18" in w for w in project(policy(base_price=base), rates)["warnings"])
     assert any("blend" in w for w in project(policy(base_price=14), rates)["warnings"])
+
+
+def test_holdout_is_the_share_weighted_sum_of_its_arms(rates):
+    """85/10/5: the main policy on 85% of prospects + list price on 10% + $3 off on 5%."""
+    revenue = lambda p: project(p, rates)["summary"]["revenue_per_1000_prospects"]
+    arm = lambda share, off: policy(offer_share={s: share for s in PODCAST_SEGMENTS}, prospect_discount={s: off for s in PODCAST_SEGMENTS})
+    expected = 0.85 * revenue(policy()) + 0.10 * revenue(arm(0.0, 0)) + 0.05 * revenue(arm(1.0, 3))
+    assert revenue(policy(holdout_list_share=0.10, holdout_test_share=0.05)) == pytest.approx(expected)
+
+
+def test_holdout_conserves_people(rates):
+    result = project(policy(holdout_list_share=0.10, holdout_test_share=0.05, horizon_quarters=6), rates)
+    joined = sum(q["new_members"] for q in result["quarters"])
+    churned = sum(q["churned"] for q in result["quarters"])
+    assert result["quarters"][-1]["members"] == pytest.approx(joined - churned)

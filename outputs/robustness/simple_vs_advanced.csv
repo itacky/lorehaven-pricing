@@ -7,7 +7,7 @@ Sign-up uplift at $5 off: cold,difference of two group averages,0.12423308391694
 Sign-up uplift at $5 off: win_back,difference of two group averages,0.34463246022510663,"linear model, region x quarter fixed effects",0.3453299064272149,True,0.0020196519013486185
 Sign-up uplift at $5 off: lapsed_low_podcast,difference of two group averages,0.1778369350252486,"linear model, region x quarter fixed effects",0.17931075570195226,True,0.008219365709179294
 2019 base cut raised list-price sign-ups (sign),"cut regions minus Panem, 2018 vs 2019, points",0.030739665547284585,logit difference-in-differences,0.839907608177731,True,
-"Recommended vs today, 3 years",lookup-table projection,1.2218463195198308,fitted-curve simulator,1.3253869992167138,True,0.07812109199658224
-"Recommended vs today, 10 years",lookup-table projection,0.6537306481958529,fitted-curve simulator,0.6929127141744185,True,0.05654690003090739
-"85/10/5 rollout vs today, 3 years",lookup-table projection,1.0464870137026607,fitted-curve simulator,1.1307202864758374,True,0.07449523439232707
-Tenure discounts vs best single member discount,lookup-table projection,0.10284455602445042,fitted-curve simulator,0.11744193644695922,True,0.12429444595458858
+"Full $5 rollout (no holdout) vs today, 3 years",lookup-table projection,1.2218463195198308,fitted-curve simulator,1.3253869992167138,True,0.07812109199658224
+"Full $5 rollout (no holdout) vs today, 10 years",lookup-table projection,0.6537306481958529,fitted-curve simulator,0.6929127141744185,True,0.05654690003090739
+"Recommended (85/10/5 holdout) vs today, 3 years",lookup-table projection,1.0464870137026607,fitted-curve simulator,1.1307202864758374,True,0.07449523439232707
+Tenure discounts vs best single member discount (no holdout),lookup-table projection,0.10284455602445042,fitted-curve simulator,0.11744193644695922,True,0.12429444595458858

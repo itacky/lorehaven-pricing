@@ -92,8 +92,11 @@ analysis logic: it converts form inputs to a `Policy` and calls `project()`.
 *Why:* bad input should say what to fix, not return a server error. `InvalidPolicy` carries the field name, so the
 page highlights the right box. NaN and infinity are rejected explicitly (they parse as floats).
 
-**9. The holdout: 85% at $5, 10% at list, 5% at $3, assigned once per customer.**
-*Why:* the full rollout gives up the randomization that made this analysis possible. *Sizing:* at about 268k
+**9. The holdout: 85% at $5 off, 10% at list price, 5% at $3 off, assigned once per customer.**
+*Why:* the full rollout gives up the randomization that made this analysis possible. *Modelled inside the
+projection:* each arm runs on its share of the prospects and the results are added, so the recommended policy is
+valued as it would actually run, and the simulator, the evidence panel and the write-up quote one number
+(+105% vs today). A full rollout (+122%) is only a setting (both holdout shares at 0), never a second headline. *Sizing:* at about 268k
 prospects a quarter, the 10% list arm detects a 0.5-point sign-up difference in one quarter (the real one is
 19 points) and a 2-point renewal difference within three quarters (80% power, 5% significance). Renewal is the
 open question, so 10% for the first quarters, 5% after. The $3 arm checks whether $5 is deeper than needed.

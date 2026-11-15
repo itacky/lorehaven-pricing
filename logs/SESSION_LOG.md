@@ -8,7 +8,7 @@
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 89 rows: every AI suggestion and what I did with it (64 accepted, 14 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 91 rows: every AI suggestion and what I did with it (66 accepted, 14 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
@@ -306,6 +306,15 @@ Claude confirmed power had not been checked (only a relative-precision ratio) an
 
 Claude agreed and checked the data: the $15 era (2017–18) also had randomized discounts, so it has a full rate table of its own. **I chose** a $12–$15 base, with $13 and $14 blended in a straight line between the two tables, over a $12/$15 switch or a fitted price curve. The tool warns that $12 vs $15 also compares 2019 with 2017–18. At $15 the recommended discounts earn 43% less, which supports keeping $12 (direction only).
 
+
+### 16. Interpretability pass (15 Nov)
+
+After a deeper review of how an audience would read the tool, I sent a nine-point list (paraphrased): replace the evidence-strength bars with plain Strong / Good / Weak labels; fix the title; show the four recommendations before the payoff number; word every $1–$5 amount as a discount, not a price; write comparisons as "43% vs 91%", not "43% → 91%"; reword the base-cut row; rewrite the limitations (I supplied a draft); quote one revenue number instead of both +105% and +122%; and remove AI-sounding language. **On the two numbers I asked (verbatim, abridged):**
+
+> The $44,942 on the simulator revenue panel is for when all customers get the %5 offer no? So wouldn't it be better for the actual 41.4k to be reflected there? Or is that difficult to implement? If it's not, maybe having the arm confiruation settings available in the more settings drop down could be beneficial also
+
+Claude modelled the holdout arms inside the projection (each arm on its share of prospects, then added), added the arm shares under More settings, and made every quoted number the recommended policy as it would run (+105%). The full rollout (+122%) is now just a setting.
+
 ---
 
 ## Where the AI got it wrong, and what caught it
@@ -323,6 +332,7 @@ Claude agreed and checked the data: the $15 era (2017–18) also had randomized 
 | Commit message miscounted critic outcomes | Claude, later | Correction logged, history kept |
 | Team acronym guessed (EDS) | Claude flagged it, I corrected it | AERO |
 | Fig. 1 suggested win-backs bring the most sign-ups (rates shown, segment sizes not) | Me | Redesigned as rate + volume (F); shares rounded to sum to 100 |
+| Two revenue numbers (+105% with holdout, +122% without) on one page | Me | Holdout modelled in the simulator; one number quoted |
 | Holdout never checked for power | Me | Minimum detectable differences added |
 | Simplified tool lost the base-price control the brief asks for | Me | $12-$15 base restored from observed tables |
 | Methods heavier than the design needs, hard to defend end to end | Me | Rebuilt on group averages; models kept as a cross-check appendix |

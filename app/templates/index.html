@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lorehaven pricing simulator · Audible AERO</title>
+<title>Lorehaven pricing · Audible AERO</title>
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
@@ -19,17 +19,17 @@
     </div>
     <div class="nav-links">
       <a href="#answer" class="active">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>The answer</a>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Summary</a>
       <a href="#evidence">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20V10M12 20V4M18 20v-7"/></svg>Evidence</a>
       <a href="#simulator">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-6"/></svg>Test a policy</a>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-6"/></svg>Simulator</a>
       <a href="#limits">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>Limitations</a>
     </div>
     <div class="promo">
       <p class="promo-title">Recommended policy</p>
-      <p class="promo-text">${{ facts.base }} base, $5 intro offer as the default with a holdout, $5 off the first two renewals, then $1.</p>
+      <p class="promo-text">${{ facts.base }} base; $5-off intro discount with a holdout; $5 off the first two renewals, then $1 off.</p>
       <button type="button" class="js-load-recommended">Load it</button>
     </div>
   </nav>
@@ -37,8 +37,8 @@
   <main class="main">
     <header class="main-header" id="answer">
       <div>
-        <h1>Lorehaven pricing: did the price changes work, and what next?</h1>
-        <p>The answer first, then the evidence behind it, then a simulator to test other policies. All numbers are per 1,000 new prospects and come from the analysis results.</p>
+        <h1>Lorehaven Pricing: Did the price changes work and what's next?</h1>
+        <p>Summary first, then the evidence, then a simulator for testing other policies. Figures are per 1,000 new prospects and come from the analysis results.</p>
       </div>
     </header>
 
@@ -47,74 +47,71 @@
       <div class="score-table" role="table" aria-label="Verdict on each price change">
         <div class="score-row score-head" role="row">
           <span role="columnheader">Change</span><span role="columnheader">Verdict</span>
-          <span role="columnheader">How strong is the evidence?</span><span role="columnheader" class="num">Key number</span>
+          <span role="columnheader">Strength of evidence</span><span role="columnheader" class="num">Key number</span>
         </div>
         <div class="score-row" role="row">
-          <span role="cell" class="score-change">Randomized $1–$5 discounts</span>
+          <span role="cell" class="score-change">Random $1–$5 introductory discounts</span>
           <span role="cell"><span class="badge yes">Worked</span></span>
           <span role="cell" class="strength">
-            <span class="meter5" aria-label="Evidence strength 5 of 5"><i class="on good"></i><i class="on good"></i><i class="on good"></i><i class="on good"></i><i class="on good"></i></span>
-            <span class="strength-text">Strong: discount size was randomized, so price is the only difference</span>
+            <span class="strength-label strong">Strong</span>
+            <span class="strength-text">Discount size was assigned at random, so price is the only difference between the groups.</span>
           </span>
-          <span role="cell" class="num"><strong>{{ facts.signup_at_list }} → {{ facts.signup_at_5_off }}</strong><small>sign-up rate at list price vs $5 off (randomized groups)</small></span>
+          <span role="cell" class="num"><strong>{{ facts.signup_at_list }} vs {{ facts.signup_at_5_off }}</strong><small>sign-up rate at list price vs $5 off</small></span>
         </div>
         <div class="score-row" role="row">
           <span role="cell" class="score-change">Base price cut, $15 → ${{ facts.base }} (2019)</span>
           <span role="cell"><span class="badge maybe">Likely helped</span></span>
           <span role="cell" class="strength">
-            <span class="meter5" aria-label="Evidence strength 2 of 5"><i class="on warn"></i><i class="on warn"></i><i></i><i></i><i></i></span>
-            <span class="strength-text">Weak: one comparison region (Panem), and the gap to it moved even without a price change</span>
+            <span class="strength-label weak">Weak</span>
+            <span class="strength-text">Panem is the only comparison region, and the gap to it also moved in quarters with no price change.</span>
           </span>
-          <span role="cell" class="num"><strong>{{ facts.cut_after }}</strong><small>quarters above Panem after the cut ({{ facts.cut_before }} before)</small></span>
+          <span role="cell" class="num"><strong>Trailed → led</strong><small>List-price sign-ups vs Panem: behind in all {{ facts.cut_before_total }} quarters at $15, ahead in all {{ facts.cut_after_total }} after the cut</small></span>
         </div>
         <div class="score-row" role="row">
-          <span role="cell" class="score-change">Random discounts for every member</span>
+          <span role="cell" class="score-change">Random $1–$5 member discounts</span>
           <span role="cell"><span class="badge no">Wasteful</span></span>
           <span role="cell" class="strength">
-            <span class="meter5" aria-label="Evidence strength 4 of 5"><i class="on good"></i><i class="on good"></i><i class="on good"></i><i class="on good"></i><i></i></span>
-            <span class="strength-text">Good: observed renewal rates by how long people have been members</span>
+            <span class="strength-label good">Good</span>
+            <span class="strength-text">Observed renewal rates by tenure and price.</span>
           </span>
-          <span role="cell" class="num"><strong>{{ facts.stay_rows[0].established }}%</strong><small>of established members stay at $11 anyway</small></span>
+          <span role="cell" class="num"><strong>{{ facts.stay_rows[0].established }}%</strong><small>of established members renew at $11 ($1 off) anyway</small></span>
         </div>
       </div>
     </section>
 
     <section class="card recommend-card" aria-labelledby="recommend-title">
-      <div class="recommend-head">
-        <h2 id="recommend-title">What we recommend</h2>
-        <p class="payoff-inline"><strong>{{ facts.holdout_vs_today }}</strong> revenue per new prospect vs today over 3 years, projected ({{ facts.holdout_ltv }} vs {{ facts.today_ltv }}; {{ facts.holdout_vs_today_h40 }} over 10 years)</p>
-      </div>
+      <h2 id="recommend-title">Recommendation</h2>
       <ol class="steps">
         <li><span class="step-tag">1 · Price</span><strong>Keep the ${{ facts.base }} base</strong><span>Test any change in a controlled experiment</span></li>
-        <li><span class="step-tag">2 · New customers</span><strong>$5 intro offer by default</strong><span>Randomized holdout: {{ facts.holdout_arms['5_off'] }}% $5 · {{ facts.holdout_arms['list'] }}% list · {{ facts.holdout_arms['3_off'] }}% $3</span></li>
-        <li><span class="step-tag">3 · Members</span><strong>$5 off the first two renewals</strong><span>Then $1 off</span></li>
-        <li><span class="step-tag">4 · Former members</span><strong>Win-backs in a test group</strong><span>Until we can see whether people cancel to collect them</span></li>
+        <li><span class="step-tag">2 · New customers</span><strong>$5-off intro discount by default</strong><span>Randomized holdout: {{ facts.holdout_arms['5_off'] }}% get $5 off · {{ facts.holdout_arms['list'] }}% pay list price · {{ facts.holdout_arms['3_off'] }}% get $3 off</span></li>
+        <li><span class="step-tag">3 · Members</span><strong>$5 off the first two renewals</strong><span>Then $1 off each renewal</span></li>
+        <li><span class="step-tag">4 · Former members</span><strong>Win-back discounts in a test group only</strong><span>Until we can see whether people cancel to collect them</span></li>
       </ol>
+      <p class="payoff-inline"><strong>{{ facts.recommended_vs_today }}</strong> revenue per new prospect vs today over 3 years ({{ facts.recommended_revenue }} vs {{ facts.today_revenue }} per 1,000 prospects; {{ facts.recommended_vs_today_h40 }} over 10 years). Includes the holdout.</p>
       <div class="actions">
         <button type="button" class="primary js-load-recommended">Load it in the simulator</button>
         <a href="#evidence">See the evidence</a>
       </div>
-      <p class="small fine-print">The tool sets one offer per segment, so "Load it" shows the full $5 rollout ({{ facts.full_rollout_vs_today }}). The holdout's value ({{ facts.holdout_vs_today }}) is computed from its three arms.</p>
     </section>
 
-    <h2 class="section-title" id="evidence">The evidence in three numbers</h2>
+    <h2 class="section-title" id="evidence">Evidence</h2>
     <div class="evidence-tiles" role="tablist" aria-label="Evidence">
       <button type="button" role="tab" id="tab-offer" aria-controls="panel-offer" aria-selected="true" class="evidence-tile">
         <span class="tile-number accent">{{ facts.uplift_rows[0].share }}%</span>
         <span class="tile-claim">of cold prospects who join with $5 off would not have joined at list price</span>
-        <span class="tile-note">{{ facts.uplift_others_low }}–{{ facts.uplift_others_high }}% in the other segments. The offer mostly buys new customers.</span>
+        <span class="tile-note">{{ facts.uplift_others_low }}–{{ facts.uplift_others_high }}% in the other segments. Most sign-ups the discount brings in are new customers.</span>
         <span class="tile-more">Detail</span>
       </button>
       <button type="button" role="tab" id="tab-tenure" aria-controls="panel-tenure" aria-selected="false" class="evidence-tile">
-        <span class="tile-number">{{ facts.stay_rows[1].first }}%<span class="arrow"> → </span>{{ facts.stay_rows[1].established }}%</span>
+        <span class="tile-number pair">{{ facts.stay_rows[1].first }}%<span class="vs"> vs </span>{{ facts.stay_rows[1].established }}%</span>
         <span class="tile-claim">renewal at $11 for less-engaged members: first renewal vs established</span>
-        <span class="tile-note">Engaged: {{ facts.stay_rows[0].first }}% → {{ facts.stay_rows[0].established }}%. Discounts matter early, not later.</span>
+        <span class="tile-note">Engaged members: {{ facts.stay_rows[0].first }}% vs {{ facts.stay_rows[0].established }}%. Discounts change behaviour early in membership, not later.</span>
         <span class="tile-more">Detail</span>
       </button>
       <button type="button" role="tab" id="tab-value" aria-controls="panel-value" aria-selected="false" class="evidence-tile dark">
-        <span class="tile-number brand">{{ facts.holdout_ltv_ratio }}×</span>
-        <span class="tile-claim">today's revenue per new prospect with the recommended rollout</span>
-        <span class="tile-note">{{ facts.holdout_ltv }} vs {{ facts.today_ltv }} per 1,000 prospects over 3 years, projected.</span>
+        <span class="tile-number brand">{{ facts.recommended_ratio }}×</span>
+        <span class="tile-claim">today's revenue per new prospect under the recommended policy</span>
+        <span class="tile-note">{{ facts.recommended_revenue }} vs {{ facts.today_revenue }} per 1,000 prospects over 3 years, including the holdout.</span>
         <span class="tile-more">Detail</span>
       </button>
     </div>
@@ -125,7 +122,7 @@
         <span class="muted small">${{ facts.base }} era, randomized offers</span>
       </div>
       <table class="detail-table">
-        <thead><tr><th>Segment</th><th class="num">Share of prospects</th><th class="num">Join at list price</th><th class="num">New because of $5</th></tr></thead>
+        <thead><tr><th>Segment</th><th class="num">Share of prospects</th><th class="num">Join at list price</th><th class="num">New because of $5 off</th></tr></thead>
         <tbody>
           {% for row in facts.uplift_rows %}
           <tr><td><strong>{{ row.label }}</strong>{% if row.detail %}<span class="muted"> · {{ row.detail }}</span>{% endif %}</td>
@@ -133,12 +130,12 @@
           {% endfor %}
         </tbody>
       </table>
-      <p class="small muted">"New because of $5" is the share of people joining with $5 off who would not have joined at list price. First-quarter revenue per prospect: {{ facts.first_quarter_offer_all }} with $5 to everyone vs {{ facts.first_quarter_today }} today.</p>
+      <p class="small muted">"New because of $5 off": the share of people joining with $5 off who would not have joined at list price. First-quarter revenue per prospect: {{ facts.first_quarter_offer_all }} if everyone got $5 off, {{ facts.first_quarter_today }} today.</p>
     </section>
 
     <section class="card evidence-detail" role="tabpanel" id="panel-tenure" aria-labelledby="tab-tenure" hidden>
       <div class="card-head">
-        <h3 class="card-title">Renewal at $11, first renewal vs established</h3>
+        <h3 class="card-title">Renewal at $11 ($1 off): first renewal vs established</h3>
         <span class="muted small">Observed, ${{ facts.base }} era</span>
       </div>
       <div class="tenure-grid">
@@ -153,7 +150,7 @@
         </div>
         {% endfor %}
       </div>
-      <p class="small muted">New members cancel far more often, so that is where a discount can still change behaviour. Tenure-based discounts beat the best single flat discount by {{ facts.vs_best_uniform }} in the projection.</p>
+      <p class="small muted">New members cancel far more often, so that is where a discount still changes behaviour. Discounts by tenure earn {{ facts.vs_best_uniform }} more than the best single discount for every member.</p>
     </section>
 
     <section class="card evidence-detail" role="tabpanel" id="panel-value" aria-labelledby="tab-value" hidden>
@@ -162,13 +159,13 @@
         <span class="muted small" id="compare-caption">Revenue per 1,000 prospects</span>
       </div>
       <div id="compare-bars" class="compare"></div>
-      <p class="small muted">Projected from observed rates, and follows the horizon chosen in the settings. The recommended rollout with its holdout earns {{ facts.holdout_ltv }} over 3 years ({{ facts.holdout_vs_today }} vs today); the "Recommended" preset is the full $5 rollout.</p>
+      <p class="small muted">Projected from observed rates over the horizon chosen in the simulator. Policies with a $5-off intro discount include the 85/10/5 holdout; set both holdout shares to 0 under More settings to see a full rollout.</p>
     </section>
 
     <header class="section-head" id="simulator">
       <div>
-        <h2 class="section-title">Test a policy</h2>
-        <p class="small muted">Change the settings in the panel on the right. Results compare your policy with today's.</p>
+        <h2 class="section-title">Policy simulator</h2>
+        <p class="small muted">Adjust the settings on the right. Results are compared with today's policy.</p>
       </div>
       <div class="segmented" role="group" aria-label="Horizon" id="horizon-buttons">
         <button type="button" data-quarters="12" aria-pressed="true">3 years</button>
@@ -188,7 +185,7 @@
         </div>
       </div>
       <div id="chart" class="chart" aria-label="Members per quarter, your policy versus today"></div>
-      <p class="footnote">Today's policy: ${{ facts.base }} base, a quarter of prospects get a random $1–$5 offer, every member gets a random $1–$5 discount. Hover the chart for each quarter.</p>
+      <p class="footnote">Today's policy: ${{ facts.base }} base; 25% of prospects get a random $1–$5 discount; every member gets a random $1–$5 discount each quarter. Hover the chart for each quarter.</p>
     </section>
 
     <div class="pair-cards">
@@ -199,16 +196,14 @@
       <section id="warnings" class="card notice" aria-live="polite"></section>
     </div>
 
-    <h2 class="section-title" id="limits">Limitations: what these numbers cannot tell you</h2>
+    <h2 class="section-title" id="limits">Limitations: What these numbers cannot tell you</h2>
     <section class="card" aria-label="Limitations">
       <ul class="assumptions">
-        <li><strong>A comparison, not a forecast.</strong> The projection reuses the average 2019 rate for every quarter, so use it to rank policies, not to predict revenue.</li>
-        <li><strong>Offering everyone a discount is untested.</strong> Offers reached about {{ facts.tested_offer_share_pct }}% of prospects in the data. The projection assumes people respond the same at full coverage, which is why the recommendation keeps a randomized holdout. A 10% list-price arm can detect a {{ facts.mde_renewal_pts }}-point renewal gap within three quarters.</li>
-        <li><strong>The base-price cut is not cleanly identified.</strong> One comparison region, and the gap to it moves by a few points even in quarters with no price change, so its size is not claimed.</li>
-        <li><strong>Tested prices only.</strong> A $12–$15 base with $0–$5 off for new customers and $1–$5 off for members (every member had an offer, so full price for members was never seen). The tool only allows those.</li>
-        <li><strong>Base prices compare different years.</strong> The $15 rates come from 2017–18 and the $12 rates from 2019, so a gap between them is not only price. In the projection, the recommended discounts at a $15 base earn {{ facts.recommended_at_15_vs_12 }} vs $12; test any base change in a controlled experiment.</li>
-        <li><strong>Gaming is invisible.</strong> The data cannot show customers who cancel in order to collect a win-back offer, or who wait for a deeper one.</li>
-        <li><strong>Every quarter looks like an average 2019 quarter:</strong> no seasonality or marketing changes. Revenue is net of discounts; content costs are out of scope.</li>
+        <li><strong>Broader discount coverage is untested.</strong> Historically, about {{ facts.tested_offer_share_pct }}% of prospects received a discount. The simulator assumes customers would respond the same way if discounts reached most prospects. Test that by expanding coverage in stages and keeping a randomized holdout; a {{ facts.holdout_arms['list'] }}% list-price group can detect a {{ facts.mde_renewal_pts }}-point renewal gap within three quarters.</li>
+        <li><strong>The $12 and $15 base prices were used in different years.</strong> Sign-ups may have changed for reasons other than price, and the gap to Panem also moved before the cut. Test base prices at the same time in comparable markets, with the same discount rules.</li>
+        <li><strong>Some price choices need more evidence.</strong> The tool blends the $12 and $15 response rates to estimate $13 and $14, and it excludes full-price renewals because every member in the discounting regions received a discount. Test these choices before adopting them.</li>
+        <li><strong>The simulator can't see customers gaming discounts.</strong> It doesn't capture customers who cancel to qualify for a win-back discount or wait for a deeper one. Track repeat cancellations and discount use, and test a cooldown period.</li>
+        <li><strong>Each scenario repeats the same response rates every quarter.</strong> At the ${{ facts.base }} base the simulator uses average 2019 rates; other bases use earlier rates or a blend. Projections don't account for seasonality or changes in marketing, so use them to compare policies rather than to forecast. Revenue is net of discounts; content costs are out of scope.</li>
       </ul>
     </section>
   </main>
@@ -220,46 +215,46 @@
         <button type="button" class="ghost" id="reset-today">Reset to today</button>
       </div>
 
-      <p class="hint">Set a policy to test. Results appear under "Test a policy".</p>
+      <p class="hint">Set a policy to test. Results appear under "Policy simulator".</p>
       <label class="field">Start from
         <select name="preset" id="preset"></select>
       </label>
       <p id="form-error" class="form-error" role="alert" hidden></p>
 
       <div class="group">
-        <h3 class="group-title">Base price per quarter</h3>
+        <h3 class="group-title">Base price (list price per quarter)</h3>
         <div class="chips base-chips" role="radiogroup" aria-label="Base price">
           {% for amount in facts.base_choices %}<label class="chip"><input type="radio" name="base_price" value="{{ amount }}"><span>${{ amount }}</span></label>{% endfor %}
         </div>
-        <p class="hint">Lorehaven charged $15 (2017–18) and ${{ facts.base }} (2019), both with random discounts underneath. $13 and $14 blend the two. Other bases were never tested.</p>
+        <p class="hint">Lorehaven charged $15 in 2017–18 and ${{ facts.base }} in 2019. $13 and $14 are blended from those two.</p>
       </div>
 
       <div class="group">
-        <h3 class="group-title">Introductory offer</h3>
-        <p class="hint">Engaged listeners have a podcast-engagement score of 0.5 or more.</p>
+        <h3 class="group-title">Introductory discount</h3>
+        <p class="hint">Dollars off the base price in a new member's first quarter. Engaged listeners have a podcast-engagement score of 0.5 or more.</p>
         <fieldset class="segment">
           <legend>Engaged listeners</legend>
-          <div class="slider-row"><label for="offer_share_high">Offered</label><output id="offer_share_high_out" for="offer_share_high"></output></div>
+          <div class="slider-row"><label for="offer_share_high">Share offered</label><output id="offer_share_high_out" for="offer_share_high"></output></div>
           <input type="range" id="offer_share_high" name="offer_share_high" min="0" max="100" step="5">
           <div class="chips" role="radiogroup" aria-label="Engaged listeners: amount off">
-            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_high" value="{{ amount }}"><span>{{ '$%d' % amount if amount else 'None' }}</span></label>{% endfor %}
+            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_high" value="{{ amount }}"><span>{{ '$%d off' % amount if amount else 'None' }}</span></label>{% endfor %}
           </div>
         </fieldset>
         <fieldset class="segment">
           <legend>Other prospects</legend>
-          <div class="slider-row"><label for="offer_share_low">Offered</label><output id="offer_share_low_out" for="offer_share_low"></output></div>
+          <div class="slider-row"><label for="offer_share_low">Share offered</label><output id="offer_share_low_out" for="offer_share_low"></output></div>
           <input type="range" id="offer_share_low" name="offer_share_low" min="0" max="100" step="5">
           <div class="chips" role="radiogroup" aria-label="Other prospects: amount off">
-            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_low" value="{{ amount }}"><span>{{ '$%d' % amount if amount else 'None' }}</span></label>{% endfor %}
+            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_low" value="{{ amount }}"><span>{{ '$%d off' % amount if amount else 'None' }}</span></label>{% endfor %}
           </div>
         </fieldset>
-        <label class="toggle">Former members get it too
+        <label class="toggle">Offer it to former members too (win-back)
           <input type="checkbox" name="lapsed_get_offers">
         </label>
       </div>
 
       <div class="group">
-        <h3 class="group-title">Member discounts</h3>
+        <h3 class="group-title">Member renewal discounts</h3>
         <div class="two-col">
           <label class="field">First two renewals
             <select name="new_member_discount">{% for amount in range(1, 6) %}<option value="{{ amount }}">${{ amount }} off</option>{% endfor %}</select>
@@ -268,7 +263,7 @@
             <select name="established_member_discount">{% for amount in range(1, 6) %}<option value="{{ amount }}">${{ amount }} off</option>{% endfor %}</select>
           </label>
         </div>
-        <p class="hint">Dollars off the base price at each renewal. New members cancel far more often, so early discounts buy the most loyalty.</p>
+        <p class="hint">Dollars off the base price at each renewal. Every member had a discount in the data, so $1 off is the minimum.</p>
       </div>
 
       <details class="group">
@@ -279,7 +274,16 @@
         <label class="field">Discount rate on future revenue (% per quarter)
           <input type="number" name="discount_rate_pct" step="0.5" min="0" max="99">
         </label>
-        <label class="toggle">Draw each discount at random from $1–$5, as today (ignores the amounts above)
+        <div class="two-col">
+          <label class="field">Holdout at list price (%)
+            <input type="number" name="holdout_list_pct" step="1" min="0" max="50">
+          </label>
+          <label class="field">Test arm at $3 off (%)
+            <input type="number" name="holdout_test_pct" step="1" min="0" max="50">
+          </label>
+        </div>
+        <p class="hint">Shares of new prospects kept out of the main intro discount. The recommended policy uses {{ facts.holdout_arms['list'] }}% and {{ facts.holdout_arms['3_off'] }}%; set both to 0 for a full rollout.</p>
+        <label class="toggle">Random $1–$5 discounts, as today (overrides the discount settings)
           <input type="checkbox" name="random_depths">
         </label>
       </details>

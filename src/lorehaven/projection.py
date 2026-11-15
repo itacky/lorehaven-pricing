@@ -14,6 +14,10 @@ prices, each with randomized $1-$5 discounts underneath: $12 (2019) and $15 (201
 Caveat: the $15 table comes from 2017-18 and the $12 table from 2019, so a $12-vs-$15 difference also reflects
 whatever else changed between those years. The tool says so whenever the base is not $12.
 
+Randomized holdout (optional): a share of new prospects can be kept at list price and another share given a $3 test
+discount, each assigned once and kept. The projection runs each arm on its share of the prospects and adds them up,
+so the recommended rollout (85% $5 off / 10% list / 5% $3 off) is valued exactly as it would run.
+
 Groups tracked, separately for engaged podcast listeners (high_podcast) and everyone else (low_podcast):
   never members, former members, and members by tenure: first renewal, second renewal, established (third renewal on).
 Reads its rates from outputs/results/metrics.json, so the tool needs only Flask (no pandas).
@@ -28,6 +32,7 @@ BASE_PRICE = 12                      # the default and the base the recommendati
 PODCAST_SEGMENTS = ("high_podcast", "low_podcast")
 TENURE_GROUPS = ("first_renewal", "second_renewal", "established")
 TODAYS_DEPTHS = (1, 2, 3, 4, 5)      # today's engine: a random $1-$5 off
+HOLDOUT_TEST_DISCOUNT = 3            # $ off for the holdout's test arm
 SEGMENT_NAME = {("high_podcast", "never"): "warm_listener", ("low_podcast", "never"): "cold",
                 ("high_podcast", "lapsed"): "win_back", ("low_podcast", "lapsed"): "lapsed_low_podcast"}
 METRICS_PATH = Path(__file__).resolve().parents[2] / "outputs" / "results" / "metrics.json"
@@ -46,6 +51,8 @@ class Policy:
     established_member_discount: int = 3    # $ off from the third renewal on (1-5)
     win_back_offers: bool = True            # False = former members see only the list price
     todays_random_depths: bool = False      # True = today's engine: random $1-$5 for offered prospects and all members
+    holdout_list_share: float = 0.0         # share of new prospects kept at list price (no intro discount), 0-0.5
+    holdout_test_share: float = 0.0         # share of new prospects given $3 off instead, 0-0.5
     horizon_quarters: int = 12
     starting_prospects: int = 1000
     discount_rate_per_quarter: float = 0.0
@@ -111,6 +118,10 @@ def validate(policy: Policy) -> None:
         if isinstance(share, bool) or not isinstance(share, (int, float)) or not math.isfinite(share) or not 0 <= share <= 1:
             raise InvalidPolicy(f"Offer share must be between 0% and 100% (got {share!r}).", f"offer_share.{segment}")
         _whole_dollars(f"prospect_discount.{segment}", "Prospect discount", policy.prospect_discount.get(segment), 0, 5)
+    for name, label in (("holdout_list_share", "Holdout at list price"), ("holdout_test_share", "Test arm at $3 off")):
+        share = getattr(policy, name)
+        if isinstance(share, bool) or not isinstance(share, (int, float)) or not math.isfinite(share) or not 0 <= share <= 0.5:
+            raise InvalidPolicy(f"{label} must be between 0% and 50% of new prospects (got {share!r}).", name)
     _whole_dollars("new_member_discount", "New-member discount", policy.new_member_discount, 1, 5)
     _whole_dollars("established_member_discount", "Established-member discount", policy.established_member_discount, 1, 5)
     if isinstance(policy.horizon_quarters, bool) or not isinstance(policy.horizon_quarters, int) or not 1 <= policy.horizon_quarters <= 40:
@@ -150,8 +161,8 @@ def warnings_for(policy: Policy, rates: Rates) -> list:
                         f"also reflects whatever else changed between those years, not only price.{blended} "
                         f"Test a base-price change in a controlled experiment before relying on it.")
     if any(policy.offer_share[s] > rates.tested_offer_share + 0.005 for s in PODCAST_SEGMENTS):
-        warnings.append(f"In the data about {rates.tested_offer_share:.0%} of prospects got an offer. Offering more people assumes each "
-                        f"person responds the same when everyone gets one: confirm it with a randomized holdout.")
+        warnings.append(f"In the data about {rates.tested_offer_share:.0%} of prospects received a discount. Offering it to more people "
+                        f"assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.")
     return warnings
 
 
@@ -187,11 +198,10 @@ def _one_quarter(policy, rates, people, segment) -> dict:
     return flow
 
 
-def project(policy: Policy, rates: Rates) -> dict:
-    """Run the policy quarter by quarter. Returns per-quarter totals, summary numbers and warnings."""
-    validate(policy)
+def _run_arm(policy: Policy, rates: Rates, starting_prospects: float) -> list:
+    """Per-quarter totals for one group of new prospects who all follow `policy`."""
     share = {"high_podcast": rates.share_high_podcast, "low_podcast": 1 - rates.share_high_podcast}
-    people = {s: {"never": policy.starting_prospects * share[s], "lapsed": 0.0, **{g: 0.0 for g in TENURE_GROUPS}}
+    people = {s: {"never": starting_prospects * share[s], "lapsed": 0.0, **{g: 0.0 for g in TENURE_GROUPS}}
               for s in PODCAST_SEGMENTS}
     quarters = []
     for quarter in range(1, policy.horizon_quarters + 1):
@@ -202,6 +212,29 @@ def project(policy: Policy, rates: Rates) -> dict:
                 total[key] += amount
         total["members"] = sum(people[s][g] for s in PODCAST_SEGMENTS for g in TENURE_GROUPS)
         quarters.append(total)
+    return quarters
+
+
+def holdout_arms(policy: Policy) -> list:
+    """(share of new prospects, policy for that arm). Without a holdout, one arm: the policy itself.
+    Holdout arms keep the member discounts and win-back setting, and change only the introductory discount."""
+    holdout = policy.holdout_list_share + policy.holdout_test_share
+    if holdout == 0:
+        return [(1.0, policy)]
+    arm = lambda off: Policy(**{**vars(policy), "offer_share": {s: 1.0 if off else 0.0 for s in PODCAST_SEGMENTS},
+                                "prospect_discount": {s: off for s in PODCAST_SEGMENTS}, "todays_random_depths": False,
+                                "holdout_list_share": 0.0, "holdout_test_share": 0.0})
+    return [(1 - holdout, Policy(**{**vars(policy), "holdout_list_share": 0.0, "holdout_test_share": 0.0})),
+            (policy.holdout_list_share, arm(0)), (policy.holdout_test_share, arm(HOLDOUT_TEST_DISCOUNT))]
+
+
+def project(policy: Policy, rates: Rates) -> dict:
+    """Run the policy quarter by quarter (each holdout arm on its share of prospects, then added up).
+    Returns per-quarter totals, summary numbers and warnings."""
+    validate(policy)
+    arms = [_run_arm(arm_policy, rates, policy.starting_prospects * share) for share, arm_policy in holdout_arms(policy) if share > 0]
+    quarters = [{key: (sum(arm[i][key] for arm in arms) if key != "quarter" else arms[0][i][key]) for key in arms[0][i]}
+                for i in range(policy.horizon_quarters)]
 
     per_1000 = 1000 / policy.starting_prospects
     present_value = lambda q: q["revenue"] / (1 + policy.discount_rate_per_quarter) ** (q["quarter"] - 1)

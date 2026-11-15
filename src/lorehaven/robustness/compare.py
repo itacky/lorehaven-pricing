@@ -9,6 +9,8 @@ import json
 import pandas as pd
 
 from lorehaven.data_prep import REPO_ROOT
+from lorehaven.projection import Policy, load_rates, project
+from lorehaven.recommendation import named_policies
 
 SIMPLE = REPO_ROOT / "outputs" / "results" / "metrics.json"
 ADVANCED = REPO_ROOT / "outputs" / "robustness" / "metrics.json"
@@ -24,6 +26,17 @@ def odds_change_per_dollar(rate_high_price, rate_low_price, dollars):
     """Average change in the odds of signing up per $1 off, from two observed rates: (odds ratio)^(1/dollars) - 1."""
     odds = lambda p: p / (1 - p)
     return (odds(rate_low_price) / odds(rate_high_price)) ** (1 / dollars) - 1
+
+
+def tenure_vs_best_single_without_holdout() -> float:
+    """Tenure discounts vs the best single member discount, all with a full $5 rollout (no holdout), as the
+    advanced simulator measured it, so the two methods are compared like for like."""
+    rates = load_rates(SIMPLE)
+    no_holdout = lambda policy: Policy(**{**vars(policy), "holdout_list_share": 0.0, "holdout_test_share": 0.0})
+    revenue = lambda policy: project(no_holdout(policy), rates)["summary"]["revenue_per_1000_prospects"]
+    policies = named_policies()
+    best_single = max(revenue(policies[f"offer_5_members_{off}_off"]) for off in range(1, 6))
+    return revenue(policies["recommended"]) / best_single - 1
 
 
 def comparison_rows(simple: dict, advanced: dict) -> list:
@@ -45,13 +58,13 @@ def comparison_rows(simple: dict, advanced: dict) -> list:
     rows += [
         ("2019 base cut raised list-price sign-ups (sign)", "cut regions minus Panem, 2018 vs 2019, points",
          s("base_cut.change_vs_panem"), "logit difference-in-differences", a("did.delta")),
-        ("Recommended vs today, 3 years", "lookup-table projection", s("headline.recommended_vs_today"),
+        ("Full $5 rollout (no holdout) vs today, 3 years", "lookup-table projection", s("headline.full_rollout_vs_today"),
          "fitted-curve simulator", a("headline.ltv_recommended_vs_today_pct")),
-        ("Recommended vs today, 10 years", "lookup-table projection", s("headline.recommended_vs_today_h40"),
+        ("Full $5 rollout (no holdout) vs today, 10 years", "lookup-table projection", s("headline.full_rollout_vs_today_h40"),
          "fitted-curve simulator", a("headline.ltv_recommended_vs_today_pct_h40")),
-        ("85/10/5 rollout vs today, 3 years", "lookup-table projection", s("headline.rollout_vs_today"),
+        ("Recommended (85/10/5 holdout) vs today, 3 years", "lookup-table projection", s("headline.recommended_vs_today"),
          "fitted-curve simulator", a("headline.holdout_design_ltv_vs_today_pct")),
-        ("Tenure discounts vs best single member discount", "lookup-table projection", s("headline.recommended_vs_best_single"),
+        ("Tenure discounts vs best single member discount (no holdout)", "lookup-table projection", tenure_vs_best_single_without_holdout(),
          "fitted-curve simulator", a("headline.ltv_recommended_vs_best_uniform_pct")),
     ]
     return rows

@@ -67,11 +67,11 @@ def figure_who_needs_the_offer():
         ax.xaxis.grid(True, color=GRID, linewidth=0.8)
         ax.set_axisbelow(True)
         ax.tick_params(axis="y", length=0)
-    fig.suptitle("Who a $5 offer brings in: rate and volume", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
+    fig.suptitle("Who a $5-off discount brings in: rate and volume", x=0.02, ha="left", fontsize=8.5, fontweight="bold", color=INK)
     legend = [Rectangle((0, 0), 1, 1, color=BLUE, label="Would join anyway"),
-              Rectangle((0, 0), 1, 1, color=ORANGE, label="Join because of the $5 offer")]
+              Rectangle((0, 0), 1, 1, color=ORANGE, label="Join because of $5 off")]
     fig.legend(handles=legend, loc="outside lower center", ncol=2, fontsize=6.5, frameon=False,
-               title="Assumes offers were as good as random and no one is put off by one. $12 era.", title_fontsize=5.6)
+               title="Assumes discounts were as good as random and no one is put off by one. $12 era.", title_fontsize=5.6)
     fig.savefig(FIGURES_DIR / "fig1_who_the_offer_wins.png")
     plt.close(fig)
 
@@ -102,22 +102,22 @@ def figure_retention_by_tenure():
 
 
 def figure_policy_value():
-    """3-year revenue per 1,000 new prospects for the main policies (projection from observed rates, no win-back offers)."""
+    """3-year revenue per 1,000 new prospects for the main policies (projection from observed rates, holdout included)."""
     metrics = _metrics()
     revenue = lambda name: metrics[f"policy.{name}.revenue_per_1000_prospects"]["value"] / 1000
     best = metrics["headline.best_single_member_discount"]["value"]
-    rows = [("Today: random 25% offers,\nrandom $1-$5 member discounts", revenue("today"), NEUTRAL),
-            ("$5 offer to all; every member $5 off", revenue("offer_5_members_5_off"), NEUTRAL),
-            ("$5 offer to all; every member $1 off", revenue("offer_5_members_1_off"), NEUTRAL),
-            (f"$5 offer to all; every member ${best} off\n(best single member discount)", revenue(f"offer_5_members_{best}_off"), NEUTRAL),
-            ("Recommended: $5 offer to all; $5 off first\ntwo renewals, $1 off after", revenue("recommended"), ORANGE)]
+    rows = [("Today: 25% of prospects get a random\n$1-$5 discount; members too", revenue("today"), NEUTRAL),
+            ("Every member $5 off", revenue("offer_5_members_5_off"), NEUTRAL),
+            ("Every member $1 off", revenue("offer_5_members_1_off"), NEUTRAL),
+            (f"Every member ${best} off\n(best single member discount)", revenue(f"offer_5_members_{best}_off"), NEUTRAL),
+            ("Recommended: $5 off the first\ntwo renewals, $1 off after", revenue("recommended"), ORANGE)]
     fig, ax = plt.subplots(figsize=FIGURE_SIZE, layout="constrained")
     y = range(len(rows))[::-1]
     ax.barh(list(y), [r[1] for r in rows], color=[r[2] for r in rows], height=0.6)
     for yi, (_, value, _) in zip(y, rows):
         ax.text(value + 0.8, yi, f"${value:.1f}k", va="center", fontsize=6.5, color=INK)
     ax.set_yticks(list(y), [r[0] for r in rows], fontsize=6.5)
-    ax.set_xlabel("Revenue per 1,000 prospects ($k)")
+    ax.set_xlabel("Revenue per 1,000 prospects ($k)\nAll but today: $5 off intro + holdout", fontsize=6)
     ax.set_xlim(0, max(r[1] for r in rows) * 1.18)
     ax.xaxis.grid(True, color=GRID, linewidth=0.8)
     ax.set_axisbelow(True)

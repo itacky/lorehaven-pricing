@@ -16,7 +16,7 @@ const KPIS = [
   { key: "revenue_per_1000_prospects", label: "Revenue", format: money, tile: "revenue" },
   { key: "members_at_end_per_1000", label: "Members at the end", format: count, tile: "members" },
   { key: "first_quarter_revenue_per_1000", label: "First-quarter revenue", format: money, tile: "first" },
-  { key: "average_quarterly_churn", label: "Leaving per quarter", format: pct, tile: "churn", points: true },
+  { key: "average_quarterly_churn", label: "Churn per quarter", format: pct, tile: "churn", points: true },
 ];
 
 // ---------- form <-> policy ----------
@@ -30,6 +30,7 @@ function formToPolicy() {
     random_depths: form.random_depths.checked,
     new_member_discount: f.get("new_member_discount"),
     established_member_discount: f.get("established_member_discount"),
+    holdout_list_pct: f.get("holdout_list_pct"), holdout_test_pct: f.get("holdout_test_pct"),
     horizon_quarters: f.get("horizon_quarters"), discount_rate_pct: f.get("discount_rate_pct"),
   };
 }
@@ -121,9 +122,9 @@ function renderWarnings(warnings) {
   const box = document.getElementById("warnings");
   box.classList.toggle("ok", warnings.length === 0);
   box.innerHTML = warnings.length
-    ? `${WARN_ICON}<div><h2>Outside what the data saw</h2><ul>${warnings.map((w) => `<li>${w}</li>`).join("")}</ul>
+    ? `${WARN_ICON}<div><h2>Notes on these settings</h2><ul>${warnings.map((w) => `<li>${w}</li>`).join("")}</ul>
        <p style="margin-top:8px"><a href="#limits">See the limitations</a></p></div>`
-    : `${OK_ICON}<div><h2>Inside the tested range</h2><ul><li>Every price and offer in this policy is within what the data tested.</li></ul></div>`;
+    : `${OK_ICON}<div><h2>Within tested prices</h2><ul><li>Every price and discount in this policy was observed in the data.</li></ul></div>`;
 }
 
 // Revenue of each preset at the current horizon, next to the policy on screen.

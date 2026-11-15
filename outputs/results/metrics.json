@@ -161,59 +161,47 @@
   "unit": "share",
   "value": 0.9916701682295108
  },
+ "headline.full_rollout_vs_today": {
+  "label": "estimate",
+  "note": "3 years; every new prospect gets $5 off (no holdout). Cross-check only; not quoted",
+  "unit": "share",
+  "value": 1.2218463195198308
+ },
+ "headline.full_rollout_vs_today_h40": {
+  "label": "estimate",
+  "note": "10 years; every new prospect gets $5 off (no holdout). Cross-check only; not quoted",
+  "unit": "share",
+  "value": 0.6537306481958529
+ },
  "headline.recommended_at_15_vs_12": {
   "label": "estimate",
   "note": "Same policy at a $15 base vs $12, 3 years. CAUTION: the $15 rates are from 2017-18, the $12 rates from 2019",
   "unit": "share",
-  "value": -0.4300176097062359
+  "value": -0.43259718534834657
  },
  "headline.recommended_vs_best_single": {
   "label": "estimate",
-  "note": "Tenure discounts vs the best single discount for every member, 3 years",
+  "note": "Tenure discounts vs the best single discount for every member, same intro discount and holdout, 3 years",
   "unit": "share",
-  "value": 0.10284455602445042
+  "value": 0.09751279262825308
  },
  "headline.recommended_vs_today": {
   "label": "estimate",
-  "note": "3 years; full rollout (every new prospect gets $5 off)",
+  "note": "3 years; the recommended policy as it would run, with its 85/10/5 holdout",
   "unit": "share",
-  "value": 1.2218463195198308
+  "value": 1.0464870137026607
  },
  "headline.recommended_vs_today_h40": {
   "label": "estimate",
-  "note": "10 years; full rollout (every new prospect gets $5 off)",
+  "note": "10 years; the recommended policy as it would run, with its 85/10/5 holdout",
   "unit": "share",
-  "value": 0.6537306481958529
+  "value": 0.5509318577801741
  },
  "headline.recommended_with_win_back_vs_today": {
   "label": "estimate",
   "note": "Recommended plus offers to former members, 3 years",
   "unit": "share",
-  "value": 1.4949909535654866
- },
- "headline.rollout_revenue_per_1000": {
-  "label": "estimate",
-  "note": "3 years; 85% $5 / 10% list / 5% $3, each arm kept for life",
-  "unit": "$ per 1,000 prospects",
-  "value": 41395.14229864687
- },
- "headline.rollout_revenue_per_1000_h40": {
-  "label": "estimate",
-  "note": "10 years; 85% $5 / 10% list / 5% $3, each arm kept for life",
-  "unit": "$ per 1,000 prospects",
-  "value": 161011.95257900236
- },
- "headline.rollout_vs_today": {
-  "label": "estimate",
-  "note": "3 years",
-  "unit": "share",
-  "value": 1.0464870137026607
- },
- "headline.rollout_vs_today_h40": {
-  "label": "estimate",
-  "note": "10 years",
-  "unit": "share",
-  "value": 0.5509318577801741
+  "value": 1.2843330578156964
  },
  "holdout.cost_per_prospect_quarter": {
   "label": "estimate",
@@ -281,629 +269,533 @@
   "unit": "points",
   "value": 0.1924304980745887
  },
- "policy.holdout_arm_3_off.average_quarterly_churn": {
+ "policy.full_rollout.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 0.12270072814765304
- },
- "policy.holdout_arm_3_off.average_revenue_per_member_quarter": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 9.558115734837424
- },
- "policy.holdout_arm_3_off.discount_cost_per_1000": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 8350.420935071475
- },
- "policy.holdout_arm_3_off.first_quarter_revenue_per_1000": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 1043.2197362052425
- },
- "policy.holdout_arm_3_off.h40.revenue_per_1000_prospects": {
-  "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 145720.47002232086
- },
- "policy.holdout_arm_3_off.members_at_end_per_1000": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 352.4077640792389
- },
- "policy.holdout_arm_3_off.revenue_per_1000_prospects": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 32685.53340987623
- },
- "policy.holdout_arm_3_off.share_of_member_quarters_discounted": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
-  "unit": "see note",
-  "value": 0.961444875177535
- },
- "policy.holdout_arm_5_off.average_quarterly_churn": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 0.13711887555206573
  },
- "policy.holdout_arm_5_off.average_revenue_per_member_quarter": {
+ "policy.full_rollout.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 9.23081269552776
  },
- "policy.holdout_arm_5_off.discount_cost_per_1000": {
+ "policy.full_rollout.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 13482.387227244566
  },
- "policy.holdout_arm_5_off.first_quarter_revenue_per_1000": {
+ "policy.full_rollout.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 1444.8723038245978
  },
- "policy.holdout_arm_5_off.h40.revenue_per_1000_prospects": {
+ "policy.full_rollout.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 171684.13903552308
  },
- "policy.holdout_arm_5_off.members_at_end_per_1000": {
+ "policy.full_rollout.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 455.6994833934398
  },
- "policy.holdout_arm_5_off.revenue_per_1000_prospects": {
+ "policy.full_rollout.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 44942.207766978434
  },
- "policy.holdout_arm_5_off.share_of_member_quarters_discounted": {
+ "policy.full_rollout.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
   "value": 0.9579399829771233
- },
- "policy.holdout_arm_list.average_quarterly_churn": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 0.08463659209179579
- },
- "policy.holdout_arm_list.average_revenue_per_member_quarter": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 10.01039816178568
- },
- "policy.holdout_arm_list.discount_cost_per_1000": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 3100.5330497369364
- },
- "policy.holdout_arm_list.first_quarter_revenue_per_1000": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 444.9215107588272
- },
- "policy.holdout_arm_list.h40.revenue_per_1000_prospects": {
-  "label": "estimate",
-  "note": "40 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 77944.10897691685
- },
- "policy.holdout_arm_list.members_at_end_per_1000": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 180.51833306327734
- },
- "policy.holdout_arm_list.revenue_per_1000_prospects": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 15599.890262213854
- },
- "policy.holdout_arm_list.share_of_member_quarters_discounted": {
-  "label": "estimate",
-  "note": "12 quarters, $12-era rates. ",
-  "unit": "see note",
-  "value": 0.8093295237850929
  },
  "policy.offer_5_members_1_off.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.2289527144294883
+  "value": 0.22400014696571224
  },
  "policy.offer_5_members_1_off.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 10.182505974093937
+  "value": 10.242052307919783
  },
  "policy.offer_5_members_1_off.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 6971.788878572996
+  "value": 6224.023684231151
  },
  "policy.offer_5_members_1_off.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.offer_5_members_1_off.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 142904.11658088508
+  "value": 135186.2300449914
  },
  "policy.offer_5_members_1_off.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 345.0421604184934
+  "value": 323.542970506641
  },
  "policy.offer_5_members_1_off.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 39059.43067449747
+  "value": 36262.043760923356
  },
  "policy.offer_5_members_1_off.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.9248521014375393
+  "value": 0.9190306283675503
  },
  "policy.offer_5_members_2_off.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.18029162404340285
+  "value": 0.1764639526316467
  },
  "policy.offer_5_members_2_off.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 9.515571992620892
+  "value": 9.564861041879254
  },
  "policy.offer_5_members_2_off.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 10639.754727491345
+  "value": 9602.51230805686
  },
  "policy.offer_5_members_2_off.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.offer_5_members_2_off.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 155705.35770742345
+  "value": 146575.36372806496
  },
  "policy.offer_5_members_2_off.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 403.3870740949612
+  "value": 376.4666660889044
  },
  "policy.offer_5_members_2_off.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 40751.17161478018
+  "value": 37717.22988259339
  },
  "policy.offer_5_members_2_off.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.9423843499062363
+  "value": 0.9370032821387535
  },
  "policy.offer_5_members_3_off.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.1513648370311514
+  "value": 0.14805054750137175
  },
  "policy.offer_5_members_3_off.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 8.768965139346967
+  "value": 8.812356143686
  },
  "policy.offer_5_members_3_off.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 14849.813442795074
+  "value": 13472.299302164072
  },
  "policy.offer_5_members_3_off.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.offer_5_members_3_off.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 156362.86109422427
+  "value": 146886.952038827
  },
  "policy.offer_5_members_3_off.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 444.35887397527915
+  "value": 413.7305149956511
  },
  "policy.offer_5_members_3_off.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 40302.10196474248
+  "value": 37244.65620268069
  },
  "policy.offer_5_members_3_off.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.9528412684905084
+  "value": 0.9477737554587774
  },
  "policy.offer_5_members_4_off.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.11645640059619625
+  "value": 0.11411074810267494
  },
  "policy.offer_5_members_4_off.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 7.9748484275283955
+  "value": 8.01292734943702
  },
  "policy.offer_5_members_4_off.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 20287.135589148096
+  "value": 18432.849700459243
  },
  "policy.offer_5_members_4_off.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.offer_5_members_4_off.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 166750.7853210926
+  "value": 155730.98821569534
  },
  "policy.offer_5_members_4_off.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 510.89022785416034
+  "value": 473.31541403410597
  },
  "policy.offer_5_members_4_off.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 40193.97243538568
+  "value": 37044.99477129322
  },
  "policy.offer_5_members_4_off.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.9638269105177456
+  "value": 0.959035321654367
  },
  "policy.offer_5_members_5_off.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.09841252451875235
+  "value": 0.09635661274898352
  },
  "policy.offer_5_members_5_off.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 7.14848030271162
+  "value": 7.1836044379657364
  },
  "policy.offer_5_members_5_off.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 25799.13814057332
+  "value": 23469.162634059612
  },
  "policy.offer_5_members_5_off.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.offer_5_members_5_off.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 156102.8056246235
+  "value": 145664.26081208035
  },
  "policy.offer_5_members_5_off.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 544.1652242367162
+  "value": 503.45232834172015
  },
  "policy.offer_5_members_5_off.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 38013.785851040324
+  "value": 35004.014658248474
  },
  "policy.offer_5_members_5_off.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.970303939457676
+  "value": 0.9657291246572337
  },
  "policy.recommended.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.13711887555206573
+  "value": 0.13478290712582391
  },
  "policy.recommended.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 9.23081269552776
+  "value": 9.27055342587024
  },
  "policy.recommended.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 13482.387227244566
+  "value": 12187.603494885148
  },
  "policy.recommended.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.recommended.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 171684.13903552308
+  "value": 161011.95257900236
  },
  "policy.recommended.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 455.6994833934398
+  "value": 423.0167823947135
  },
  "policy.recommended.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 44942.207766978434
+  "value": 41395.14229864687
  },
  "policy.recommended.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.9579399829771233
+  "value": 0.952887675266455
  },
  "policy.recommended_at_13.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.1729220176761037
+  "value": 0.17086575208911745
  },
  "policy.recommended_at_13.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 10.003061069150835
+  "value": 10.046464985108093
  },
  "policy.recommended_at_13.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 11937.71207137247
+  "value": 10765.879516232366
  },
  "policy.recommended_at_13.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1382.3910372842847
+  "value": 1262.7116835038792
  },
  "policy.recommended_at_13.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 142845.18850544936
+  "value": 133672.8501334964
  },
  "policy.recommended_at_13.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 355.5137201524815
+  "value": 329.34840623630225
  },
  "policy.recommended_at_13.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 39845.21060695848
+  "value": 36620.19615422752
  },
  "policy.recommended_at_13.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $13 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.948382701125045
+  "value": 0.9425253728959415
  },
  "policy.recommended_at_14.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.20194595313533023
+  "value": 0.20022507110953908
  },
  "policy.recommended_at_14.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 10.798480955320612
+  "value": 10.84532597087967
  },
  "policy.recommended_at_14.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 9970.85525028242
+  "value": 8973.744423218845
  },
  "policy.recommended_at_14.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1252.6868718294438
+  "value": 1140.1800080038313
  },
  "policy.recommended_at_14.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 118833.02380293599
+  "value": 110754.5822309884
  },
  "policy.recommended_at_14.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 268.28686877927794
+  "value": 248.01385672361195
  },
  "policy.recommended_at_14.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 33630.93863438681
+  "value": 30850.472204353286
  },
  "policy.recommended_at_14.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. $14 was never charged: its rates are a straight-line blend of the $12 and $15 tables. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.941377609652274
+  "value": 0.9347306460005924
  },
  "policy.recommended_at_15.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.22423230189551246
+  "value": 0.22290756220068803
  },
  "policy.recommended_at_15.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 11.631475424590079
+  "value": 11.681544860216276
  },
  "policy.recommended_at_15.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 7418.579483444404
+  "value": 6672.314914557559
  },
  "policy.recommended_at_15.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1055.7598074600744
+  "value": 957.1995696369096
  },
  "policy.recommended_at_15.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 90194.5780046938
+  "value": 83773.64852957964
  },
  "policy.recommended_at_15.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 179.2098375528742
+  "value": 165.83301934433996
  },
  "policy.recommended_at_15.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 25616.267008101335
+  "value": 23487.72025315795
  },
  "policy.recommended_at_15.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. The $15-base rates come from 2017-18 and the $12-base rates from 2019, so the difference between them also reflects whatever else changed between those years, not only price. Test a base-price change in a controlled experiment before relying on it. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.9350226023112042
+  "value": 0.9274810252499823
  },
  "policy.recommended_with_win_back.average_quarterly_churn": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 0.14315772402112056
+  "value": 0.1407666335462634
  },
  "policy.recommended_with_win_back.average_revenue_per_member_quarter": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 8.913525077711986
+  "value": 8.964219120356455
  },
  "policy.recommended_with_win_back.discount_cost_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 17475.218877365045
+  "value": 15647.96150054988
  },
  "policy.recommended_with_win_back.first_quarter_revenue_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1444.8723038245978
+  "value": 1324.794596137053
  },
  "policy.recommended_with_win_back.h40.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "40 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "40 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 234680.37126293674
+  "value": 216209.496922321
  },
  "policy.recommended_with_win_back.members_at_end_per_1000": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 602.8809860401449
+  "value": 551.1363990283298
  },
  "policy.recommended_with_win_back.revenue_per_1000_prospects": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 50467.217658917354
+  "value": 46206.15295999273
  },
  "policy.recommended_with_win_back.share_of_member_quarters_discounted": {
   "label": "estimate",
-  "note": "12 quarters, $12-era rates. In the data about 25% of prospects got an offer. Offering more people assumes each person responds the same when everyone gets one: confirm it with a randomized holdout.",
+  "note": "12 quarters, $12-era rates. In the data about 25% of prospects received a discount. Offering it to more people assumes customers respond the same way when most prospects get one: keep a randomized holdout to check.",
   "unit": "see note",
-  "value": 1.0
+  "value": 0.9942354382575722
  },
  "policy.today.average_quarterly_churn": {
   "label": "estimate",

@@ -169,13 +169,11 @@ def record_headlines(rec):
     for h, label in (("", "3 years"), (".h40", "10 years")):
         tag = h.replace(".", "_")
         rec.add(f"headline.recommended_vs_today{tag}", revenue("recommended", h) / revenue("today", h) - 1, "share",
-                "estimate", f"{label}; full rollout (every new prospect gets $5 off)")
-        rollout = sum(share * revenue(f"holdout_arm_{arm}", h) for arm, share in HOLDOUT_ARMS.items())
-        rec.add(f"headline.rollout_revenue_per_1000{tag}", rollout, "$ per 1,000 prospects", "estimate",
-                f"{label}; 85% $5 / 10% list / 5% $3, each arm kept for life")
-        rec.add(f"headline.rollout_vs_today{tag}", rollout / revenue("today", h) - 1, "share", "estimate", label)
+                "estimate", f"{label}; the recommended policy as it would run, with its 85/10/5 holdout")
+        rec.add(f"headline.full_rollout_vs_today{tag}", revenue("full_rollout", h) / revenue("today", h) - 1, "share",
+                "estimate", f"{label}; every new prospect gets $5 off (no holdout). Cross-check only; not quoted")
     rec.add("headline.recommended_vs_best_single", revenue("recommended") / revenue(best_single) - 1, "share", "estimate",
-            "Tenure discounts vs the best single discount for every member, 3 years")
+            "Tenure discounts vs the best single discount for every member, same intro discount and holdout, 3 years")
     rec.add("headline.recommended_with_win_back_vs_today", revenue("recommended_with_win_back") / revenue("today") - 1,
             "share", "estimate", "Recommended plus offers to former members, 3 years")
     rec.add("headline.recommended_at_15_vs_12", revenue("recommended_at_15") / revenue("recommended") - 1, "share", "estimate",

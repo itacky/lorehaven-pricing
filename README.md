@@ -68,15 +68,17 @@ The page reads top to bottom in the order of the brief:
    chosen horizon.
 3. **Test a policy.** Set a policy in the **Policy settings** panel on the right:
    - **Start from** a preset: *Recommended*, *Today's policy (2019)*, *Same $2 discount for all members*, or
-     *No intro offer, $1 off for members*, *Recommended discounts at the old $15 base*.
+     *No intro discount, $1 off for members*, *Recommended, at the old $15 base*. *Recommended* includes the 85/10/5
+     holdout, so the simulator shows the same value as the rest of the page.
    - **Base price per quarter**: $12-$15. Lorehaven charged $15 (2017-18) and $12 (2019); $13 and $14 blend the
      two eras' rates. A note appears whenever the base is not $12, because the eras differ in more than price.
    - **Introductory offer**: the share of prospects offered a discount and its size ($0-$5), set separately for
      *engaged listeners* (podcast-engagement score of 0.5 or more) and other prospects. *Former members get
      it too* switches win-back offers on or off.
    - **Member discounts**: $1-$5 off at the first two renewals, and from the third renewal on.
-   - **More settings**: horizon (quarters), a discount rate on future revenue, and *random $1-$5 discounts*
-     (today's promotions engine).
+   - **More settings**: horizon (quarters), a discount rate on future revenue, the **randomized holdout** (share of
+     new prospects kept at list price, and share given $3 off; the recommended policy uses 10% and 5%), and
+     *random $1-$5 discounts* (today's promotions engine).
 
    Only tested prices can be chosen, because the projection reads observed rates and has nothing to say about
    prices that were never tried. Results update automatically: tiles (revenue,
@@ -86,9 +88,8 @@ The page reads top to bottom in the order of the brief:
 4. **Limitations.** What the numbers cannot tell you.
 
 Every number on the page is read from `outputs/results/metrics.json` or computed by `project()`; none is typed
-into the page. The *Recommended* preset is the full $5 rollout; the recommended rollout with its randomized
-holdout (85% / 10% / 5%) is valued separately in `metrics.json` (`headline.rollout_*`), because the tool sets one
-offer per segment.
+into the page. One headline number is quoted everywhere: the recommended policy *with* its holdout
+(`headline.recommended_vs_today`). Setting both holdout shares to 0 shows a full rollout.
 
 Invalid settings (a discount that was never tested, an offer share over 100%, a fractional horizon) are refused
 with a message saying what to change, and the box concerned is highlighted.

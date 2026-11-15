@@ -34,12 +34,14 @@ FORM_FIELD_FOR_POLICY_FIELD = {
     "new_member_discount": "new_member_discount", "established_member_discount": "established_member_discount",
     "horizon_quarters": "horizon_quarters", "discount_rate_per_quarter": "discount_rate_pct",
     "win_back_offers": "lapsed_get_offers", "todays_random_depths": "random_depths",
+    "holdout_list_share": "holdout_list_pct", "holdout_test_share": "holdout_test_pct",
 }
 FORM_LABELS = {
     "base_price": "Base price", "offer_share_high": "Engaged listeners offered", "discount_high": "Engaged listeners' discount",
     "offer_share_low": "Other prospects offered", "discount_low": "Other prospects' discount",
     "new_member_discount": "New-member discount", "established_member_discount": "Established-member discount",
     "horizon_quarters": "Horizon", "discount_rate_pct": "Discount rate",
+    "holdout_list_pct": "Holdout at list price", "holdout_test_pct": "Test arm at $3 off",
 }
 
 
@@ -72,6 +74,8 @@ def policy_from_form(form: dict) -> Policy:
         established_member_discount=_number(form, "established_member_discount", whole=True),
         win_back_offers=bool(form.get("lapsed_get_offers", False)),
         todays_random_depths=bool(form.get("random_depths", False)),
+        holdout_list_share=_number(form, "holdout_list_pct") / 100,
+        holdout_test_share=_number(form, "holdout_test_pct") / 100,
         horizon_quarters=_number(form, "horizon_quarters", whole=True),
         discount_rate_per_quarter=_number(form, "discount_rate_pct") / 100,
     )
@@ -99,12 +103,12 @@ def page_facts(metrics_path: Path) -> dict:
         "signup_at_5_off": f"{100 * value('rates.by_price.signup.base12.price7'):.0f}%",
         "cut_after": f"{value('base_cut.quarters_after_above_panem')} of {value('base_cut.quarters_after')}",
         "cut_before": f"{value('base_cut.quarters_before_above_panem')} of {value('base_cut.quarters_before')}",
-        "full_rollout_vs_today": signed("headline.recommended_vs_today"),
-        "holdout_vs_today": signed("headline.rollout_vs_today"),
-        "holdout_vs_today_h40": signed("headline.rollout_vs_today_h40"),
-        "holdout_ltv": money_k("headline.rollout_revenue_per_1000"),
-        "today_ltv": money_k("policy.today.revenue_per_1000_prospects"),
-        "holdout_ltv_ratio": f"{value('headline.rollout_revenue_per_1000') / value('policy.today.revenue_per_1000_prospects'):.1f}",
+        "cut_before_total": value("base_cut.quarters_before"), "cut_after_total": value("base_cut.quarters_after"),
+        "recommended_vs_today": signed("headline.recommended_vs_today"),
+        "recommended_vs_today_h40": signed("headline.recommended_vs_today_h40"),
+        "recommended_revenue": money_k("policy.recommended.revenue_per_1000_prospects"),
+        "today_revenue": money_k("policy.today.revenue_per_1000_prospects"),
+        "recommended_ratio": f"{value('policy.recommended.revenue_per_1000_prospects') / value('policy.today.revenue_per_1000_prospects'):.1f}",
         "vs_best_uniform": signed("headline.recommended_vs_best_single"),
         "holdout_arms": {arm: pct(f"assumption.holdout_arm_share.{arm}") for arm in ("5_off", "list", "3_off")},
         "mde_renewal_pts": f"{100 * value('holdout.mde_renewal_list10_q3'):.0f}",

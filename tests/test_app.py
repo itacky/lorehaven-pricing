@@ -27,19 +27,27 @@ def test_page_leads_with_the_answer_then_evidence_simulator_and_limits(client):
     page = client.get("/").get_data(as_text=True)
     order = [page.index(f'id="{section}"') for section in ("answer", "evidence", "simulator", "limits")]
     assert order == sorted(order)
-    assert "Were the 2017–2019 price changes effective?" in page and "What we recommend" in page
+    assert "Were the 2017–2019 price changes effective?" in page and ">Recommendation<" in page
 
 
 def test_answer_numbers_come_from_metrics(client):
     metrics = json.loads(METRICS_PATH.read_text())
     value = lambda key: metrics[key]["value"]
     page = client.get("/").get_data(as_text=True)
-    assert f"{100 * value('rates.by_price.signup.base12.price12'):.0f}% → {100 * value('rates.by_price.signup.base12.price7'):.0f}%" in page
-    assert f"{100 * value('headline.rollout_vs_today'):+.0f}%" in page
-    assert f"Randomized holdout: {round(100 * value('assumption.holdout_arm_share.5_off'))}% $5" in page
-    ratio = value("headline.rollout_revenue_per_1000") / value("policy.today.revenue_per_1000_prospects")
+    assert f"{100 * value('rates.by_price.signup.base12.price12'):.0f}% vs {100 * value('rates.by_price.signup.base12.price7'):.0f}%" in page
+    assert f"{100 * value('headline.recommended_vs_today'):+.0f}%" in page
+    assert f"{100 * value('headline.full_rollout_vs_today'):+.0f}%" not in page        # one headline number only
+    assert f"Randomized holdout: {round(100 * value('assumption.holdout_arm_share.5_off'))}% get $5 off" in page
+    ratio = value("policy.recommended.revenue_per_1000_prospects") / value("policy.today.revenue_per_1000_prospects")
     assert f"{ratio:.1f}×" in page
     assert f"{round(100 * value('segment.cold.incremental_share_at_5'))}%" in page
+
+
+def test_recommended_preset_matches_the_quoted_recommended_value(client):
+    metrics = json.loads(METRICS_PATH.read_text())
+    body = client.post("/api/simulate", json=PRESETS["recommended"]["values"]).get_json()
+    quoted = metrics["policy.recommended.revenue_per_1000_prospects"]["value"]
+    assert body["scenario"]["summary"]["revenue_per_1000_prospects"] == pytest.approx(quoted)
 
 
 @pytest.mark.parametrize("preset_id", list(PRESETS))
@@ -65,6 +73,8 @@ def test_status_quo_matches_its_own_baseline(client):
     ({"base_price": 11}, "base_price"),
     ({"base_price": "abc"}, "base_price"),
     ({"base_price": "nan"}, "base_price"),
+    ({"holdout_list_pct": 60}, "holdout_list_pct"),
+    ({"holdout_test_pct": "nan"}, "holdout_test_pct"),
     ({"discount_high": "abc"}, "discount_high"),
     ({"discount_high": ""}, "discount_high"),
     ({"offer_share_high": 150}, "offer_share_high"),

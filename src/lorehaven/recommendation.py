@@ -24,21 +24,19 @@ def everyone(value) -> dict:
 
 
 def named_policies() -> dict:
-    """The policies compared in the write-up, the figures and the tool. All at the $12 base."""
+    """The policies compared in the write-up, the figures and the tool. $12 base unless named otherwise.
+    Every '$5 off for new prospects' policy runs with the recommended holdout (85% $5 off / 10% list / 5% $3 off),
+    so all quoted values are for the policy as it would actually run."""
+    holdout = {"holdout_list_share": HOLDOUT_ARMS["list"], "holdout_test_share": HOLDOUT_ARMS["3_off"]}
+    offer_5 = dict(offer_share=everyone(1.0), prospect_discount=everyone(5), win_back_offers=False, **holdout)
     policies = {
         "today": Policy(todays_random_depths=True),
-        "recommended": Policy(offer_share=everyone(1.0), prospect_discount=everyone(5), new_member_discount=5,
-                              established_member_discount=1, win_back_offers=False),
+        "recommended": Policy(**offer_5, new_member_discount=5, established_member_discount=1),
     }
-    for off in range(1, 6):    # $5 offer to every new prospect, one discount for every member
-        policies[f"offer_5_members_{off}_off"] = Policy(offer_share=everyone(1.0), prospect_discount=everyone(5),
-                                                        new_member_discount=off, established_member_discount=off,
-                                                        win_back_offers=False)
+    for off in range(1, 6):    # same intro discount and holdout, one discount for every member
+        policies[f"offer_5_members_{off}_off"] = Policy(**offer_5, new_member_discount=off, established_member_discount=off)
     policies["recommended_with_win_back"] = Policy(**{**vars(policies["recommended"]), "win_back_offers": True})
-    for arm, (share, off) in {"list": (0.0, 0), "3_off": (1.0, 3)}.items():   # the holdout arms (same member pricing)
-        policies[f"holdout_arm_{arm}"] = Policy(**{**vars(policies["recommended"]), "offer_share": everyone(share),
-                                                   "prospect_discount": everyone(off)})
-    policies["holdout_arm_5_off"] = policies["recommended"]
+    policies["full_rollout"] = Policy(**{**vars(policies["recommended"]), "holdout_list_share": 0.0, "holdout_test_share": 0.0})
     for base in (13, 14, 15):   # the recommended discounts at a higher base (rates blended or from the $15 era)
         policies[f"recommended_at_{base}"] = Policy(**{**vars(policies["recommended"]), "base_price": base})
     policies["today_at_15"] = Policy(todays_random_depths=True, base_price=15)
