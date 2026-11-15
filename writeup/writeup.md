@@ -1,7 +1,7 @@
 <header class="masthead">
 <div class="masthead-text">
 <h1>Lorehaven: were the price changes effective, and what next?</h1>
-<p class="byline">Immanuel Tacky · Audible Economics &amp; Data Science take-home · every number generated from <code>metrics.json</code></p>
+<p class="byline">Immanuel Tacky · Audible Economics, Research &amp; Optimization (AERO) · every number from <code>metrics.json</code></p>
 </div>
 <img class="masthead-logo" src="../app/static/audible_logo.png" alt="Audible">
 </header>

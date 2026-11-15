@@ -1,6 +1,6 @@
 # Lorehaven pricing analysis & simulator
 
-Take-home for Audible Economics & Data Science: were Lorehaven's price changes effective, and what should
+Take-home for Audible Economics, Research & Optimization (AERO): were Lorehaven's price changes effective, and what should
 membership pricing and discounts be? This repo holds the analysis (`src/lorehaven/`), every reported number
 (`outputs/results/metrics.json`), and a small pricing simulator a non-technical pricing lead can run (`app/`).
 
