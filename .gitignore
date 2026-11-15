@@ -18,3 +18,4 @@ Thumbs.db
 # Secrets (none expected; belt and braces)
 .env
 *.key
+presentation/*_generated.pptx

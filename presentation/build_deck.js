@@ -1,8 +1,8 @@
-// Build presentation/Evaluating_the_Lorehaven_Pricing_Strategy.pptx, the PowerPoint version of the interview deck.
+// Build the generated PowerPoint version of the interview deck (the starting point for the hand-edited final).
 //
 // Inputs:  outputs/results/metrics.json, outputs/robustness/crosscheck.json, outputs/results/base_cut_gap_by_quarter.csv,
 //          outputs/figures/fig1_*.png, fig2_*.png, app/static/audible_logo.png, presentation/assets/ (light logo, headshot)
-// Outputs: presentation/Evaluating_the_Lorehaven_Pricing_Strategy.pptx
+// Outputs: presentation/Evaluating_the_Lorehaven_Pricing_Strategy_generated.pptx (the committed deck is the hand-edited final)
 // Usage:   node presentation/build_deck.js   (needs pptxgenjs; every number is read from the results files, none typed here)
 
 const fs = require("fs");
@@ -10,7 +10,9 @@ const path = require("path");
 const pptxgen = require("pptxgenjs");
 
 const ROOT = path.resolve(__dirname, "..");
-const OUT = path.join(__dirname, "Evaluating_the_Lorehaven_Pricing_Strategy.pptx");
+// The committed Evaluating_the_Lorehaven_Pricing_Strategy.pptx was edited by hand after generation, so the build writes
+// a separate file and never overwrites it.
+const OUT = path.join(__dirname, "Evaluating_the_Lorehaven_Pricing_Strategy_generated.pptx");
 const metrics = JSON.parse(fs.readFileSync(path.join(ROOT, "outputs/results/metrics.json"), "utf8"));
 const crosscheck = JSON.parse(fs.readFileSync(path.join(ROOT, "outputs/robustness/crosscheck.json"), "utf8"));
 const v = (key) => {
