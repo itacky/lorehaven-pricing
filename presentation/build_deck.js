@@ -1,7 +1,7 @@
 // Build presentation/Evaluating_the_Lorehaven_Pricing_Strategy.pptx, the PowerPoint version of the interview deck.
 //
 // Inputs:  outputs/results/metrics.json, outputs/robustness/crosscheck.json, outputs/results/base_cut_gap_by_quarter.csv,
-//          outputs/figures/fig1_*.png, fig2_*.png, app/static/audible_logo.png, presentation/assets/audible_logo_light.png
+//          outputs/figures/fig1_*.png, fig2_*.png, app/static/audible_logo.png, presentation/assets/ (light logo, headshot)
 // Outputs: presentation/Evaluating_the_Lorehaven_Pricing_Strategy.pptx
 // Usage:   node presentation/build_deck.js   (needs pptxgenjs; every number is read from the results files, none typed here)
 
@@ -37,6 +37,7 @@ const THEME = {
 
 const LOGO_DARK = path.join(ROOT, "app/static/audible_logo.png");          // dark lettering, for light slides
 const LOGO_LIGHT = path.join(__dirname, "assets/audible_logo_light.png");  // light lettering, for dark slides
+const HEADSHOT = path.join(__dirname, "assets/headshot.jpg");            // presenter photo, thank-you slide
 const FIG1 = path.join(ROOT, "outputs/figures/fig1_who_the_offer_wins.png");
 const FIG2 = path.join(ROOT, "outputs/figures/fig2_retention_by_tenure.png");
 
@@ -353,7 +354,8 @@ s.addNotes("None of these is a reason to wait. The recommendation ships with its
 pres.addSection({ title: "Thank you and questions" });
 s = pres.addSlide({ masterName: "DARK_COVER", sectionTitle: "Thank you and questions" });
 s.addText("Thank you", { placeholder: "title", fontSize: 72 });
-text(s, "Questions and discussion welcome.", { x: X0, y: 4.65, w: 10.8, h: 0.6, fontSize: 20, color: DARK_TEXT });
+text(s, "Questions and discussion welcome.", { x: X0, y: 4.65, w: 6.5, h: 0.6, fontSize: 20, color: DARK_TEXT });
+s.addImage({ path: HEADSHOT, x: 8.27, y: 0.89, w: 4.17, h: 5.73, altText: "Immanuel Tacky" });
 text(s, "Immanuel Tacky · Audible Economics, Research & Optimization (AERO)", { x: X0, y: 6.55, w: 10, h: 0.3, fontSize: 12, bold: true, color: ORANGE });
 s.addNotes("Happy to walk through the code, the simulator live, or any of the checks behind the numbers.");
 
