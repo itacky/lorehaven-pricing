@@ -287,3 +287,5 @@ details[open] { gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 html { scroll-behavior: smooth; }
+
+.chips-label { margin: 10px 0 6px; font-size: 12px; font-weight: 600; color: var(--muted); }

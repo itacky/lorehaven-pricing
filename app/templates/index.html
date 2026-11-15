@@ -236,16 +236,18 @@
           <legend>Engaged listeners</legend>
           <div class="slider-row"><label for="offer_share_high">Share offered</label><output id="offer_share_high_out" for="offer_share_high"></output></div>
           <input type="range" id="offer_share_high" name="offer_share_high" min="0" max="100" step="5">
-          <div class="chips" role="radiogroup" aria-label="Engaged listeners: amount off">
-            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_high" value="{{ amount }}"><span>{{ '$%d off' % amount if amount else 'None' }}</span></label>{% endfor %}
+          <p class="chips-label" id="discount_high_label">Discount ($ off the base price)</p>
+          <div class="chips" role="radiogroup" aria-labelledby="discount_high_label">
+            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_high" value="{{ amount }}"><span>{{ '$%d' % amount if amount else 'None' }}</span></label>{% endfor %}
           </div>
         </fieldset>
         <fieldset class="segment">
           <legend>Other prospects</legend>
           <div class="slider-row"><label for="offer_share_low">Share offered</label><output id="offer_share_low_out" for="offer_share_low"></output></div>
           <input type="range" id="offer_share_low" name="offer_share_low" min="0" max="100" step="5">
-          <div class="chips" role="radiogroup" aria-label="Other prospects: amount off">
-            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_low" value="{{ amount }}"><span>{{ '$%d off' % amount if amount else 'None' }}</span></label>{% endfor %}
+          <p class="chips-label" id="discount_low_label">Discount ($ off the base price)</p>
+          <div class="chips" role="radiogroup" aria-labelledby="discount_low_label">
+            {% for amount in range(0, 6) %}<label class="chip"><input type="radio" name="discount_low" value="{{ amount }}"><span>{{ '$%d' % amount if amount else 'None' }}</span></label>{% endfor %}
           </div>
         </fieldset>
         <label class="toggle">Offer it to former members too (win-back)
