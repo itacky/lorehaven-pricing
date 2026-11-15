@@ -158,6 +158,7 @@ questions answered both ways) and `crosscheck.json` (the summary quoted in the w
 | `notebooks/lorehaven_walkthrough.ipynb` | Short walkthrough of the simple analysis (executed; readable on GitHub) |
 | `notebooks/appendix/`, `notebooks/eda/`, `outputs/eda/` | Earlier model-based walkthrough and exploratory analysis (reference) |
 | `writeup/` | Write-up source and PDF |
+| `presentation/` | Interview deck as PowerPoint (`Evaluating_the_Lorehaven_Pricing_Strategy.pptx`), rebuilt by `node presentation/build_deck.js` from metrics.json (needs pptxgenjs) |
 | `ARCHITECTURE.md` | How the code fits together and why each design decision was made |
 | `PLAN.md`, `FINDINGS.md` | Plan and assumptions; earlier EDA findings |
 | `CLAUDE.md` (and `AGENTS.md`) | Instructions for AI agents: project overview, shared rules, where context lives, handoffs |

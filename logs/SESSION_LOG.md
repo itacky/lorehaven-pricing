@@ -8,7 +8,7 @@
 |---|---|---|
 | Master prompt | `prompts/00_master_prompt.md` (+ `prompts/CHANGELOG.md`) | The phase plan, agent roles and rules I gave Claude, verbatim |
 | Agent definitions | `.claude/agents/{analyst,critic,tool-builder}.md` | Role, allowed tools and rules for each agent |
-| Decision log | `logs/decision_log.csv` | 92 rows: every AI suggestion and what I did with it (66 accepted, 15 edited, 11 rejected) |
+| Decision log | `logs/decision_log.csv` | 93 rows: every AI suggestion and what I did with it (67 accepted, 15 edited, 11 rejected) |
 | Critic reviews | `logs/critic_phase2.md`, `logs/critic_phase4.md` | Two independent reviews (20 and 15 issues) and how each was handled |
 | Commits | `git log` | One commit per phase, then small follow-ups |
 | Process write-up | `AI_WORKFLOW.md` | Why three agents, what the AI got wrong, how results were verified |
