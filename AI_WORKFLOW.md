@@ -43,7 +43,7 @@ because it already held the context. The critic was always a separate fresh-cont
 
 ## Decision-log summary
 
-96 logged decisions: 70 accepted, 15 edited, 11 rejected.
+97 logged decisions: 71 accepted, 15 edited, 11 rejected.
 
 | Phase | Accept | Edit | Reject |
 |---|---|---|---|
@@ -52,7 +52,7 @@ because it already held the context. The critic was always a separate fresh-cont
 | 2 Critic review and fixes | 11 | 2 | 2 |
 | 3 Tool | 5 | 2 | 2 |
 | 4 Write-up, notebook, final review | 9 | 1 | 1 |
-| 5 AI note and follow-ups (sharing, UI, branding, reviews) | 29 | 6 | 0 |
+| 5 AI note and follow-ups (sharing, UI, branding, reviews) | 30 | 6 | 0 |
 
 Critic reviews:
 - **Phase 2** (analysis): 20 issues. 17 accepted, 2 accepted in modified form, 1 rejected with evidence (a test showed the propensity score is not affected by the offer).
